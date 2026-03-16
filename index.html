@@ -228,9 +228,96 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .popular-strip{display:inline-flex;align-items:center;gap:10px;background:var(--petal);border:1px solid rgba(184,0,62,.12);padding:14px 28px;border-radius:50px;font-size:13px;color:var(--mid)}
 .popular-strip strong{color:var(--hot)}
 .p-card.hidden{display:none}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(22,8,16,.6);z-index:500;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:8px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative}
+.modal-header{padding:28px 28px 0;display:flex;justify-content:space-between;align-items:flex-start}
+.modal-header h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:400;color:var(--dark);font-style:italic;line-height:1.2}
+.modal-close{width:34px;height:34px;border-radius:50%;background:var(--petal);border:none;cursor:pointer;font-size:16px;color:var(--hot);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s}
+.modal-close:hover{background:var(--blush)}
+.modal-body{padding:24px 28px 28px}
+.modal-section{margin-bottom:24px}
+.modal-section-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);margin-bottom:14px;font-weight:500}
+.tone-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tone-opt{border:2px solid transparent;border-radius:6px;overflow:hidden;cursor:pointer;transition:all .2s;position:relative}
+.tone-opt img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.tone-opt .tone-label{font-size:10px;text-align:center;padding:5px 4px;color:var(--mid);font-weight:400;background:#fff}
+.tone-opt.selected{border-color:var(--hot)}
+.tone-opt.selected::after{content:'✓';position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--hot);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.tone-opt.disabled{opacity:.35;cursor:not-allowed}
+.bolso-grid{display:flex;gap:12px}
+.bolso-opt{flex:1;padding:14px 10px;border:2px solid rgba(184,0,62,.15);border-radius:6px;cursor:pointer;text-align:center;transition:all .2s}
+.bolso-opt:hover{border-color:var(--hot)}
+.bolso-opt.selected{border-color:var(--hot);background:var(--petal)}
+.bolso-circle{width:32px;height:32px;border-radius:50%;margin:0 auto 8px;border:2px solid rgba(0,0,0,.1)}
+.bolso-name{font-size:12px;color:var(--mid);font-weight:400}
+.bolso-opt.selected .bolso-name{color:var(--hot);font-weight:500}
+.modal-footer{padding:0 28px 28px;display:flex;flex-direction:column;gap:10px}
+.modal-summary{font-size:13px;color:var(--muted);text-align:center;min-height:20px}
+.btn-modal-add{width:100%;background:var(--hot);color:#fff;padding:15px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all .25s}
+.btn-modal-add:hover{background:var(--rose)}
+.btn-modal-add:disabled{background:var(--muted);cursor:not-allowed}
+.tone-counter{font-size:12px;color:var(--muted);margin-bottom:10px}
+.tone-counter span{color:var(--hot);font-weight:500}
 </style>
 </head>
 <body>
+
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Personaliza tu kit</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section" id="toneSection" style="display:none">
+        <div class="modal-section-title">Elige tus tonos</div>
+        <div class="tone-counter">Seleccionados: <span id="toneCount">0</span> de <span id="toneMax">0</span></div>
+        <div class="tone-grid">
+          <div class="tone-opt" data-tone="1" data-name="Cereza" onclick="selectTone(this)">
+            <img src="1_tono.jpeg" alt="Cereza">
+            <div class="tone-label">Cereza</div>
+          </div>
+          <div class="tone-opt" data-tone="2" data-name="Coral" onclick="selectTone(this)">
+            <img src="2_tono.jpeg" alt="Coral">
+            <div class="tone-label">Coral</div>
+          </div>
+          <div class="tone-opt" data-tone="3" data-name="Rosa" onclick="selectTone(this)">
+            <img src="tono_3.jpeg" alt="Rosa">
+            <div class="tone-label">Rosa</div>
+          </div>
+          <div class="tone-opt" data-tone="4" data-name="Cacao" onclick="selectTone(this)">
+            <img src="tono_4.jpeg" alt="Cacao">
+            <div class="tone-label">Cacao</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-section" id="bolsoSection" style="display:none">
+        <div class="modal-section-title">Elige el color de tu bolso</div>
+        <div class="bolso-grid">
+          <div class="bolso-opt" data-color="Negro" onclick="selectBolso(this)">
+            <div class="bolso-circle" style="background:#1a1a1a"></div>
+            <div class="bolso-name">Negro</div>
+          </div>
+          <div class="bolso-opt" data-color="Blanco" onclick="selectBolso(this)">
+            <div class="bolso-circle" style="background:#f5f5f5;border-color:rgba(0,0,0,.2)"></div>
+            <div class="bolso-name">Blanco</div>
+          </div>
+          <div class="bolso-opt" data-color="Rojo" onclick="selectBolso(this)">
+            <div class="bolso-circle" style="background:#C8004E"></div>
+            <div class="bolso-name">Rojo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-summary" id="modalSummary"></div>
+      <button class="btn-modal-add" id="btnModalAdd" onclick="addModalToCart()" disabled>Selecciona tus opciones</button>
+    </div>
+  </div>
+</div>
 
 <div class="cart-overlay" id="cOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cDrawer">
@@ -365,7 +452,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <span class="kit-price">$90.000</span>
       <span class="kit-price-sub">Kit 4 tonos</span>
     </div>
-    <button class="btn-primary" onclick="addKit()">Agregar kit al carrito</button>
+    <button class="btn-primary" onclick="openModal(6)">Personalizar y agregar kit</button>
   </div>
 </div>
 
@@ -464,13 +551,122 @@ const products = [
 let cart=[];
 const fmt=n=>'$'+n.toLocaleString('es-CO');
 
+
+let currentModalProduct = null;
+let selectedTones = [];
+let selectedBolso = '';
+let maxTones = 0;
+let needsBolso = false;
+
+const tonesNeeded = {5:0, 6:4, 7:6, 8:1, 9:2, 10:4, 11:6};
+const hasBolso = {5:true, 8:true, 9:true, 10:true, 11:true};
+
+function openModal(productId){
+  const p = products.find(x=>x.id===productId);
+  currentModalProduct = p;
+  selectedTones = [];
+  selectedBolso = '';
+  maxTones = tonesNeeded[productId] || 0;
+  needsBolso = hasBolso[productId] || false;
+
+  document.getElementById('modalTitle').textContent = p.name;
+  document.getElementById('toneCount').textContent = '0';
+  document.getElementById('toneMax').textContent = maxTones;
+  document.querySelectorAll('.tone-opt').forEach(t=>{t.classList.remove('selected','disabled')});
+  document.querySelectorAll('.bolso-opt').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('modalSummary').textContent = '';
+  document.getElementById('btnModalAdd').disabled = true;
+  document.getElementById('btnModalAdd').textContent = 'Selecciona tus opciones';
+
+  document.getElementById('toneSection').style.display = maxTones > 0 ? 'block' : 'none';
+  document.getElementById('bolsoSection').style.display = needsBolso ? 'block' : 'none';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOutside(e){
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function selectTone(el){
+  const tone = el.dataset.tone;
+  const name = el.dataset.name;
+  if(el.classList.contains('disabled')) return;
+  if(el.classList.contains('selected')){
+    el.classList.remove('selected');
+    selectedTones = selectedTones.filter(t=>t.tone!==tone);
+  } else {
+    if(maxTones > 0 && selectedTones.length >= maxTones) return;
+    el.classList.add('selected');
+    selectedTones.push({tone, name});
+  }
+  document.getElementById('toneCount').textContent = selectedTones.length;
+  if(maxTones > 0 && selectedTones.length >= maxTones){
+    document.querySelectorAll('.tone-opt:not(.selected)').forEach(t=>t.classList.add('disabled'));
+  } else {
+    document.querySelectorAll('.tone-opt').forEach(t=>t.classList.remove('disabled'));
+  }
+  updateModalBtn();
+}
+
+function selectBolso(el){
+  document.querySelectorAll('.bolso-opt').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedBolso = el.dataset.color;
+  updateModalBtn();
+}
+
+function updateModalBtn(){
+  const tonesOk = maxTones === 0 || selectedTones.length === maxTones;
+  const bolsoOk = !needsBolso || selectedBolso !== '';
+  const btn = document.getElementById('btnModalAdd');
+  if(tonesOk && bolsoOk){
+    btn.disabled = false;
+    let summary = '';
+    if(selectedTones.length) summary += 'Tonos: ' + selectedTones.map(t=>t.name).join(', ');
+    if(selectedBolso) summary += (summary?' · ':'') + 'Bolso: ' + selectedBolso;
+    document.getElementById('modalSummary').textContent = summary;
+    btn.textContent = 'Agregar al carrito — ' + fmt(currentModalProduct.price);
+  } else {
+    btn.disabled = true;
+    let missing = [];
+    if(!tonesOk) missing.push(`${maxTones - selectedTones.length} tono${maxTones-selectedTones.length>1?'s':''} más`);
+    if(!bolsoOk) missing.push('color de bolso');
+    btn.textContent = 'Falta elegir ' + missing.join(' y ');
+  }
+}
+
+function addModalToCart(){
+  if(!currentModalProduct) return;
+  const shade = [
+    selectedTones.length ? 'Tonos: ' + selectedTones.map(t=>t.name).join(', ') : '',
+    selectedBolso ? 'Bolso: ' + selectedBolso : ''
+  ].filter(Boolean).join(' · ') || currentModalProduct.shade;
+
+  const cartItem = {
+    ...currentModalProduct,
+    shade,
+    id: currentModalProduct.id + '_' + Date.now()
+  };
+  cart.push({...cartItem, qty:1});
+  updateCart();
+  closeModal();
+  openCart();
+}
+
 function renderProducts(){
   document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
     <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}">
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
         ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
-        <button class="p-add" onclick="addToCart(${p.id})">+</button>
+        <button class="p-add" onclick="${(p.cat==='kit'||p.cat==='bolso')?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
       </div>
       <div class="p-name">${p.name}</div>
       <div class="p-shade">${p.shade}</div>
@@ -507,10 +703,10 @@ function addKit(){
   updateCart();openCart();
 }
 
-function removeItem(id){cart=cart.filter(x=>x.id!==id);updateCart()}
+function removeItem(id){cart=cart.filter(x=>String(x.id)!==String(id));updateCart()}
 
 function changeQty(id,d){
-  const i=cart.find(x=>x.id===id);
+  const i=cart.find(x=>String(x.id)===String(id));
   if(!i)return;
   i.qty+=d;
   if(i.qty<=0)removeItem(id);else updateCart();
