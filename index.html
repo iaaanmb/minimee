@@ -37,7 +37,7 @@ nav.scrolled .nav-btn{border-color:var(--hot);background:var(--hot)}
 nav.scrolled .nav-btn:hover{background:var(--rose)}
 
 .hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('4_tonos.jpeg') center 30%/cover no-repeat;transform:scale(1.06);transition:transform 12s ease}
+.hero-bg{position:absolute;inset:0;background:url('6_tonos.JPG') center 30%/cover no-repeat;transform:scale(1.06);transition:transform 12s ease}
 .hero-bg.ready{transform:scale(1)}
 .hero-tint{position:absolute;inset:0;background:linear-gradient(160deg,rgba(22,8,16,.75) 0%,rgba(22,8,16,.2) 50%,transparent 75%),linear-gradient(to top,rgba(22,8,16,.98) 0%,rgba(22,8,16,.55) 35%,transparent 65%)}
 .hero-content{position:relative;z-index:1;padding:0 6% 90px;max-width:820px}
@@ -275,39 +275,51 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <div class="modal-section" id="toneSection" style="display:none">
         <div class="modal-section-title">Elige tus tonos</div>
         <div class="tone-counter">Seleccionados: <span id="toneCount">0</span> de <span id="toneMax">0</span></div>
-        <div class="tone-grid">
-          <div class="tone-opt" data-tone="1" data-name="Cereza" onclick="selectTone(this)">
-            <img src="1_tono.jpeg" alt="Cereza">
-            <div class="tone-label">Cereza</div>
+        <div class="tone-grid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="tone-opt" data-tone="1" data-name="Mini Drama" onclick="selectTone(this)">
+            <img src="tono_1.JPG" alt="Mini Drama">
+            <div class="tone-label">Mini Drama</div>
           </div>
-          <div class="tone-opt" data-tone="2" data-name="Coral" onclick="selectTone(this)">
-            <img src="2_tono.jpeg" alt="Coral">
-            <div class="tone-label">Coral</div>
+          <div class="tone-opt" data-tone="2" data-name="Sweet Sunset" onclick="selectTone(this)">
+            <img src="tono_2.JPG" alt="Sweet Sunset">
+            <div class="tone-label">Sweet Sunset</div>
           </div>
-          <div class="tone-opt" data-tone="3" data-name="Rosa" onclick="selectTone(this)">
-            <img src="tono_3.jpeg" alt="Rosa">
-            <div class="tone-label">Rosa</div>
+          <div class="tone-opt" data-tone="3" data-name="Blush Crush" onclick="selectTone(this)">
+            <img src="tono_3.JPG" alt="Blush Crush">
+            <div class="tone-label">Blush Crush</div>
           </div>
-          <div class="tone-opt" data-tone="4" data-name="Cacao" onclick="selectTone(this)">
-            <img src="tono_4.jpeg" alt="Cacao">
-            <div class="tone-label">Cacao</div>
+          <div class="tone-opt" data-tone="4" data-name="Latte Kiss" onclick="selectTone(this)">
+            <img src="tono_4.JPG" alt="Latte Kiss">
+            <div class="tone-label">Latte Kiss</div>
+          </div>
+          <div class="tone-opt" data-tone="5" data-name="Pink Whisper" onclick="selectTone(this)">
+            <img src="tono_5.JPG" alt="Pink Whisper">
+            <div class="tone-label">Pink Whisper</div>
+          </div>
+          <div class="tone-opt" data-tone="6" data-name="Tiny Flame" onclick="selectTone(this)">
+            <img src="tono_6.JPG" alt="Tiny Flame">
+            <div class="tone-label">Tiny Flame</div>
           </div>
         </div>
       </div>
       <div class="modal-section" id="bolsoSection" style="display:none">
         <div class="modal-section-title">Elige el color de tu bolso</div>
-        <div class="bolso-grid">
+        <div class="bolso-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
           <div class="bolso-opt" data-color="Negro" onclick="selectBolso(this)">
-            <div class="bolso-circle" style="background:#1a1a1a"></div>
+            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_negro.JPG" style="width:100%;height:100%;object-fit:cover;display:block"></div>
             <div class="bolso-name">Negro</div>
           </div>
           <div class="bolso-opt" data-color="Blanco" onclick="selectBolso(this)">
-            <div class="bolso-circle" style="background:#f5f5f5;border-color:rgba(0,0,0,.2)"></div>
+            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_blanco.JPG" style="width:100%;height:100%;object-fit:cover;display:block"></div>
             <div class="bolso-name">Blanco</div>
           </div>
           <div class="bolso-opt" data-color="Rojo" onclick="selectBolso(this)">
-            <div class="bolso-circle" style="background:#C8004E"></div>
+            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_rojo.JPG" style="width:100%;height:100%;object-fit:cover;display:block"></div>
             <div class="bolso-name">Rojo</div>
+          </div>
+          <div class="bolso-opt" data-color="Rosa" onclick="selectBolso(this)">
+            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_rosa.JPG" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+            <div class="bolso-name">Rosa</div>
           </div>
         </div>
       </div>
@@ -411,7 +423,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 
 <section class="about-strip" id="nosotras">
   <div class="about-img reveal from-left">
-    <img src="1_tono.jpeg" alt="minimee tono cereza">
+    <img src="tono_1.JPG" alt="minimee Mini Drama">
   </div>
   <div class="about-text">
     <div class="label-tag reveal">Nuestra historia</div>
@@ -438,21 +450,21 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
   <div class="grid" id="pGrid"></div>
   <div class="popular-badge-row reveal">
-    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos</strong> — la elección favorita de nuestras clientas</div>
+    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos ($130.000)</strong> — la elección favorita de nuestras clientas</div>
   </div>
 </section>
 
 <div class="kit reveal scale-in">
-  <div class="kit-img"><img src="4_tonos.jpeg" alt="Kit minimee 4 tonos"></div>
+  <div class="kit-img"><img src="6_tonos.JPG" alt="Kit minimee 6 tonos"></div>
   <div class="kit-text">
     <div class="kit-eyebrow">Colección completa</div>
-    <h2>Los 4 tonos,<br><em>una sola decisión</em></h2>
+    <h2>Los 6 tonos,<br><em>una sola decisión</em></h2>
     <p>De la oficina a la rumba. El kit completo para tener el tono perfecto en cada momento de tu vida.</p>
     <div class="kit-price-row">
-      <span class="kit-price">$90.000</span>
-      <span class="kit-price-sub">Kit 4 tonos</span>
+      <span class="kit-price">$130.000</span>
+      <span class="kit-price-sub">Kit 6 tonos</span>
     </div>
-    <button class="btn-primary" onclick="openModal(6)">Personalizar y agregar kit</button>
+    <button class="btn-primary" onclick="openModal(15)">Personalizar y agregar kit</button>
   </div>
 </div>
 
@@ -535,17 +547,22 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 const WA = '573202251747';
 
 const products = [
-  {id:1,name:'Labial en Polvo',shade:'Tono 01 — Cereza',price:25000,img:'1_tono.jpeg',swatch:'#8B1A3A',badge:'Favorita',cat:'labial'},
-  {id:2,name:'Labial en Polvo',shade:'Tono 02 — Coral',price:25000,img:'2_tono.jpeg',swatch:'#C4503A',badge:'',cat:'labial'},
-  {id:3,name:'Labial en Polvo',shade:'Tono 03 — Rosa',price:25000,img:'tono_3.jpeg',swatch:'#C4406A',badge:'Nuevo',cat:'labial'},
-  {id:4,name:'Labial en Polvo',shade:'Tono 04 — Cacao',price:25000,img:'tono_4.jpeg',swatch:'#7A4030',badge:'',cat:'labial'},
-  {id:5,name:'Bolso Mini',shade:'Individual — Edición limitada',price:49000,img:'4_tonos.jpeg',swatch:'#C8004E',badge:'Nuevo',cat:'bolso'},
-  {id:6,name:'Kit 4 Tonos',shade:'Cereza + Coral + Rosa + Cacao',price:90000,img:'4_tonos.jpeg',swatch:'#B8003E',badge:'Popular',cat:'kit'},
-  {id:7,name:'Kit 6 Tonos',shade:'Colección completa',price:130000,img:'4_tonos.jpeg',swatch:'#8B1A3A',badge:'',cat:'kit'},
-  {id:8,name:'Kit Bolso + Labial',shade:'Bolso mini + 1 tono a elegir',price:70000,img:'4_tonos.jpeg',swatch:'#D4005A',badge:'',cat:'kit'},
-  {id:9,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',price:90000,img:'4_tonos.jpeg',swatch:'#C8004E',badge:'',cat:'kit'},
-  {id:10,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',price:130000,img:'4_tonos.jpeg',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
-  {id:11,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',price:180000,img:'4_tonos.jpeg',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial'},
+  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial'},
+  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial'},
+  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial'},
+  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial'},
+  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial'},
+  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:49000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso'},
+  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:49000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso'},
+  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:49000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
+  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:49000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
+  {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit'},
+  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:130000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:13,name:'Kit Bolso + Labial',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el labial perfecto. El dúo que lo cambia todo.',price:70000,img:'4_tonos.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
+  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista.',price:90000,img:'4_tonos.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
+  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:130000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
+  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todo minimee en una sola decisión increíble.',price:180000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
 ];
 
 let cart=[];
@@ -558,8 +575,8 @@ let selectedBolso = '';
 let maxTones = 0;
 let needsBolso = false;
 
-const tonesNeeded = {5:0, 6:4, 7:6, 8:1, 9:2, 10:4, 11:6};
-const hasBolso = {5:true, 8:true, 9:true, 10:true, 11:true};
+const tonesNeeded = {11:4, 12:6, 13:1, 14:2, 15:4, 16:6};
+const hasBolso = {7:false, 8:false, 9:false, 10:false, 13:true, 14:true, 15:true, 16:true};
 
 function openModal(productId){
   const p = products.find(x=>x.id===productId);
@@ -670,6 +687,7 @@ function renderProducts(){
       </div>
       <div class="p-name">${p.name}</div>
       <div class="p-shade">${p.shade}</div>
+      <div class="p-desc" style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:10px;font-weight:300">${p.desc}</div>
       <div class="p-row">
         <span class="p-price">${fmt(p.price)}</span>
         <span class="p-swatch" style="background:${p.swatch}"></span>
@@ -699,7 +717,7 @@ function addToCart(id){
 function addKit(){
   const ex=cart.find(x=>x.id===99);
   if(ex)ex.qty++;
-  else cart.push({id:6,name:'Kit 4 Tonos',shade:'Cereza + Coral + Rosa + Cacao',price:90000,img:'4_tonos.jpeg',swatch:'#B8003E',qty:1});
+  else cart.push({id:15,name:'Kit Bolso + 4 Tonos',shade:'',price:130000,img:'4_tonos.JPG',swatch:'#B8003E',qty:1});
   updateCart();openCart();
 }
 
@@ -833,3 +851,4 @@ updateCart();
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>
+
