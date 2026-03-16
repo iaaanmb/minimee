@@ -491,7 +491,52 @@ function updateCart(){
 
 function openCart(){document.getElementById('cDrawer').classList.add('open');document.getElementById('cOverlay').classList.add('open')}
 function closeCart(){document.getElementById('cDrawer').classList.remove('open');document.getElementById('cOverlay').classList.remove('open')}
-function payMP(){alert('Aquí conectas tu MercadoPago')}
+async function payMP(){
+  if(!cart.length)return;
+  const btn = document.querySelector('.btn-pay');
+  btn.textContent = 'Procesando...';
+  btn.disabled = true;
+
+  const items = cart.map(i=>({
+    title: i.name + ' - ' + i.shade,
+    quantity: i.qty,
+    unit_price: i.price,
+    currency_id: 'COP'
+  }));
+
+  try {
+    // Checkout Pro — crea la preferencia y redirige a MP
+    const mp = new MercadoPago('APP_USR-7b4a7120-55cc-4f01-be99-f9c196733333', {locale:'es-CO'});
+    const res = await fetch('https://api.mercadopago.com/checkout/preferences', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer APP_USR-7b4a7120-55cc-4f01-be99-f9c196733333'
+      },
+      body: JSON.stringify({
+        items,
+        back_urls:{
+          success: window.location.href,
+          failure: window.location.href,
+          pending: window.location.href
+        },
+        auto_return:'approved',
+        statement_descriptor:'MINIMEE'
+      })
+    });
+    const data = await res.json();
+    if(data.init_point){
+      window.location.href = data.init_point;
+    } else {
+      throw new Error('Sin init_point');
+    }
+  } catch(e) {
+    // Fallback a WhatsApp si hay error
+    btn.textContent = 'Pagar con MercadoPago';
+    btn.disabled = false;
+    payWA();
+  }
+}
 function payWA(){
   if(!cart.length)return;
   const lines=cart.map(i=>`• ${i.name} - ${i.shade} x${i.qty} — ${fmt(i.price*i.qty)}`).join('\n');
@@ -519,5 +564,6 @@ renderProducts();
 initReveal();
 updateCart();
 </script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>
