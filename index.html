@@ -85,7 +85,7 @@ nav.scrolled .nav-btn:hover{background:var(--rose)}
 .section-header h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(36px,4vw,54px);font-weight:300;color:var(--dark);line-height:1.1}
 .section-header h2 em{font-style:italic;color:var(--hot)}
 .section-header p{font-size:13px;color:var(--muted);max-width:220px;text-align:right;line-height:1.7}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}@media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
 .p-card{cursor:pointer;transition:transform .35s cubic-bezier(.16,1,.3,1)}
 .p-card:hover{transform:translateY(-8px)}
 .p-img{position:relative;overflow:hidden;border-radius:3px;aspect-ratio:3/4;background:#f0e0e8;margin-bottom:16px}
@@ -219,6 +219,15 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   .hero-content{padding-bottom:72px}
   .kit-text{padding:48px 36px}
 }
+
+.cat-tabs{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap}
+.cat-tab{padding:10px 24px;border-radius:50px;border:1px solid rgba(184,0,62,.2);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:all .25s;font-weight:400}
+.cat-tab:hover{border-color:var(--hot);color:var(--hot)}
+.cat-tab.active{background:var(--hot);border-color:var(--hot);color:#fff}
+.popular-badge-row{margin-top:48px;text-align:center}
+.popular-strip{display:inline-flex;align-items:center;gap:10px;background:var(--petal);border:1px solid rgba(184,0,62,.12);padding:14px 28px;border-radius:50px;font-size:13px;color:var(--mid)}
+.popular-strip strong{color:var(--hot)}
+.p-card.hidden{display:none}
 </style>
 </head>
 <body>
@@ -235,9 +244,9 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Ciudad de envío</label>
       <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none">
         <option value="">Selecciona tu ciudad</option>
-        <option value="bogota">📍 Bogotá — Gratis</option>
-        <option value="principal">🏙️ Ciudad principal — $15.000</option>
-        <option value="otro">🗺️ Otro municipio — $20.000</option>
+        <option value="bogota">📍 Bogotá — $10.000</option>
+        <option value="principal">🏙️ Ciudad principal (Medellín, Cali, Barranquilla, Cartagena, Tunja) — $15.000</option>
+        <option value="otro">🗺️ Resto de Colombia — $20.000</option>
       </select>
     </div>
     <div class="cart-total-row">
@@ -331,10 +340,19 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 
 <section class="products" id="productos">
   <div class="section-header">
-    <h2 class="reveal">Elige tu<br><em>tono perfecto</em></h2>
-    <p class="reveal d2">4 tonos formulados para la piel colombiana. ¿Cuál eres tú?</p>
+    <h2 class="reveal">Nuestra<br><em>colección</em></h2>
+    <p class="reveal d2">Labiales en polvo, bolsos mini y kits. Todo lo que necesitas.</p>
+  </div>
+  <div class="cat-tabs reveal d2">
+    <button class="cat-tab active" onclick="filterCat('all')">Todo</button>
+    <button class="cat-tab" onclick="filterCat('labial')">Labiales</button>
+    <button class="cat-tab" onclick="filterCat('bolso')">Bolsos</button>
+    <button class="cat-tab" onclick="filterCat('kit')">Kits</button>
   </div>
   <div class="grid" id="pGrid"></div>
+  <div class="popular-badge-row reveal">
+    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos</strong> — la elección favorita de nuestras clientas</div>
+  </div>
 </section>
 
 <div class="kit reveal scale-in">
@@ -344,7 +362,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h2>Los 4 tonos,<br><em>una sola decisión</em></h2>
     <p>De la oficina a la rumba. El kit completo para tener el tono perfecto en cada momento de tu vida.</p>
     <div class="kit-price-row">
-      <span class="kit-price">$96.000</span>
+      <span class="kit-price">$90.000</span>
       <span class="kit-price-sub">Kit 4 tonos</span>
     </div>
     <button class="btn-primary" onclick="addKit()">Agregar kit al carrito</button>
@@ -427,21 +445,28 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 </div>
 
 <script>
-const WA = '57TUNUMERO';
+const WA = '573202251747';
 
 const products = [
-  {id:1,name:'Labial en Polvo',shade:'Tono 01 — Cereza',price:28000,img:'1_tono.jpeg',swatch:'#8B1A3A',badge:'Favorita'},
-  {id:2,name:'Labial en Polvo',shade:'Tono 02 — Coral',price:28000,img:'2_tono.jpeg',swatch:'#C4503A',badge:''},
-  {id:3,name:'Labial en Polvo',shade:'Tono 03 — Rosa',price:28000,img:'tono_3.jpeg',swatch:'#C4406A',badge:'Nuevo'},
-  {id:4,name:'Labial en Polvo',shade:'Tono 04 — Cacao',price:28000,img:'tono_4.jpeg',swatch:'#7A4030',badge:''},
+  {id:1,name:'Labial en Polvo',shade:'Tono 01 — Cereza',price:25000,img:'1_tono.jpeg',swatch:'#8B1A3A',badge:'Favorita',cat:'labial'},
+  {id:2,name:'Labial en Polvo',shade:'Tono 02 — Coral',price:25000,img:'2_tono.jpeg',swatch:'#C4503A',badge:'',cat:'labial'},
+  {id:3,name:'Labial en Polvo',shade:'Tono 03 — Rosa',price:25000,img:'tono_3.jpeg',swatch:'#C4406A',badge:'Nuevo',cat:'labial'},
+  {id:4,name:'Labial en Polvo',shade:'Tono 04 — Cacao',price:25000,img:'tono_4.jpeg',swatch:'#7A4030',badge:'',cat:'labial'},
+  {id:5,name:'Bolso Mini',shade:'Individual — Edición limitada',price:49000,img:'4_tonos.jpeg',swatch:'#C8004E',badge:'Nuevo',cat:'bolso'},
+  {id:6,name:'Kit 4 Tonos',shade:'Cereza + Coral + Rosa + Cacao',price:90000,img:'4_tonos.jpeg',swatch:'#B8003E',badge:'Popular',cat:'kit'},
+  {id:7,name:'Kit 6 Tonos',shade:'Colección completa',price:130000,img:'4_tonos.jpeg',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:8,name:'Kit Bolso + Labial',shade:'Bolso mini + 1 tono a elegir',price:70000,img:'4_tonos.jpeg',swatch:'#D4005A',badge:'',cat:'kit'},
+  {id:9,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',price:90000,img:'4_tonos.jpeg',swatch:'#C8004E',badge:'',cat:'kit'},
+  {id:10,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',price:130000,img:'4_tonos.jpeg',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
+  {id:11,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',price:180000,img:'4_tonos.jpeg',swatch:'#8B1A3A',badge:'',cat:'kit'},
 ];
 
 let cart=[];
 const fmt=n=>'$'+n.toLocaleString('es-CO');
 
 function renderProducts(){
-  document.getElementById('pGrid').innerHTML=products.map(p=>`
-    <div class="p-card reveal d${p.id}">
+  document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
+    <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}">
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
         ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
@@ -457,6 +482,18 @@ function renderProducts(){
   initReveal();
 }
 
+function filterCat(cat){
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.p-card').forEach(card=>{
+    if(cat==='all' || card.dataset.cat===cat){
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
 function addToCart(id){
   const p=products.find(x=>x.id===id),ex=cart.find(x=>x.id===id);
   if(ex)ex.qty++;else cart.push({...p,qty:1});
@@ -466,7 +503,7 @@ function addToCart(id){
 function addKit(){
   const ex=cart.find(x=>x.id===99);
   if(ex)ex.qty++;
-  else cart.push({id:99,name:'Kit 4 Tonos',shade:'Colección completa',price:96000,img:'4_tonos.jpeg',qty:1});
+  else cart.push({id:6,name:'Kit 4 Tonos',shade:'Cereza + Coral + Rosa + Cacao',price:90000,img:'4_tonos.jpeg',swatch:'#B8003E',qty:1});
   updateCart();openCart();
 }
 
@@ -484,7 +521,7 @@ let shippingLabel = '';
 
 function updateShipping(){
   const v = document.getElementById('citySelect').value;
-  if(v === 'bogota'){ shippingCost = 0; shippingLabel = 'Bogotá'; }
+  if(v === 'bogota'){ shippingCost = 10000; shippingLabel = 'Bogotá'; }
   else if(v === 'principal'){ shippingCost = 15000; shippingLabel = 'Ciudad principal'; }
   else if(v === 'otro'){ shippingCost = 20000; shippingLabel = 'Otro municipio'; }
   else { shippingCost = 0; shippingLabel = ''; }
@@ -504,8 +541,7 @@ function updateCart(){
     shRow.style.display='flex';
     document.getElementById('cShipping').textContent=fmt(shippingCost);
   } else {
-    shRow.style.display = shippingLabel === 'Bogotá' ? 'flex' : 'none';
-    if(shippingLabel === 'Bogotá') document.getElementById('cShipping').textContent='Gratis';
+    shRow.style.display='none';
   }
 
   const b=document.getElementById('cBadge');
