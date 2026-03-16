@@ -231,11 +231,28 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
   <div class="cart-body" id="cBody"></div>
   <div class="cart-foot">
+    <div id="shippingBox" style="margin-bottom:16px">
+      <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Ciudad de envío</label>
+      <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none">
+        <option value="">Selecciona tu ciudad</option>
+        <option value="bogota">📍 Bogotá — Gratis</option>
+        <option value="principal">🏙️ Ciudad principal — $15.000</option>
+        <option value="otro">🗺️ Otro municipio — $20.000</option>
+      </select>
+    </div>
     <div class="cart-total-row">
-      <span class="cart-total-lbl">Total</span>
+      <span class="cart-total-lbl">Subtotal productos</span>
+      <span id="cSubtotal" style="font-size:15px;color:var(--mid)">$0</span>
+    </div>
+    <div class="cart-total-row" id="shippingRow" style="display:none">
+      <span class="cart-total-lbl">Envío</span>
+      <span id="cShipping" style="font-size:15px;color:var(--mid)">$0</span>
+    </div>
+    <div class="cart-total-row" style="border-top:1px solid rgba(184,0,62,.08);padding-top:12px;margin-top:4px">
+      <span class="cart-total-lbl" style="font-weight:500;color:var(--dark)">Total</span>
       <span class="cart-total-val" id="cTotal">$0</span>
     </div>
-    <button class="btn-pay" onclick="payMP()">Pagar con MercadoPago</button>
+    <button class="btn-pay" id="btnPay" onclick="payMP()">Pagar con MercadoPago</button>
     <button class="btn-pay-wa" onclick="payWA()">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.847L.057 23.882l6.206-1.445A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.213-3.682.857.925-3.578-.233-.369A9.818 9.818 0 1112 21.818z"/></svg>
       Pedir por WhatsApp
@@ -462,10 +479,35 @@ function changeQty(id,d){
   if(i.qty<=0)removeItem(id);else updateCart();
 }
 
+let shippingCost = 0;
+let shippingLabel = '';
+
+function updateShipping(){
+  const v = document.getElementById('citySelect').value;
+  if(v === 'bogota'){ shippingCost = 0; shippingLabel = 'Bogotá'; }
+  else if(v === 'principal'){ shippingCost = 15000; shippingLabel = 'Ciudad principal'; }
+  else if(v === 'otro'){ shippingCost = 20000; shippingLabel = 'Otro municipio'; }
+  else { shippingCost = 0; shippingLabel = ''; }
+  updateCart();
+}
+
 function updateCart(){
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = subtotal + shippingCost;
   const qty=cart.reduce((s,i)=>s+i.qty,0);
+
+  document.getElementById('cSubtotal').textContent=fmt(subtotal);
   document.getElementById('cTotal').textContent=fmt(total);
+
+  const shRow = document.getElementById('shippingRow');
+  if(shippingCost > 0){
+    shRow.style.display='flex';
+    document.getElementById('cShipping').textContent=fmt(shippingCost);
+  } else {
+    shRow.style.display = shippingLabel === 'Bogotá' ? 'flex' : 'none';
+    if(shippingLabel === 'Bogotá') document.getElementById('cShipping').textContent='Gratis';
+  }
+
   const b=document.getElementById('cBadge');
   b.textContent=qty;b.classList.toggle('show',qty>0);
   const body=document.getElementById('cBody');
@@ -493,7 +535,12 @@ function openCart(){document.getElementById('cDrawer').classList.add('open');doc
 function closeCart(){document.getElementById('cDrawer').classList.remove('open');document.getElementById('cOverlay').classList.remove('open')}
 async function payMP(){
   if(!cart.length)return;
-  const btn = document.querySelector('.btn-pay');
+  const cityVal = document.getElementById('citySelect').value;
+  if(!cityVal){
+    alert('Por favor selecciona tu ciudad de envío antes de pagar.');
+    return;
+  }
+  const btn = document.getElementById('btnPay');
   btn.textContent = 'Procesando...';
   btn.disabled = true;
 
@@ -504,25 +551,13 @@ async function payMP(){
     currency_id: 'COP'
   }));
 
+  const envio = shippingCost > 0 ? { costo: shippingCost, ciudad: shippingLabel } : null;
+
   try {
-    // Checkout Pro — crea la preferencia y redirige a MP
-    const mp = new MercadoPago('APP_USR-7b4a7120-55cc-4f01-be99-f9c196733333', {locale:'es-CO'});
-    const res = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer APP_USR-7b4a7120-55cc-4f01-be99-f9c196733333'
-      },
-      body: JSON.stringify({
-        items,
-        back_urls:{
-          success: window.location.href,
-          failure: window.location.href,
-          pending: window.location.href
-        },
-        auto_return:'approved',
-        statement_descriptor:'MINIMEE'
-      })
+    const res = await fetch('/.netlify/functions/crear-preferencia', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items, envio })
     });
     const data = await res.json();
     if(data.init_point){
@@ -531,10 +566,9 @@ async function payMP(){
       throw new Error('Sin init_point');
     }
   } catch(e) {
-    // Fallback a WhatsApp si hay error
     btn.textContent = 'Pagar con MercadoPago';
     btn.disabled = false;
-    payWA();
+    alert('Hubo un error al procesar el pago. Intenta por WhatsApp.');
   }
 }
 function payWA(){
