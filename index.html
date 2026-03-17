@@ -775,12 +775,12 @@ function addKit(){
   updateCart();openCart();
 }
 
-function removeItem(id){cart=cart.filter(x=>String(x.id)!==String(id));updateCart()}
+function removeItem(id){cart=cart.filter(x=>String(x.id)!==String(id));updateCart();}
 
 function changeQty(id,d){
   const i=cart.find(x=>String(x.id)===String(id));
   if(!i)return;
-  i.qty+=d;
+  i.qty=Math.max(0,i.qty+d);
   if(i.qty<=0)removeItem(id);else updateCart();
 }
 
@@ -818,22 +818,36 @@ function updateCart(){
   if(!cart.length){
     body.innerHTML='<div class="cart-empty-state"><div class="empty-icon">🛍️</div><p>Tu carrito está vacío</p></div>';return;
   }
-  body.innerHTML=cart.map(i=>`
-    <div class="cart-item">
+  body.innerHTML=cart.map(i=>{
+    const safeId = String(i.id).replace(/[^a-zA-Z0-9_-]/g,'_');
+    return `
+    <div class="cart-item" data-id="${i.id}">
       <div class="cart-item-img"><img src="${i.img}" alt="${i.shade}"></div>
       <div class="cart-item-info">
         <div class="cart-item-name">${i.name}</div>
         <div class="cart-item-shade">${i.shade}</div>
         <div class="cart-item-price">${fmt(i.price)}</div>
         <div class="qty-row">
-          <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <button class="qty-btn" data-action="minus" data-id="${i.id}">−</button>
           <span class="qty-n">${i.qty}</span>
-          <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          <button class="qty-btn" data-action="plus" data-id="${i.id}">+</button>
         </div>
       </div>
-      <button class="rm-btn" onclick="removeItem(${i.id})">✕</button>
-    </div>`).join('');
+      <button class="rm-btn" data-action="remove" data-id="${i.id}">✕</button>
+    </div>`;
+  }).join('');
 }
+
+// Event delegation for cart buttons
+document.getElementById('cBody').addEventListener('click', function(e){
+  const btn = e.target.closest('[data-action]');
+  if(!btn) return;
+  const id = btn.dataset.id;
+  const action = btn.dataset.action;
+  if(action === 'plus') changeQty(id, 1);
+  else if(action === 'minus') changeQty(id, -1);
+  else if(action === 'remove') removeItem(id);
+});
 
 function openCart(){document.getElementById('cDrawer').classList.add('open');document.getElementById('cOverlay').classList.add('open')}
 function closeCart(){document.getElementById('cDrawer').classList.remove('open');document.getElementById('cOverlay').classList.remove('open')}
@@ -905,3 +919,4 @@ updateCart();
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>
+
