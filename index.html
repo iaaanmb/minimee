@@ -629,11 +629,14 @@ let selectedBolso = '';
 let maxTones = 0;
 let needsBolso = false;
 
+// How many tones each product needs
 const tonesNeeded = {11:4, 12:6, 13:1, 14:2, 15:4, 16:6};
-const hasBolso = {7:false, 8:false, 9:false, 10:false, 13:true, 14:true, 15:true, 16:true};
+// Which products include a bolso selection
+const hasBolso = {7:true, 8:true, 9:true, 10:true, 13:true, 14:true, 15:true, 16:true};
 
 function openModal(productId){
   const p = products.find(x=>x.id===productId);
+  if(!p) return;
   currentModalProduct = p;
   selectedTones = [];
   selectedBolso = '';
@@ -701,15 +704,15 @@ function updateModalBtn(){
     btn.disabled = false;
     let summary = '';
     if(selectedTones.length) summary += 'Tonos: ' + selectedTones.map(t=>t.name).join(', ');
-    if(selectedBolso) summary += (summary?' · ':'') + 'Bolso: ' + selectedBolso;
+    if(selectedBolso) summary += (summary?' · ':'') + 'Bolso ' + selectedBolso;
     document.getElementById('modalSummary').textContent = summary;
     btn.textContent = 'Agregar al carrito — ' + fmt(currentModalProduct.price);
   } else {
     btn.disabled = true;
     let missing = [];
-    if(!tonesOk) missing.push(`${maxTones - selectedTones.length} tono${maxTones-selectedTones.length>1?'s':''} más`);
-    if(!bolsoOk) missing.push('color de bolso');
-    btn.textContent = 'Falta elegir ' + missing.join(' y ');
+    if(maxTones > 0 && selectedTones.length < maxTones) missing.push((maxTones - selectedTones.length) + ' tono' + (maxTones-selectedTones.length>1?'s':'')+' más');
+    if(needsBolso && !selectedBolso) missing.push('color de bolso');
+    btn.textContent = missing.length ? 'Falta elegir ' + missing.join(' y ') : 'Agregar al carrito — ' + fmt(currentModalProduct.price);
   }
 }
 
