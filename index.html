@@ -315,11 +315,11 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tone-counter{font-size:12px;color:var(--muted);margin-bottom:10px}
 .tone-counter span{color:var(--hot);font-weight:500}
 
-.detail-overlay{display:none;position:fixed;inset:0;background:rgba(22,8,16,.55);z-index:500;backdrop-filter:blur(6px)}
+.detail-overlay{display:none;position:fixed;inset:0;background:rgba(22,8,16,.55);z-index:600;backdrop-filter:blur(6px)}
 .detail-overlay.open{display:block}
 .detail-panel{
   position:fixed;top:0;right:0;bottom:0;width:520px;max-width:100vw;
-  background:#fff;z-index:501;
+  background:#fff;z-index:601;
   transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);
   display:flex;flex-direction:column;overflow-y:auto;
 }
@@ -904,12 +904,12 @@ function addDetailToCart(){
 }
 
 function renderProducts(){
-  document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
-    <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}">
+    document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
+    <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}" onclick="openDetail(${p.id})" style="cursor:pointer">
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
         ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
-        <button class="p-add" onclick="${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
+        <button class="p-add" onclick="event.stopPropagation();${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
       </div>
       <div class="p-name">${p.name}</div>
       <div class="p-shade">${p.shade}</div>
