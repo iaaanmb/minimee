@@ -632,7 +632,7 @@ let needsBolso = false;
 // How many tones each product needs
 const tonesNeeded = {11:4, 12:6, 13:1, 14:2, 15:4, 16:6};
 // Which products include a bolso selection
-const hasBolso = {7:true, 8:true, 9:true, 10:true, 13:true, 14:true, 15:true, 16:true};
+const hasBolso = {13:true, 14:true, 15:true, 16:true};
 
 function openModal(productId){
   const p = products.find(x=>x.id===productId);
@@ -740,7 +740,7 @@ function renderProducts(){
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
         ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
-        <button class="p-add" onclick="${(p.cat==='kit'||p.cat==='bolso')?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
+        <button class="p-add" onclick="${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
       </div>
       <div class="p-name">${p.name}</div>
       <div class="p-shade">${p.shade}</div>
@@ -922,4 +922,3 @@ updateCart();
 <script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>
-
