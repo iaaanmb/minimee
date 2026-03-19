@@ -502,6 +502,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
   <div class="cart-body" id="cBody"></div>
   <div class="cart-foot">
+    <div id="freeShipBanner" style="display:none;font-size:12px;font-weight:500;text-align:center;padding:8px 12px;background:var(--petal);border-radius:12px;margin-bottom:10px"></div>
     <div id="shippingBox" style="margin-bottom:16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
         <div>
@@ -629,7 +630,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
   <div class="grid" id="pGrid"></div>
   <div class="popular-badge-row reveal">
-    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos ($130.000)</strong> — la elección favorita de minime lovers</div>
+    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos ($120.000)</strong> — la elección favorita de minime lovers</div>
   </div>
 </section>
 
@@ -640,7 +641,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h2>Los 6 tonos,<br><em>una sola decisión</em></h2>
     <p>De la oficina a la rumba. El kit completo para tener el tono perfecto en cada momento de tu vida.</p>
     <div class="kit-price-row">
-      <span class="kit-price">$130.000</span>
+      <span class="kit-price">$120.000</span>
       <span class="kit-price-sub">Kit 6 tonos</span>
     </div>
     <button class="btn-primary" onclick="openModal(15)">Personalizar y agregar kit</button>
@@ -732,16 +733,16 @@ const products = [
   {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial'},
   {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial'},
   {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial'},
-  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:49000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso'},
-  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:49000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso'},
-  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:49000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
-  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:49000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
+  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso'},
+  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso'},
+  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
+  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
   {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit'},
-  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:130000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
-  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:70000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
-  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:90000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
-  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:130000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
-  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:180000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:120000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
+  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
+  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
+  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
 ];
 
 let cart=[];
@@ -974,31 +975,64 @@ function changeQty(id,d){
 
 let shippingCost = 0;
 let shippingLabel = '';
+const FREE_SHIPPING_THRESHOLD = 120000;
+
+function getBaseShipping(v){
+  if(v === 'bogota') return 0;
+  if(v === 'principal') return 15000;
+  if(v === 'otro') return 20000;
+  return 0;
+}
 
 function updateShipping(){
   const v = document.getElementById('citySelect').value;
-  if(v === 'bogota'){ shippingCost = 0; shippingLabel = 'Bogotá'; }
-  else if(v === 'principal'){ shippingCost = 15000; shippingLabel = 'Ciudad principal'; }
-  else if(v === 'otro'){ shippingCost = 20000; shippingLabel = 'Otro municipio'; }
-  else { shippingCost = 0; shippingLabel = ''; }
+  if(v === 'bogota'){ shippingLabel = 'Bogotá'; }
+  else if(v === 'principal'){ shippingLabel = 'Ciudad principal'; }
+  else if(v === 'otro'){ shippingLabel = 'Otro municipio'; }
+  else { shippingLabel = ''; }
   updateCart();
 }
 
 function updateCart(){
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const total = subtotal + shippingCost;
   const qty=cart.reduce((s,i)=>s+i.qty,0);
+
+  // Free shipping if subtotal >= 120k OR Bogotá
+  const cityVal = document.getElementById('citySelect')?.value || '';
+  const baseShip = getBaseShipping(cityVal);
+  const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD || cityVal === 'bogota';
+  shippingCost = freeShipping ? 0 : baseShip;
+
+  const total = subtotal + shippingCost;
 
   document.getElementById('cSubtotal').textContent=fmt(subtotal);
   document.getElementById('cTotal').textContent=fmt(total);
 
+  // Show free shipping banner when close or already free
+  const banner = document.getElementById('freeShipBanner');
+  if(banner){
+    if(freeShipping && cityVal){
+      banner.textContent = '🎉 ¡Envío gratis aplicado!';
+      banner.style.color = '#0a7c3e';
+      banner.style.display = 'block';
+    } else if(subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD && cityVal && cityVal !== 'bogota'){
+      const diff = FREE_SHIPPING_THRESHOLD - subtotal;
+      banner.textContent = `¡Te faltan ${fmt(diff)} para envío gratis! 🚚`;
+      banner.style.color = 'var(--hot)';
+      banner.style.display = 'block';
+    } else {
+      banner.style.display = 'none';
+    }
+  }
+
   const shRow = document.getElementById('shippingRow');
-  if(shippingCost > 0){
+  if(cityVal){
     shRow.style.display='flex';
-    document.getElementById('cShipping').textContent=fmt(shippingCost);
-  } else if(shippingLabel === 'Bogotá'){
-    shRow.style.display='flex';
-    document.getElementById('cShipping').textContent='Gratis 🎉';
+    if(freeShipping){
+      document.getElementById('cShipping').textContent = cityVal === 'bogota' ? 'Gratis 🎉' : 'Gratis 🎉 +$120k';
+    } else {
+      document.getElementById('cShipping').textContent = fmt(shippingCost);
+    }
   } else {
     shRow.style.display='none';
   }
