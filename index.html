@@ -506,12 +506,138 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <div id="shippingBox" style="margin-bottom:16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
         <div>
-          <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Ciudad</label>
+          <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Ciudad / Municipio</label>
           <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:8px 12px;border:1px solid rgba(184,0,62,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none">
-            <option value="">Selecciona</option>
-            <option value="bogota">📍 Bogotá — Gratis 🎉</option>
-            <option value="principal">🏙️ Ciudad principal — $15.000</option>
-            <option value="otro">🗺️ Resto de Colombia — $20.000</option>
+            <option value="">Selecciona tu ciudad</option>
+            <optgroup label="— Bogotá">
+              <option value="bogota">Bogotá — $10.000</option>
+            </optgroup>
+            <optgroup label="— Ciudades principales">
+              <option value="principal">Medellín — $15.000</option>
+              <option value="principal">Cali — $15.000</option>
+              <option value="principal">Barranquilla — $15.000</option>
+              <option value="principal">Cartagena — $15.000</option>
+              <option value="principal">Bucaramanga — $15.000</option>
+              <option value="principal">Pereira — $15.000</option>
+              <option value="principal">Manizales — $15.000</option>
+              <option value="principal">Santa Marta — $15.000</option>
+              <option value="principal">Cúcuta — $15.000</option>
+              <option value="principal">Ibagué — $15.000</option>
+              <option value="principal">Pasto — $15.000</option>
+              <option value="principal">Neiva — $15.000</option>
+              <option value="principal">Villavicencio — $15.000</option>
+              <option value="principal">Armenia — $15.000</option>
+              <option value="principal">Montería — $15.000</option>
+              <option value="principal">Valledupar — $15.000</option>
+              <option value="principal">Sincelejo — $15.000</option>
+              <option value="principal">Popayán — $15.000</option>
+              <option value="principal">Tunja — $15.000</option>
+              <option value="principal">Florencia — $15.000</option>
+              <option value="principal">Riohacha — $15.000</option>
+              <option value="principal">Quibdó — $15.000</option>
+              <option value="principal">Yopal — $15.000</option>
+              <option value="principal">Arauca — $15.000</option>
+              <option value="principal">Mitú — $15.000</option>
+              <option value="principal">Puerto Inírida — $15.000</option>
+              <option value="principal">San José del Guaviare — $15.000</option>
+              <option value="principal">Mocoa — $15.000</option>
+              <option value="principal">Leticia — $15.000</option>
+              <option value="principal">Puerto Carreño — $15.000</option>
+            </optgroup>
+            <optgroup label="— Cundinamarca">
+              <option value="otro">Soacha — $20.000</option>
+              <option value="otro">Chía — $20.000</option>
+              <option value="otro">Zipaquirá — $20.000</option>
+              <option value="otro">Facatativá — $20.000</option>
+              <option value="otro">Fusagasugá — $20.000</option>
+              <option value="otro">Girardot — $20.000</option>
+              <option value="otro">Mosquera — $20.000</option>
+              <option value="otro">Madrid — $20.000</option>
+              <option value="otro">Funza — $20.000</option>
+              <option value="otro">Cajicá — $20.000</option>
+              <option value="otro">Tocancipá — $20.000</option>
+              <option value="otro">Sopó — $20.000</option>
+            </optgroup>
+            <optgroup label="— Antioquia">
+              <option value="otro">Bello — $20.000</option>
+              <option value="otro">Itagüí — $20.000</option>
+              <option value="otro">Envigado — $20.000</option>
+              <option value="otro">Sabaneta — $20.000</option>
+              <option value="otro">Rionegro — $20.000</option>
+              <option value="otro">Apartadó — $20.000</option>
+              <option value="otro">Turbo — $20.000</option>
+              <option value="otro">Caucasia — $20.000</option>
+              <option value="otro">La Estrella — $20.000</option>
+              <option value="otro">Copacabana — $20.000</option>
+            </optgroup>
+            <optgroup label="— Valle del Cauca">
+              <option value="otro">Buenaventura — $20.000</option>
+              <option value="otro">Palmira — $20.000</option>
+              <option value="otro">Tuluá — $20.000</option>
+              <option value="otro">Cartago — $20.000</option>
+              <option value="otro">Buga — $20.000</option>
+              <option value="otro">Jamundí — $20.000</option>
+              <option value="otro">Yumbo — $20.000</option>
+            </optgroup>
+            <optgroup label="— Atlántico">
+              <option value="otro">Soledad — $20.000</option>
+              <option value="otro">Malambo — $20.000</option>
+              <option value="otro">Sabanalarga — $20.000</option>
+              <option value="otro">Baranoa — $20.000</option>
+            </optgroup>
+            <optgroup label="— Bolívar">
+              <option value="otro">Magangué — $20.000</option>
+              <option value="otro">Turbaco — $20.000</option>
+              <option value="otro">El Carmen de Bolívar — $20.000</option>
+            </optgroup>
+            <optgroup label="— Santander">
+              <option value="otro">Floridablanca — $20.000</option>
+              <option value="otro">Girón — $20.000</option>
+              <option value="otro">Piedecuesta — $20.000</option>
+              <option value="otro">Barrancabermeja — $20.000</option>
+              <option value="otro">San Gil — $20.000</option>
+            </optgroup>
+            <optgroup label="— Boyacá">
+              <option value="otro">Duitama — $20.000</option>
+              <option value="otro">Sogamoso — $20.000</option>
+              <option value="otro">Chiquinquirá — $20.000</option>
+            </optgroup>
+            <optgroup label="— Tolima">
+              <option value="otro">Espinal — $20.000</option>
+              <option value="otro">Honda — $20.000</option>
+              <option value="otro">Melgar — $20.000</option>
+            </optgroup>
+            <optgroup label="— Huila">
+              <option value="otro">Pitalito — $20.000</option>
+              <option value="otro">Garzón — $20.000</option>
+            </optgroup>
+            <optgroup label="— Nariño">
+              <option value="otro">Tumaco — $20.000</option>
+              <option value="otro">Ipiales — $20.000</option>
+            </optgroup>
+            <optgroup label="— Córdoba">
+              <option value="otro">Cereté — $20.000</option>
+              <option value="otro">Lorica — $20.000</option>
+            </optgroup>
+            <optgroup label="— Cesar">
+              <option value="otro">Aguachica — $20.000</option>
+            </optgroup>
+            <optgroup label="— Magdalena">
+              <option value="otro">Ciénaga — $20.000</option>
+              <option value="otro">Fundación — $20.000</option>
+            </optgroup>
+            <optgroup label="— Caldas">
+              <option value="otro">La Dorada — $20.000</option>
+              <option value="otro">Riosucio — $20.000</option>
+            </optgroup>
+            <optgroup label="— Risaralda">
+              <option value="otro">Dosquebradas — $20.000</option>
+              <option value="otro">La Virginia — $20.000</option>
+            </optgroup>
+            <optgroup label="— Meta">
+              <option value="otro">Acacías — $20.000</option>
+              <option value="otro">Granada — $20.000</option>
+            </optgroup>
           </select>
         </div>
         <div>
@@ -523,9 +649,14 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
         <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Nombre completo</label>
         <input id="nameInput" type="text" placeholder="Tu nombre completo" style="width:100%;padding:8px 12px;border:1px solid rgba(184,0,62,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
       </div>
+      <div style="margin-bottom:8px">
+        <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Dirección</label>
+        <input id="addressInput" type="text" placeholder="Ej: Calle 116 # 77b-42" style="width:100%;padding:8px 12px;border:1px solid rgba(184,0,62,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none;margin-bottom:4px">
+        <div id="addressHint" style="font-size:10px;color:var(--muted);padding:0 4px"></div>
+      </div>
       <div>
-        <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Dirección de entrega</label>
-        <input id="addressInput" type="text" placeholder="Ej: Calle 123 # 45-67, Apto 8" style="width:100%;padding:8px 12px;border:1px solid rgba(184,0,62,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
+        <label style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px">Barrio / Referencia</label>
+        <input id="barrioInput" type="text" placeholder="Ej: Barrio Chapinero, cerca al parque" style="width:100%;padding:8px 12px;border:1px solid rgba(184,0,62,.2);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
       </div>
     </div>
     <div class="cart-total-row">
@@ -934,7 +1065,7 @@ async function logPedido(metodo){
       nombre: document.getElementById('nameInput')?.value||'',
       telefono: document.getElementById('phoneInput')?.value||'',
       ciudad: cityText,
-      direccion: document.getElementById('addressInput')?.value||'',
+      direccion: (document.getElementById('addressInput')?.value||'') + (document.getElementById('barrioInput')?.value ? ' — ' + document.getElementById('barrioInput').value : ''),
       productos: items,
       total: '$'+subtotal.toLocaleString('es-CO'),
       envio: shippingCost===0?'Gratis':'$'+shippingCost.toLocaleString('es-CO'),
@@ -1009,18 +1140,34 @@ let shippingLabel = '';
 const FREE_SHIPPING_THRESHOLD = 120000;
 
 function getBaseShipping(v){
-  if(v === 'bogota') return 0;
+  if(v === 'bogota') return 10000;
   if(v === 'principal') return 15000;
   if(v === 'otro') return 20000;
   return 0;
 }
 
 function updateShipping(){
-  const v = document.getElementById('citySelect').value;
+  const sel = document.getElementById('citySelect');
+  const v = sel.value;
+  const cityName = sel.options[sel.selectedIndex]?.text?.split(' —')[0] || '';
   if(v === 'bogota'){ shippingLabel = 'Bogotá'; }
-  else if(v === 'principal'){ shippingLabel = 'Ciudad principal'; }
-  else if(v === 'otro'){ shippingLabel = 'Otro municipio'; }
+  else if(v === 'principal'){ shippingLabel = cityName; }
+  else if(v === 'otro'){ shippingLabel = cityName; }
   else { shippingLabel = ''; }
+
+  // Dynamic address placeholder
+  const addrInput = document.getElementById('addressInput');
+  const hint = document.getElementById('addressHint');
+  if(v === 'bogota' || v === 'principal'){
+    addrInput.placeholder = 'Ej: Calle 116 # 77b-42, Apto 301';
+    if(hint) hint.textContent = '💡 Usa el formato: Calle/Carrera/Diagonal + número # número-número';
+  } else if(v === 'otro'){
+    addrInput.placeholder = 'Ej: Barrio La Esperanza, casa rosada frente a la cancha';
+    if(hint) hint.textContent = '💡 Puedes describir tu dirección libremente — entre más detalle mejor';
+  } else {
+    addrInput.placeholder = 'Ej: Calle 116 # 77b-42';
+    if(hint) hint.textContent = '';
+  }
   updateCart();
 }
 
@@ -1113,10 +1260,10 @@ async function payMP(){
   const address = document.getElementById('addressInput').value.trim();
   const name = document.getElementById('nameInput').value.trim();
   const phone = document.getElementById('phoneInput').value.trim();
-  if(!cityVal){ alert('Por favor selecciona tu ciudad de envío.'); return; }
-  if(!address){ alert('Por favor ingresa tu dirección de entrega.'); return; }
+  if(!cityVal){ alert('Por favor selecciona tu ciudad.'); return; }
   if(!name){ alert('Por favor ingresa tu nombre completo.'); return; }
   if(!phone){ alert('Por favor ingresa tu teléfono.'); return; }
+  if(!address){ alert('Por favor ingresa tu dirección de entrega.'); return; }
   const btn = document.getElementById('btnPay');
   btn.textContent = 'Procesando...';
   btn.disabled = true;
@@ -1154,14 +1301,16 @@ function payWA(){
   const lines=cart.map(i=>`• ${i.name} - ${i.shade} x${i.qty} — ${fmt(i.price*i.qty)}`).join('\n');
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const address = document.getElementById('addressInput')?.value || '';
+  const barrio = document.getElementById('barrioInput')?.value || '';
   const name = document.getElementById('nameInput')?.value || '';
   const phone = document.getElementById('phoneInput')?.value || '';
-  const city = document.getElementById('citySelect')?.options[document.getElementById('citySelect')?.selectedIndex]?.text || '';
+  const city = document.getElementById('citySelect')?.options[document.getElementById('citySelect')?.selectedIndex]?.text?.split(' —')[0] || '';
   let msg = `¡Hola minime lovers! 💄 Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${fmt(total)}`;
   if(name) msg += `\n\n👤 Nombre: ${name}`;
   if(phone) msg += `\n📱 Teléfono: ${phone}`;
   if(city) msg += `\n🏙️ Ciudad: ${city}`;
   if(address) msg += `\n📍 Dirección: ${address}`;
+  if(barrio) msg += `\n🏘️ Barrio/Ref: ${barrio}`;
   logPedido('WhatsApp');
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
 }
