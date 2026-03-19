@@ -920,6 +920,37 @@ function addDetailToCart(){
   openCart();
 }
 
+
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec';
+
+async function logPedido(metodo){
+  try{
+    const items = cart.map(i=>`${i.name} - ${i.shade} x${i.qty}`).join(' | ');
+    const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    const cityVal = document.getElementById('citySelect')?.value||'';
+    const cityText = document.getElementById('citySelect')?.options[document.getElementById('citySelect')?.selectedIndex]?.text||'';
+    const data = {
+      fecha: new Date().toLocaleString('es-CO'),
+      nombre: document.getElementById('nameInput')?.value||'',
+      telefono: document.getElementById('phoneInput')?.value||'',
+      ciudad: cityText,
+      direccion: document.getElementById('addressInput')?.value||'',
+      productos: items,
+      total: '$'+subtotal.toLocaleString('es-CO'),
+      envio: shippingCost===0?'Gratis':'$'+shippingCost.toLocaleString('es-CO'),
+      metodo: metodo
+    };
+    await fetch(SHEETS_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(data)
+    });
+  } catch(e){
+    console.log('Sheets log error:', e);
+  }
+}
+
 function renderProducts(){
     document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
     <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}" onclick="openDetail(${p.id})" style="cursor:pointer">
@@ -1107,6 +1138,7 @@ async function payMP(){
     });
     const data = await res.json();
     if(data.init_point){
+      await logPedido('MercadoPago');
       window.location.href = data.init_point;
     } else {
       throw new Error('Sin init_point');
@@ -1130,6 +1162,7 @@ function payWA(){
   if(phone) msg += `\n📱 Teléfono: ${phone}`;
   if(city) msg += `\n🏙️ Ciudad: ${city}`;
   if(address) msg += `\n📍 Dirección: ${address}`;
+  logPedido('WhatsApp');
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 function contactWA(){window.open(`https://wa.me/${WA}?text=${encodeURIComponent('¡Hola minimee! Me gustaría conocer más sobre sus productos 💄')}`,'_blank')}
