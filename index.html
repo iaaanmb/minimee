@@ -504,12 +504,18 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   <div class="cart-foot">
     <div id="shippingBox" style="margin-bottom:16px">
       <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Ciudad de envío</label>
-      <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none">
+      <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none;margin-bottom:10px">
         <option value="">Selecciona tu ciudad</option>
         <option value="bogota">📍 Bogotá — Gratis 🎉</option>
         <option value="principal">🏙️ Ciudad principal (Medellín, Cali, Barranquilla, Cartagena, Tunja) — $15.000</option>
         <option value="otro">🗺️ Resto de Colombia — $20.000</option>
       </select>
+      <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Dirección de entrega</label>
+      <input id="addressInput" type="text" placeholder="Ej: Calle 123 # 45-67, Apto 8" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:16px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none;margin-bottom:10px">
+      <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Nombre completo</label>
+      <input id="nameInput" type="text" placeholder="Tu nombre completo" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:16px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none;margin-bottom:10px">
+      <label style="font-size:11px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;display:block;margin-bottom:8px">Teléfono</label>
+      <input id="phoneInput" type="tel" placeholder="300 000 0000" style="width:100%;padding:10px 16px;border:1px solid rgba(184,0,62,.2);border-radius:16px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);background:#fff;outline:none">
     </div>
     <div class="cart-total-row">
       <span class="cart-total-lbl">Subtotal productos</span>
@@ -1029,10 +1035,13 @@ function closeCart(){document.getElementById('cDrawer').classList.remove('open')
 async function payMP(){
   if(!cart.length)return;
   const cityVal = document.getElementById('citySelect').value;
-  if(!cityVal){
-    alert('Por favor selecciona tu ciudad de envío antes de pagar.');
-    return;
-  }
+  const address = document.getElementById('addressInput').value.trim();
+  const name = document.getElementById('nameInput').value.trim();
+  const phone = document.getElementById('phoneInput').value.trim();
+  if(!cityVal){ alert('Por favor selecciona tu ciudad de envío.'); return; }
+  if(!address){ alert('Por favor ingresa tu dirección de entrega.'); return; }
+  if(!name){ alert('Por favor ingresa tu nombre completo.'); return; }
+  if(!phone){ alert('Por favor ingresa tu teléfono.'); return; }
   const btn = document.getElementById('btnPay');
   btn.textContent = 'Procesando...';
   btn.disabled = true;
@@ -1068,7 +1077,16 @@ function payWA(){
   if(!cart.length)return;
   const lines=cart.map(i=>`• ${i.name} - ${i.shade} x${i.qty} — ${fmt(i.price*i.qty)}`).join('\n');
   const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`¡Hola minimee! 💄 Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${fmt(total)}\n\n¿Cómo coordino el pago y envío?`)}`,'_blank');
+  const address = document.getElementById('addressInput')?.value || '';
+  const name = document.getElementById('nameInput')?.value || '';
+  const phone = document.getElementById('phoneInput')?.value || '';
+  const city = document.getElementById('citySelect')?.options[document.getElementById('citySelect')?.selectedIndex]?.text || '';
+  let msg = `¡Hola minime lovers! 💄 Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${fmt(total)}`;
+  if(name) msg += `\n\n👤 Nombre: ${name}`;
+  if(phone) msg += `\n📱 Teléfono: ${phone}`;
+  if(city) msg += `\n🏙️ Ciudad: ${city}`;
+  if(address) msg += `\n📍 Dirección: ${address}`;
+  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 function contactWA(){window.open(`https://wa.me/${WA}?text=${encodeURIComponent('¡Hola minimee! Me gustaría conocer más sobre sus productos 💄')}`,'_blank')}
 
