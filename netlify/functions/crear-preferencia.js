@@ -20,9 +20,9 @@ exports.handler = async (event) => {
     const body = {
       items: todosItems,
       back_urls: {
-        success: 'https://velvety-nougat-508e4c.netlify.app/?pago=exitoso',
-        failure: 'https://velvety-nougat-508e4c.netlify.app/?pago=fallido',
-        pending: 'https://velvety-nougat-508e4c.netlify.app/?pago=pendiente'
+        success: 'https://minime.com.co/?pago=exitoso',
+        failure: 'https://minime.com.co/?pago=fallido',
+        pending: 'https://minime.com.co/?pago=pendiente'
       },
       auto_return: 'approved',
       statement_descriptor: 'MINIMEE',
