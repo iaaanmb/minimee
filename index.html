@@ -1175,11 +1175,12 @@ function updateCart(){
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const qty=cart.reduce((s,i)=>s+i.qty,0);
 
-  // Free shipping if subtotal >= 120k OR Bogotá
+  // Free shipping only if subtotal >= 120k (any city) OR no shipping needed
   const cityVal = document.getElementById('citySelect')?.value || '';
   const baseShip = getBaseShipping(cityVal);
-  const freeShipping = subtotal >= FREE_SHIPPING_THRESHOLD || cityVal === 'bogota';
-  shippingCost = freeShipping ? 0 : baseShip;
+  const freeByAmount = subtotal >= FREE_SHIPPING_THRESHOLD && cityVal !== '';
+  shippingCost = freeByAmount ? 0 : baseShip;
+  const freeShipping = freeByAmount || (cityVal === 'bogota' && baseShip === 0);
 
   const total = subtotal + shippingCost;
 
@@ -1189,11 +1190,11 @@ function updateCart(){
   // Show free shipping banner when close or already free
   const banner = document.getElementById('freeShipBanner');
   if(banner){
-    if(freeShipping && cityVal){
-      banner.textContent = '🎉 ¡Envío gratis aplicado!';
+    if(freeByAmount){
+      banner.textContent = '🎉 ¡Envío gratis aplicado! Tu pedido supera $120.000';
       banner.style.color = '#0a7c3e';
       banner.style.display = 'block';
-    } else if(subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD && cityVal && cityVal !== 'bogota'){
+    } else if(subtotal > 0 && subtotal < FREE_SHIPPING_THRESHOLD && cityVal){
       const diff = FREE_SHIPPING_THRESHOLD - subtotal;
       banner.textContent = `¡Te faltan ${fmt(diff)} para envío gratis! 🚚`;
       banner.style.color = 'var(--hot)';
