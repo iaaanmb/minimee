@@ -18,7 +18,7 @@ exports.handler = async (event) => {
     const orderId = 'MINIME-' + Date.now();
 
     // Create integrity signature: orderId + total + currency + secret
-    const integrityString = `${orderId}${total}COP${BOLD_SECRET}`;
+   const integrityString = `${orderId}${Math.round(total)}COP${BOLD_SECRET}`;
     const signature = crypto.createHash('sha256').update(integrityString).digest('hex');
 
     // Build product description
