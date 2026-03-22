@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -5,56 +7,41 @@ exports.handler = async (event) => {
 
   try {
     const { items, envio } = JSON.parse(event.body);
-    const token = process.env.MP_ACCESS_TOKEN;
+    const BOLD_API_KEY = process.env.BOLD_API_KEY;
+    const BOLD_SECRET = process.env.BOLD_SECRET;
 
-    const todosItems = [...items];
-    if (envio && envio.costo > 0) {
-      todosItems.push({
-        title: `Envío — ${envio.ciudad}`,
-        quantity: 1,
-        unit_price: envio.costo,
-        currency_id: 'COP'
-      });
-    }
+    // Calculate total
+    let total = items.reduce((s, i) => s + (i.unit_price * i.quantity), 0);
+    if (envio && envio.costo > 0) total += envio.costo;
 
-    const body = {
-      items: todosItems,
-      back_urls: {
-        success: 'https://minime.com.co/?pago=exitoso',
-        failure: 'https://minime.com.co/?pago=fallido',
-        pending: 'https://minime.com.co/?pago=pendiente'
-      },
-      auto_return: 'approved',
-      statement_descriptor: 'MINIMEE',
-      payment_methods: {
-        excluded_payment_types: [],
-        installments: 1
-      }
+    // Generate unique order ID
+    const orderId = 'MINIME-' + Date.now();
+
+    // Create integrity signature: orderId + total + currency + secret
+    const integrityString = `${orderId}${total}COP${BOLD_SECRET}`;
+    const signature = crypto.createHash('sha256').update(integrityString).digest('hex');
+
+    // Build product description
+    const description = items.map(i => `${i.title} x${i.quantity}`).join(', ');
+
+    // Return Bold checkout URL with params
+    const boldUrl = `https://checkout.bold.co/payment/link?` +
+      `api_key=${BOLD_API_KEY}` +
+      `&order_id=${orderId}` +
+      `&amount=${total}` +
+      `&currency=COP` +
+      `&description=${encodeURIComponent(description)}` +
+      `&integrity_signature=${signature}` +
+      `&redirect_url=${encodeURIComponent('https://minime.com.co/?pago=exitoso')}`;
+
+    return {
+      statusCode: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ init_point: boldUrl })
     };
 
-    const res = await fetch('https://api.mercadopago.com/checkout/preferences', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(body)
-    });
-
-    const data = await res.json();
-
-    if (data.init_point) {
-      return {
-        statusCode: 200,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        body: JSON.stringify({ init_point: data.init_point })
-      };
-    } else {
-      throw new Error(JSON.stringify(data));
-    }
-
   } catch (err) {
-    console.error('Error MP:', err);
+    console.error('Error Bold:', err);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message })
