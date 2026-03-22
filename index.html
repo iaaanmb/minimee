@@ -1266,36 +1266,72 @@ async function payMP(){
   if(!phone){ alert('Por favor ingresa tu teléfono.'); return; }
   if(!address){ alert('Por favor ingresa tu dirección de entrega.'); return; }
   const btn = document.getElementById('btnPay');
-  btn.textContent = 'Procesando...';
+  btn.textContent = 'Cargando...';
   btn.disabled = true;
 
-  const items = cart.map(i=>({
-    title: i.name + ' - ' + i.shade,
-    quantity: i.qty,
-    unit_price: i.price,
-    currency_id: 'COP'
-  }));
-
-  const envio = shippingCost > 0 ? { costo: shippingCost, ciudad: shippingLabel } : null;
+  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = subtotal + shippingCost;
+  const description = cart.map(i=>`${i.name} x${i.qty}`).join(', ');
 
   try {
     const res = await fetch('/.netlify/functions/crear-preferencia', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items, envio })
+      body: JSON.stringify({ total, description })
     });
     const data = await res.json();
-    if(data.init_point){
-      await logPedido('MercadoPago');
-      window.location.href = data.init_point;
+    if(data.error){ throw new Error(data.error); }
+    if(data.orderId && data.signature){
+      await logPedido('Bold');
+      await loadBoldSDK();
+      const checkout = new BoldCheckout({
+        orderId: data.orderId,
+        currency: 'COP',
+        amount: String(total),
+        apiKey: 'yTw0Ccmy733qFafSGYJWd9hGduAn02orqSUj-uH4tqw',
+        integritySignature: data.signature,
+        description: description,
+        redirectionUrl: 'https://minime.com.co/?pago=exitoso',
+        customerData: JSON.stringify({
+          fullName: name,
+          phone: phone,
+          dialCode: '+57'
+        }),
+        billingAddress: JSON.stringify({
+          address: address,
+          city: shippingLabel,
+          country: 'CO'
+        })
+      });
+      btn.textContent = 'Pagar con Bold';
+      btn.disabled = false;
+      checkout.open();
     } else {
-      throw new Error('Sin init_point');
+      throw new Error('Respuesta inválida del servidor');
     }
   } catch(e) {
-    btn.textContent = 'Pagar con MercadoPago';
+    console.error('Bold error:', e);
+    btn.textContent = 'Pagar con Bold';
     btn.disabled = false;
-    alert('Hubo un error al procesar el pago. Intenta por WhatsApp.');
+    alert('Hubo un error al procesar el pago. Intenta por WhatsApp. (' + e.message + ')');
   }
+}
+
+function loadBoldSDK(){
+  return new Promise((resolve, reject) => {
+    if(window.BoldCheckout){ resolve(); return; }
+    const existing = document.querySelector('script[src="https://checkout.bold.co/library/boldPaymentButton.js"]');
+    if(existing){
+      window.addEventListener('boldCheckoutLoaded', resolve, {once:true});
+      window.addEventListener('boldCheckoutLoadFailed', reject, {once:true});
+      return;
+    }
+    const s = document.createElement('script');
+    s.src = 'https://checkout.bold.co/library/boldPaymentButton.js';
+    s.onload = () => { window.dispatchEvent(new Event('boldCheckoutLoaded')); resolve(); };
+    s.onerror = () => { window.dispatchEvent(new Event('boldCheckoutLoadFailed')); reject(new Error('No se pudo cargar Bold SDK')); };
+    document.head.appendChild(s);
+  });
 }
 function payWA(){
   if(!cart.length)return;
