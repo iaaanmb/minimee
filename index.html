@@ -1272,7 +1272,7 @@ async function payMP(){
   const items = cart.map(i=>({
     title: i.name + ' - ' + i.shade,
     quantity: i.qty,
-    unit_price: i.price,
+    unit_price: Math.round(i.price),
     currency_id: 'COP'
   }));
 
