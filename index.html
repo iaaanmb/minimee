@@ -1281,14 +1281,15 @@ async function payMP(){
     });
     const data = await res.json();
     if(data.error){ throw new Error(data.error); }
-    if(data.orderId && data.signature){
+    if(data.orderId && data.signature && data.apiKey){
       await logPedido('Bold');
       await loadBoldSDK();
+      const boldApiKey = data.apiKey;
       const checkout = new BoldCheckout({
         orderId: data.orderId,
         currency: 'COP',
         amount: String(total),
-        apiKey: 'yTw0Ccmy733qFafSGYJWd9hGduAn02orqSUj-uH4tqw',
+        apiKey: boldApiKey,
         integritySignature: data.signature,
         description: description,
         redirectionUrl: 'https://minime.com.co/?pago=exitoso',
