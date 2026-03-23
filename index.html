@@ -1060,7 +1060,7 @@ function addDetailToCart(){
 }
 
 
-const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec';
+const SHEETS_URL = '/.netlify/functions/log-pedido';
 
 async function sendConfirmationEmail(nombre, email, productos, total, ciudad, direccion){
   if(!email) return;
@@ -1430,9 +1430,8 @@ updateCart();
       const order = JSON.parse(localStorage.getItem('minime_last_order') || '{}');
       if(order.nombre){
         // Register in Google Sheets only NOW (confirmed payment)
-        await fetch('https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec', {
+        await fetch('/.netlify/functions/log-pedido', {
           method: 'POST',
-          mode: 'no-cors',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             fecha: new Date().toLocaleString('es-CO'),
