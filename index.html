@@ -1417,7 +1417,7 @@ initReveal();
 updateCart();
 
 // Check if returning from successful Bold payment
-(function(){
+(async function(){
   const params = new URLSearchParams(window.location.search);
   if(params.get('pago') === 'exitoso'){
     // Show success banner
