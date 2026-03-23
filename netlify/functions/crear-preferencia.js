@@ -20,13 +20,12 @@ exports.handler = async (event) => {
   try {
     const { total, description } = JSON.parse(event.body);
     const SECRET = process.env.BOLD_SECRET;
+    const API_KEY = process.env.BOLD_API_KEY;
 
     if (!SECRET) throw new Error('BOLD_SECRET not configured');
+    if (!API_KEY) throw new Error('BOLD_API_KEY not configured');
 
-    // Generate unique order ID (only alphanumeric and hyphens, max 60 chars)
     const orderId = 'MINIME-' + Date.now();
-
-    // Bold integrity signature: orderId + amount + currency + secret
     const integrityString = `${orderId}${total}COP${SECRET}`;
     const signature = crypto.createHash('sha256').update(integrityString).digest('hex');
 
@@ -36,7 +35,7 @@ exports.handler = async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ orderId, signature, total })
+      body: JSON.stringify({ orderId, signature, total, apiKey: API_KEY })
     };
 
   } catch (err) {
