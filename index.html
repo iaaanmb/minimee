@@ -58,6 +58,8 @@
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>emailjs.init("f5J7OB5n6jACg3FcX");</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -646,6 +648,12 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
         </div>
       </div>
       <div style="margin-bottom:6px">
+        <label style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:3px">Correo (para confirmación)</label>
+        <input id="emailInput" type="email" placeholder="tucorreo@gmail.com" style="width:100%;padding:6px 10px;border:1px solid rgba(184,0,62,.2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-bottom:0px"><div style="display:none">
+      </div>
+      <div style="margin-bottom:6px">
         <label style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:3px">Nombre completo</label>
         <input id="nameInput" type="text" placeholder="Tu nombre completo" style="width:100%;padding:6px 10px;border:1px solid rgba(184,0,62,.2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
       </div>
@@ -1054,6 +1062,29 @@ function addDetailToCart(){
 
 const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec';
 
+async function sendConfirmationEmail(nombre, email, productos, total, ciudad, direccion){
+  if(!email) return;
+  try {
+    await emailjs.send('minime_service', 'template_s319duc', {
+      nombre,
+      email,
+      productos,
+      total,
+      ciudad,
+      direccion
+    });
+    console.log('Email enviado a', email);
+  } catch(e){
+    console.log('Email error:', e);
+  }
+}
+
+async function sendConfirmationWA(nombre, phone, productos, total, ciudad){
+  if(!phone) return;
+  const msg = `¡Hola ${nombre}! 💄 Tu pedido en minime lovers está confirmado:\n\n${productos}\n\nTotal: ${total}\nCiudad: ${ciudad}\n\n¡Gracias por tu compra! Pronto te contactamos para coordinar el envío. 🌸`;
+  window.open(`https://wa.me/57${phone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
 async function logPedido(metodo){
   try{
     const items = cart.map(i=>`${i.name} - ${i.shade} x${i.qty}`).join(' | ');
@@ -1282,6 +1313,17 @@ async function payMP(){
     const data = await res.json();
     if(data.error){ throw new Error(data.error); }
     if(data.orderId && data.signature && data.apiKey){
+      // Store order info for confirmation after redirect
+      const orderInfo = {
+        nombre: name,
+        phone: phone,
+        email: document.getElementById('emailInput')?.value || '',
+        productos: cart.map(i=>`${i.name} x${i.qty}`).join(', '),
+        total: fmt(total),
+        ciudad: shippingLabel,
+        direccion: address
+      };
+      localStorage.setItem('minime_last_order', JSON.stringify(orderInfo));
       await logPedido('Bold');
       await loadBoldSDK();
       const boldApiKey = data.apiKey;
@@ -1372,6 +1414,29 @@ function initReveal(){
 renderProducts();
 initReveal();
 updateCart();
+
+// Check if returning from successful Bold payment
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('pago') === 'exitoso'){
+    // Show success banner
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#0a7c3e;color:#fff;text-align:center;padding:18px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;';
+    banner.innerHTML = '🎉 ¡Pago exitoso! Gracias por tu compra en minime lovers. Te contactaremos pronto. <button onclick="this.parentElement.remove()" style="margin-left:16px;background:rgba(255,255,255,.3);border:none;color:#fff;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:inherit">✕</button>';
+    document.body.prepend(banner);
+    // Send confirmations
+    try {
+      const order = JSON.parse(localStorage.getItem('minime_last_order') || '{}');
+      if(order.nombre){
+        if(order.email) sendConfirmationEmail(order.nombre, order.email, order.productos, order.total, order.ciudad, order.direccion);
+        if(order.phone) sendConfirmationWA(order.nombre, order.phone, order.productos, order.total, order.ciudad);
+        localStorage.removeItem('minime_last_order');
+      }
+    } catch(e){ console.log('Confirmation error:', e); }
+    // Remove param from URL
+    window.history.replaceState({}, '', '/');
+  }
+})();
 </script>
 </body>
 </html>
