@@ -884,7 +884,7 @@ const products = [
   {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
 ];
 
-let cart=[];
+let cart = JSON.parse(localStorage.getItem('minime_cart') || '[]');
 const fmt=n=>'$'+n.toLocaleString('es-CO');
 
 
@@ -1203,6 +1203,7 @@ function updateShipping(){
 }
 
 function updateCart(){
+  localStorage.setItem('minime_cart', JSON.stringify(cart));
   const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const qty=cart.reduce((s,i)=>s+i.qty,0);
 
@@ -1321,10 +1322,10 @@ async function payMP(){
         productos: cart.map(i=>`${i.name} x${i.qty}`).join(', '),
         total: fmt(total),
         ciudad: shippingLabel,
-        direccion: address
+        direccion: address,
+        envio: shippingCost === 0 ? 'Gratis' : fmt(shippingCost)
       };
       localStorage.setItem('minime_last_order', JSON.stringify(orderInfo));
-      await logPedido('Bold');
       await loadBoldSDK();
       const boldApiKey = data.apiKey;
       const checkout = new BoldCheckout({
@@ -1424,13 +1425,35 @@ updateCart();
     banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#0a7c3e;color:#fff;text-align:center;padding:18px;font-family:"DM Sans",sans-serif;font-size:14px;font-weight:500;';
     banner.innerHTML = '🎉 ¡Pago exitoso! Gracias por tu compra en minime lovers. Te contactaremos pronto. <button onclick="this.parentElement.remove()" style="margin-left:16px;background:rgba(255,255,255,.3);border:none;color:#fff;padding:4px 12px;border-radius:20px;cursor:pointer;font-family:inherit">✕</button>';
     document.body.prepend(banner);
-    // Send confirmations
+    // Send confirmations and register confirmed purchase
     try {
       const order = JSON.parse(localStorage.getItem('minime_last_order') || '{}');
       if(order.nombre){
+        // Register in Google Sheets only NOW (confirmed payment)
+        await fetch('https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            fecha: new Date().toLocaleString('es-CO'),
+            nombre: order.nombre,
+            telefono: order.phone,
+            ciudad: order.ciudad,
+            direccion: order.direccion,
+            productos: order.productos,
+            total: order.total,
+            envio: order.envio || '',
+            metodo: 'Bold ✅ Confirmado'
+          })
+        });
+        // Send email confirmation
         if(order.email) sendConfirmationEmail(order.nombre, order.email, order.productos, order.total, order.ciudad, order.direccion);
+        // Send WhatsApp confirmation
         if(order.phone) sendConfirmationWA(order.nombre, order.phone, order.productos, order.total, order.ciudad);
         localStorage.removeItem('minime_last_order');
+        cart = [];
+        localStorage.removeItem('minime_cart');
+        updateCart();
       }
     } catch(e){ console.log('Confirmation error:', e); }
     // Remove param from URL
