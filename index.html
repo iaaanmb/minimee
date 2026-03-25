@@ -260,10 +260,15 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tc-check-wrap label{font-size:11px;color:var(--muted);line-height:1.6;cursor:pointer}
 .tc-check-wrap label a{color:var(--hot);text-decoration:underline}
 
-.tonos-piel{padding:48px 6%;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.tonos-piel-img{display:flex;justify-content:center;align-items:center}
+.tonos-piel{padding:80px 6%;background:linear-gradient(135deg,var(--petal) 0%,#fff 50%,var(--cream) 100%);display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;overflow:hidden}
+.tonos-piel::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(242,196,216,.45),transparent 70%);pointer-events:none}
+.tonos-piel::after{content:'';position:absolute;bottom:-60px;left:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(212,0,90,.07),transparent 70%);pointer-events:none}
+.tonos-piel-img{display:flex;justify-content:center;align-items:center;opacity:0;transform:translateX(-60px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.tonos-piel-img.visible{opacity:1;transform:none}
 .tonos-piel-img img{width:78%;max-width:380px;display:block;object-fit:cover;border-radius:24px;box-shadow:0 24px 64px rgba(22,8,16,.13);transition:transform .9s ease}
 .tonos-piel-img:hover img{transform:scale(1.03)}
+.tonos-piel-text{opacity:0;transform:translateX(60px);transition:opacity .9s cubic-bezier(.16,1,.3,1) .15s,transform .9s cubic-bezier(.16,1,.3,1) .15s}
+.tonos-piel-text.visible{opacity:1;transform:none}
 .tonos-piel-text h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(34px,3.5vw,50px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:20px}
 .tonos-piel-text h2 em{font-style:italic;color:var(--hot)}
 .tonos-piel-text p{font-size:15px;color:var(--mid);line-height:1.85;font-weight:300;margin-bottom:28px}
@@ -780,14 +785,14 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 </section>
 
 <section class="tonos-piel" id="tonos-piel">
-  <div class="tonos-piel-img reveal from-left">
+  <div class="tonos-piel-img" id="tonosPielImg">
     <img src="tonos_en_piel_.jpeg" alt="Tonos minime lovers en piel — Sweet Sunset, Blush Crush, Latte Kiss, Mini Drama, Tiny Flame, Pink Whisper">
   </div>
-  <div class="tonos-piel-text">
-    <div class="label-tag reveal">Encuentra tu tono ideal</div>
-    <h2 class="reveal d1">6 tonos,<br><em>todos perfectos</em></h2>
-    <p class="reveal d2">Desde el nude más suave hasta el rojo más intenso. Cada tono está pensado para distintos momentos, pieles y personalidades. ¿Cuál es el tuyo?</p>
-    <div class="tonos-list reveal d3">
+  <div class="tonos-piel-text" id="tonosPielText">
+    <div class="label-tag">Encuentra tu tono ideal</div>
+    <h2>6 tonos,<br><em>todos perfectos</em></h2>
+    <p>Desde el nude más suave hasta el rojo más intenso. Cada tono está pensado para distintos momentos, pieles y personalidades. ¿Cuál es el tuyo?</p>
+    <div class="tonos-list">
       <div class="tono-tag"><div class="tono-tag-dot" style="background:#C4503A"></div>Sweet Sunset — cálido y radiante</div>
       <div class="tono-tag"><div class="tono-tag-dot" style="background:#C4406A"></div>Blush Crush — romántico y fresco</div>
       <div class="tono-tag"><div class="tono-tag-dot" style="background:#8B5A3A"></div>Latte Kiss — nude elegante</div>
@@ -1474,6 +1479,22 @@ function initReveal(){
 renderProducts();
 initReveal();
 updateCart();
+
+// Tonos-piel slide-in animation
+(function(){
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.2});
+  const img = document.getElementById('tonosPielImg');
+  const txt = document.getElementById('tonosPielText');
+  if(img) obs.observe(img);
+  if(txt) obs.observe(txt);
+})();
 
 // Check if returning from successful Bold payment
 (async function(){
