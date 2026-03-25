@@ -261,8 +261,8 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tc-check-wrap label a{color:var(--hot);text-decoration:underline}
 
 .tonos-piel{padding:80px 6%;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.tonos-piel-img{border-radius:4px;overflow:hidden;box-shadow:0 20px 60px rgba(22,8,16,.1)}
-.tonos-piel-img img{width:100%;display:block;object-fit:cover;transition:transform .9s ease}
+.tonos-piel-img{display:flex;justify-content:center;align-items:center}
+.tonos-piel-img img{width:78%;max-width:380px;display:block;object-fit:cover;border-radius:24px;box-shadow:0 24px 64px rgba(22,8,16,.13);transition:transform .9s ease}
 .tonos-piel-img:hover img{transform:scale(1.03)}
 .tonos-piel-text h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(34px,3.5vw,50px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:20px}
 .tonos-piel-text h2 em{font-style:italic;color:var(--hot)}
@@ -270,7 +270,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tonos-list{display:flex;flex-direction:column;gap:11px}
 .tono-tag{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid);font-weight:400}
 .tono-tag-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.12)}
-@media(max-width:900px){.tonos-piel{grid-template-columns:1fr;gap:40px}}
+@media(max-width:900px){.tonos-piel{grid-template-columns:1fr;gap:40px}.tonos-piel-img img{width:70%;max-width:300px}}
 
 @media(max-width:900px){
   .nav-links,.nav-btn{display:none}
@@ -734,7 +734,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h1 class="hero-h1"><strong>Labial</strong><em>en polvo</em></h1>
     <p class="hero-p">Pequeño en tamaño, grande en pigmento.<br>Un labial en polvo ligero y fácil de aplicar, creado para retocar tu color en cualquier momento.<br>Su textura se difumina suavemente en los labios, dejando un acabado natural, cómodo y perfecto para llevar siempre contigo.</p>
     <div class="hero-actions">
-      <a href="#productos" class="btn-primary">Descubrir tonos</a>
+      <a href="#tonos-piel" class="btn-primary">Descubrir tonos</a>
       <a href="#nosotras" class="btn-ghost-light">Nuestra historia →</a>
     </div>
   </div>
@@ -779,24 +779,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
 </section>
 
-<section class="products" id="productos">
-  <div class="section-header">
-    <h2 class="reveal">Nuestra<br><em>colección</em></h2>
-    <p class="reveal d2" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;font-weight:300">Labiales en polvo, bolsos mini y kits. Todo lo que necesitas.</p>
-  </div>
-  <div class="cat-tabs reveal d2">
-    <button class="cat-tab active" onclick="filterCat('all')">Todo</button>
-    <button class="cat-tab" onclick="filterCat('labial')">Labiales</button>
-    <button class="cat-tab" onclick="filterCat('bolso')">Bolsos</button>
-    <button class="cat-tab" onclick="filterCat('kit')">Kits</button>
-  </div>
-  <div class="grid" id="pGrid"></div>
-  <div class="popular-badge-row reveal">
-    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos ($120.000)</strong> — la elección favorita de minime lovers</div>
-  </div>
-</section>
-
-<section class="tonos-piel">
+<section class="tonos-piel" id="tonos-piel">
   <div class="tonos-piel-img reveal from-left">
     <img src="tonos_en_piel_.jpeg" alt="Tonos minime lovers en piel — Sweet Sunset, Blush Crush, Latte Kiss, Mini Drama, Tiny Flame, Pink Whisper">
   </div>
@@ -812,6 +795,23 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <div class="tono-tag"><div class="tono-tag-dot" style="background:#6B1A2E"></div>Tiny Flame — intenso y atrevido</div>
       <div class="tono-tag"><div class="tono-tag-dot" style="background:#D890A8"></div>Pink Whisper — rosa sutil y femenino</div>
     </div>
+  </div>
+</section>
+
+<section class="products" id="productos">
+  <div class="section-header">
+    <h2 class="reveal">Nuestra<br><em>colección</em></h2>
+    <p class="reveal d2" style="font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:18px;font-weight:300">Labiales en polvo, bolsos mini y kits. Todo lo que necesitas.</p>
+  </div>
+  <div class="cat-tabs reveal d2">
+    <button class="cat-tab active" onclick="filterCat('all')">Todo</button>
+    <button class="cat-tab" onclick="filterCat('labial')">Labiales</button>
+    <button class="cat-tab" onclick="filterCat('bolso')">Bolsos</button>
+    <button class="cat-tab" onclick="filterCat('kit')">Kits</button>
+  </div>
+  <div class="grid" id="pGrid"></div>
+  <div class="popular-badge-row reveal">
+    <div class="popular-strip">⭐ Más vendido: <strong>Kit Bolso + 4 Tonos ($120.000)</strong> — la elección favorita de minime lovers</div>
   </div>
 </section>
 
