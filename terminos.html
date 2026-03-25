@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Políticas y Términos — minime lovers</title>
+<meta name="description" content="Términos y condiciones, política de privacidad, política de envío y garantías de minime lovers.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:16px 6%;background:rgba(251,246,249,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(184,0,62,.08)}
+.nav-logo img{height:34px}
+.nav-back{display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--hot)}
+.nav-back svg{transition:transform .2s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+/* HERO */
+.legal-hero{background:linear-gradient(135deg,#1A0510,#3D0A20);padding:80px 6% 60px;text-align:center}
+.legal-hero .label-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blush);margin-bottom:16px;display:block}
+.legal-hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(38px,5vw,64px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:16px}
+.legal-hero h1 em{font-style:italic;color:var(--blush)}
+.legal-hero p{font-size:14px;color:rgba(255,255,255,.5);font-weight:300}
+
+/* TABS */
+.tabs-wrap{background:#fff;border-bottom:1px solid rgba(184,0,62,.08);position:sticky;top:65px;z-index:200}
+.tabs{display:flex;gap:0;overflow-x:auto;padding:0 6%;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:18px 24px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .25s;font-weight:400}
+.tab-btn:hover{color:var(--hot)}
+.tab-btn.active{color:var(--hot);border-bottom-color:var(--hot);font-weight:500}
+
+/* CONTENT */
+.legal-content{max-width:860px;margin:0 auto;padding:64px 6% 100px}
+.legal-section{display:none}
+.legal-section.active{display:block}
+
+.doc-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(30px,4vw,44px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:8px}
+.doc-title em{font-style:italic;color:var(--hot)}
+.doc-updated{font-size:12px;color:var(--muted);margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid rgba(184,0,62,.08)}
+
+.doc-intro{font-size:15px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:40px;padding:24px 28px;background:var(--petal);border-left:3px solid var(--hot);border-radius:0 4px 4px 0}
+
+.doc-section{margin-bottom:40px}
+.doc-section h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.doc-section h3 .sec-num{font-size:11px;letter-spacing:2px;color:var(--hot);font-family:'DM Sans',sans-serif;font-weight:500;text-transform:uppercase;background:var(--petal);padding:4px 10px;border-radius:20px}
+.doc-section p{font-size:14px;color:var(--mid);line-height:1.9;font-weight:300;margin-bottom:14px}
+.doc-section ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin:16px 0}
+.doc-section ul li{font-size:14px;color:var(--mid);line-height:1.75;font-weight:300;padding-left:20px;position:relative}
+.doc-section ul li::before{content:'·';position:absolute;left:4px;color:var(--hot);font-size:18px;line-height:1.4}
+
+.contact-box{margin-top:40px;padding:28px 32px;background:#fff;border:1px solid rgba(184,0,62,.12);border-radius:4px}
+.contact-box h4{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);margin-bottom:16px;font-weight:500}
+.contact-box p{font-size:14px;color:var(--mid);line-height:1.7;font-weight:300}
+.contact-box a{color:var(--hot);text-decoration:none}
+.contact-box a:hover{text-decoration:underline}
+
+/* FOOTER */
+.legal-footer{background:#fff;border-top:1px solid rgba(184,0,62,.08);padding:32px 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.legal-footer p{font-size:12px;color:var(--muted)}
+.legal-footer a{color:var(--hot);text-decoration:none;font-size:12px}
+.legal-footer a:hover{text-decoration:underline}
+
+@media(max-width:600px){
+  .legal-content{padding:48px 5% 80px}
+  .tab-btn{padding:16px 18px;font-size:10px}
+  .doc-section ul li{padding-left:16px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Volver a la tienda
+  </a>
+  <a href="/" class="nav-logo"><img src="logo.png" alt="minime lovers"></a>
+  <div style="width:120px"></div>
+</nav>
+
+<div class="legal-hero">
+  <span class="label-tag">minime lovers</span>
+  <h1>Políticas y<br><em>Términos legales</em></h1>
+  <p>Actualizado el 24 de marzo de 2026 · Bogotá, Colombia</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('terminos', this)">Términos y condiciones</button>
+    <button class="tab-btn" onclick="showTab('privacidad', this)">Privacidad</button>
+    <button class="tab-btn" onclick="showTab('envio', this)">Envío y entrega</button>
+    <button class="tab-btn" onclick="showTab('garantias', this)">Garantías y devoluciones</button>
+  </div>
+</div>
+
+<div class="legal-content">
+
+  <!-- TÉRMINOS Y CONDICIONES -->
+  <div class="legal-section active" id="tab-terminos">
+    <h2 class="doc-title">Términos y<br><em>Condiciones de Uso</em></h2>
+    <p class="doc-updated">Última actualización: 24 de marzo de 2026</p>
+
+    <p class="doc-intro">El sitio web operado bajo el nombre comercial <strong>MINI ME</strong>, con domicilio en Bogotá, Colombia, tiene como función principal la exhibición, promoción y venta de productos cosméticos y accesorios. El acceso y navegación implica la aceptación total de los términos aquí consignados.</p>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">01</span> Definiciones</h3>
+      <p>Para facilitar la interpretación de estas condiciones, se definen los siguientes conceptos:</p>
+      <ul>
+        <li><strong>Contenidos:</strong> toda información divulgada en la página, incluyendo textos, imágenes, fotografías de productos, videos, logos y diseños.</li>
+        <li><strong>Derechos de Propiedad Intelectual:</strong> incluye la marca MINI ME, nombres comerciales, logos, lemas, nombres de dominio y derechos de autor sobre el material audiovisual.</li>
+        <li><strong>Usuario:</strong> toda persona natural o jurídica que ingresa al sitio web, ya sea para navegar o para adquirir productos.</li>
+        <li><strong>Vínculo (link):</strong> apuntadores de hipertexto que permiten saltar a información de terceros o servidores externos.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">02</span> Aceptación y modificaciones</h3>
+      <p>Se presume que cuando un usuario accede al sitio lo hace bajo su total responsabilidad y acepta plenamente estos términos. MINI ME se reserva el derecho de actualizar, modificar o retirar en cualquier momento y de manera unilateral, sin previo aviso, las presentes condiciones para ajustarlas a cambios legislativos o comerciales. Es responsabilidad del usuario revisar periódicamente esta sección.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">03</span> Propiedad intelectual</h3>
+      <p>Todo el material informático, gráfico, publicitario, fotográfico, audiovisual y de diseño, así como todos los contenidos, textos y bases de datos puestos a disposición en el sitio son de propiedad exclusiva de Emily Sofia Mongui Ardila o de terceros que han autorizado su uso.</p>
+      <p>Queda expresamente prohibido el plagio, copia, duplicación, distribución, venta o cualquier uso comercial del contenido sin autorización previa y por escrito. Cualquier uso no autorizado que viole estos derechos facultará al titular para iniciar las acciones legales, civiles y penales correspondientes.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">04</span> Uso del sitio y responsabilidad</h3>
+      <p>La finalidad del sitio es proveer una plataforma de comercio electrónico. La información sobre los productos no debe considerarse exhaustiva ni médica; el usuario es responsable de verificar ingredientes y especificaciones antes de la compra.</p>
+      <p>El usuario se compromete a no utilizar el sitio para actividades ilegales, enviar SPAM, transmitir códigos destructivos, ni publicar contenido difamatorio, obsceno o discriminatorio. MINI ME se reserva el derecho de remover cualquier contenido que considere ilegal u ofensivo sin previo aviso.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">05</span> Vínculos a terceros</h3>
+      <p>El sitio puede contener enlaces a páginas de terceros (como pasarelas de pago tipo Bold o redes sociales). El acceso a estos sitios implica someterse a sus propias políticas de privacidad y términos de uso. MINI ME no garantiza ni se responsabiliza por el funcionamiento o veracidad de la información contenida en dichos enlaces.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">06</span> Ley aplicable y jurisdicción</h3>
+      <p>Estas condiciones se rigen por las leyes de la República de Colombia. Cualquier controversia que no pueda resolverse directamente entre las partes se someterá a la jurisdicción de los jueces de la República de Colombia, siendo Bogotá D.C. el lugar de cumplimiento.</p>
+    </div>
+
+    <div class="contact-box">
+      <h4>Información de contacto</h4>
+      <p>Titular: Emily Sofia Mongui Ardila · Nombre Comercial: MINI ME<br>
+      Correo: <a href="mailto:minimeshop.ventas@gmail.com">minimeshop.ventas@gmail.com</a><br>
+      WhatsApp: <a href="https://wa.me/573226473031">3226473031</a></p>
+    </div>
+  </div>
+
+  <!-- POLÍTICA DE PRIVACIDAD -->
+  <div class="legal-section" id="tab-privacidad">
+    <h2 class="doc-title">Política de<br><em>Privacidad</em></h2>
+    <p class="doc-updated">Vigente desde el 24 de marzo de 2026 · Ley 1581 de 2012 y Decreto 1377 de 2013</p>
+
+    <p class="doc-intro">Emily Sofia Mongui Ardila, identificada con C.C. 1.052.837.287, actuando bajo el nombre comercial <strong>MINI ME</strong>, pone a disposición la presente Política de Tratamiento de Datos Personales, garantizando su derecho constitucional al Habeas Data.</p>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">01</span> Información que recolectamos</h3>
+      <p>Para la prestación de nuestros servicios recolectamos datos personales que permiten su identificación: nombre completo, número de identificación, dirección física de entrega, dirección de facturación, números de contacto y correo electrónico.</p>
+      <p>La información financiera relacionada con pagos electrónicos es gestionada directamente por pasarelas certificadas. MINI ME no almacena números de tarjetas de crédito ni claves bancarias en sus sistemas.</p>
+      <p>Adicionalmente, recolectamos información generada por su interacción con la tienda: historial de compras, preferencias de productos, dirección IP y datos de navegación obtenidos a través de cookies. No solicitamos ni tratamos datos de carácter sensible, salvo mandato legal.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">02</span> Finalidades del uso de datos</h3>
+      <ul>
+        <li>Gestionar la relación comercial: procesamiento de pedidos, coordinación logística, emisión de facturas y atención de garantías.</li>
+        <li>Mantenerle informado sobre el estado de sus transacciones y responder a sus inquietudes.</li>
+        <li>Con su autorización expresa: prospección comercial y marketing (lanzamientos, promociones y campañas). Puede solicitar el cese en cualquier momento sin afectar su capacidad de compra.</li>
+        <li>Cumplir con requerimientos de autoridades tributarias y judiciales, y prevención de fraude.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">03</span> Transmisión de datos</h3>
+      <p>Compartimos información estrictamente necesaria con terceros proveedores que actúan como encargados del tratamiento: nuestra plataforma está soportada por Netlify (servidores en el exterior bajo estándares equivalentes a los colombianos), y con empresas de mensajería para la entrega de productos.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">04</span> Derechos del titular y reclamos</h3>
+      <p>Como titular de la información, usted tiene derecho a conocer, actualizar y rectificar sus datos, revocar su consentimiento y solicitar la supresión de sus datos (salvo obligación legal o contractual).</p>
+      <p>Para ejercer estos derechos, dirija una comunicación a <a href="mailto:minimeshop.ventas@gmail.com" style="color:var(--hot)">minimeshop.ventas@gmail.com</a>. Su solicitud será atendida en máximo 10 días hábiles para consultas y 15 días hábiles para reclamos.</p>
+    </div>
+
+    <div class="contact-box">
+      <h4>Responsable del tratamiento</h4>
+      <p>Emily Sofia Mongui Ardila · MINI ME · Bogotá, Colombia<br>
+      Correo: <a href="mailto:minimeshop.ventas@gmail.com">minimeshop.ventas@gmail.com</a><br>
+      Teléfono: <a href="https://wa.me/573226473031">3226473031</a></p>
+    </div>
+  </div>
+
+  <!-- POLÍTICA DE ENVÍO -->
+  <div class="legal-section" id="tab-envio">
+    <h2 class="doc-title">Política de<br><em>Envío y Entrega</em></h2>
+    <p class="doc-updated">Última actualización: 24 de marzo de 2026</p>
+
+    <p class="doc-intro">Para <strong>MINI ME</strong>, la entrega oportuna de nuestros cosméticos y accesorios es una prioridad. A continuación, las condiciones, plazos y responsabilidades que rigen el proceso de envío.</p>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">01</span> Costos de envío</h3>
+      <p>Los costos se calculan con base en el valor total de la compra:</p>
+      <ul>
+        <li><strong>Pedidos menores a $120.000 COP:</strong> costo de envío estándar entre $10.000 y $20.000 COP, según las tarifas vigentes y la transportadora.</li>
+        <li><strong>Pedidos de $120.000 COP o más:</strong> envío gratuito a nivel nacional, salvo en zonas de difícil acceso donde apliquen recargos especiales.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">02</span> Tiempos de entrega</h3>
+      <p>El tiempo estimado de entrega nacional es de <strong>2 a 8 días hábiles</strong>, contados a partir del día hábil siguiente a la confirmación del pago, divididos en:</p>
+      <ul>
+        <li><strong>Alistamiento y control de calidad:</strong> 1 a 2 días hábiles.</li>
+        <li><strong>Distribución logística:</strong> según destino y transportadora aliada.</li>
+        <li><strong>Zonas especiales</strong> (San Andrés, Leticia, municipios de difícil acceso): hasta 20 días hábiles.</li>
+        <li><strong>Temporadas de alta demanda</strong> (Día de la Madre, Black Friday, lanzamientos): hasta 15 días hábiles, con comunicación previa en nuestras plataformas.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">03</span> Seguimiento y responsabilidad</h3>
+      <p>Una vez despachado el pedido, MINI ME enviará al correo o número registrado el número de guía y enlace de rastreo. A partir de ese momento, el seguimiento es responsabilidad del cliente.</p>
+      <p>Se realizarán hasta <strong>3 intentos de entrega</strong>. Si el pedido no puede ser entregado por causas atribuibles al cliente (dirección errada, ausencia de personas), será devuelto a nuestras instalaciones y el cliente deberá asumir el costo de un nuevo envío.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">04</span> Corrección de datos</h3>
+      <p>Solo se permiten correcciones en la dirección de entrega si el pedido aún no ha sido entregado a la transportadora y no se ha emitido la guía de despacho. Para solicitudes de corrección, escribir a <a href="mailto:minimeshop.ventas@gmail.com" style="color:var(--hot)">minimeshop.ventas@gmail.com</a> con respuesta en 3 a 5 días hábiles.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">05</span> Recepción del producto</h3>
+      <p>Al recibir su pedido, verificar el estado externo del empaque. No recibir paquetes con señales de manipulación, cajas rotas, mojadas o con la cinta de seguridad vulnerada. Al firmar la guía de transporte, se entiende que el empaque externo fue entregado en buen estado. Cualquier anomalía interna debe reportarse en máximo 24 horas.</p>
+    </div>
+
+    <div class="contact-box">
+      <h4>¿Dudas con tu envío?</h4>
+      <p>WhatsApp: <a href="https://wa.me/573226473031">3226473031</a><br>
+      Correo: <a href="mailto:minimeshop.ventas@gmail.com">minimeshop.ventas@gmail.com</a><br>
+      Horario de atención: Lunes a domingo, 8:00 AM – 5:00 PM</p>
+    </div>
+  </div>
+
+  <!-- POLÍTICA DE GARANTÍAS -->
+  <div class="legal-section" id="tab-garantias">
+    <h2 class="doc-title">Garantías, Devoluciones<br>y <em>Reembolsos</em></h2>
+    <p class="doc-updated">Última actualización: 24 de marzo de 2026</p>
+
+    <p class="doc-intro">En <strong>MINI ME</strong> valoramos la confianza que depositas en nuestra marca. Estas políticas garantizan una relación justa y transparente, protegiendo tus derechos como consumidor y asegurando los estándares de calidad de nuestros productos.</p>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">01</span> Cobertura de garantía</h3>
+      <p><strong>Cosméticos (labiales en polvo):</strong> la garantía cubre únicamente defectos de fabricación, problemas en el envase o alteraciones en la fórmula detectadas al momento de la recepción. Cualquier reclamación por avería visible debe realizarse en un plazo máximo de <strong>1 día hábil</strong> tras la entrega; pasado este tiempo no se aceptarán garantías por daños físicos.</p>
+      <p><strong>Accesorios (bolsos mini):</strong> la garantía cubre defectos de fabricación en costuras, herrajes o materiales por un periodo de <strong>2 meses</strong> desde la entrega. No cubre desgaste natural, manchas por contacto, sobrecarga de peso ni daños por agentes químicos o líquidos.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">02</span> Requisitos para garantías</h3>
+      <p>Para iniciar un proceso de garantía, presentar:</p>
+      <ul>
+        <li>Comprobante de compra o factura.</li>
+        <li>Producto en su empaque original.</li>
+        <li>Evidencia visual (fotos o videos de alta calidad) donde se aprecie claramente el defecto.</li>
+      </ul>
+      <p>Enviar el reporte a <a href="mailto:minimeshop.ventas@gmail.com" style="color:var(--hot)">minimeshop.ventas@gmail.com</a>. Si el defecto es de fábrica comprobado, MINI ME asume los costos de transporte. Si el daño fue por mal uso, el cliente asume los costos de envío.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">03</span> Productos exentos de cambios</h3>
+      <p>En cumplimiento del Artículo 47 de la Ley 1480 de 2011, los productos de uso personal como maquillaje, labiales y cosméticos en general están <strong>exentos del derecho de retracto</strong> una vez entregados. Por razones de higiene y seguridad, no se aceptan devoluciones de productos abiertos, probados o manipulados.</p>
+      <p>No se realizan cambios ni reembolsos por elección incorrecta de tonos. Recomendamos verificar cuidadosamente las descripciones e imágenes antes de finalizar la compra.</p>
+      <p><strong>Mini Bags:</strong> el derecho de retracto puede ejercerse dentro de los <strong>5 días hábiles</strong> siguientes a la entrega, siempre que el producto esté nuevo, con etiquetas originales y sin señales de uso. El cliente asume el costo del envío de retorno.</p>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">04</span> Política de reembolsos (Bold)</h3>
+      <p>En los casos donde legalmente proceda el reembolso, MINI ME lo gestionará a través de la pasarela Bold:</p>
+      <ul>
+        <li><strong>Tarjeta de crédito:</strong> reembolso directo al cupo de la tarjeta. Tiempo del banco emisor: 10 a 25 días hábiles.</li>
+        <li><strong>PSE o Link de Pago Bold:</strong> transferencia bancaria a la cuenta indicada por el cliente, adjuntando certificación bancaria no mayor a 30 días. La cuenta debe pertenecer a la persona que realizó la compra.</li>
+        <li><strong>Tiempos de gestión:</strong> una vez aprobada la devolución, MINI ME realiza el trámite ante Bold en 5 a 10 días hábiles. Los costos por comisiones financieras no reintegradas por la pasarela podrán descontarse del valor a devolver.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section">
+      <h3><span class="sec-num">05</span> Observaciones finales</h3>
+      <p>MINI ME se reserva el derecho de rechazar solicitudes de cambio o garantía que no cumplan los requisitos de documentación o que presenten señales de fraude. Al recibir tu pedido, verifica que el empaque y la cinta de seguridad estén intactos; cualquier anomalía detectada en la entrega debe reportarse de inmediato.</p>
+    </div>
+
+    <div class="contact-box">
+      <h4>¿Necesitas ayuda?</h4>
+      <p>Responsable: Emily Sofia Mongui Ardila<br>
+      WhatsApp: <a href="https://wa.me/573226473031">3226473031</a><br>
+      Correo: <a href="mailto:minimeshop.ventas@gmail.com">minimeshop.ventas@gmail.com</a></p>
+    </div>
+  </div>
+
+</div>
+
+<div class="legal-footer">
+  <p>© 2025 minime lovers · Todos los derechos reservados</p>
+  <a href="/">← Volver a la tienda</a>
+</div>
+
+<script>
+function showTab(id, btn){
+  document.querySelectorAll('.legal-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  document.querySelector('.legal-content').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Handle anchor links like terminos.html#privacidad
+window.addEventListener('DOMContentLoaded', ()=>{
+  const hash = window.location.hash.replace('#','');
+  if(hash){
+    const btn = document.querySelector(`.tab-btn[onclick*="'${hash}'"]`);
+    if(btn) btn.click();
+  }
+});
+</script>
+</body>
+</html>
