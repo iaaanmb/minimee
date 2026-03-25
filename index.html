@@ -209,7 +209,7 @@ nav.scrolled .nav-btn:hover{background:var(--rose)}
 .btn-wa:hover{background:#1ebe5d}
 .cta-btns{display:flex;flex-direction:column;align-items:flex-start}
 
-footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px}
+footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
 .footer-brand img{height:34px;margin-bottom:18px}
 .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;max-width:220px}
 .footer-col h5{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dark);margin-bottom:20px;font-weight:500}
@@ -251,8 +251,26 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .cart-total-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:600;color:var(--hot)}
 .btn-pay{width:100%;background:#1a1a1a;color:#fff;padding:13px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all .25s;margin-bottom:8px}
 .btn-pay:hover{background:#333}
+.btn-pay:disabled{opacity:.45;cursor:not-allowed}
 .btn-pay-wa{width:100%;background:#25D366;color:#fff;padding:11px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-pay-wa:hover{background:#1ebe5d}
+.btn-pay-wa:disabled{opacity:.45;cursor:not-allowed}
+.tc-check-wrap{margin:14px 0 10px;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--petal);border-radius:10px;border:1px solid rgba(184,0,62,.12)}
+.tc-check-wrap input[type=checkbox]{margin-top:2px;accent-color:var(--hot);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+.tc-check-wrap label{font-size:11px;color:var(--muted);line-height:1.6;cursor:pointer}
+.tc-check-wrap label a{color:var(--hot);text-decoration:underline}
+
+.tonos-piel{padding:80px 6%;background:#fff;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.tonos-piel-img{border-radius:4px;overflow:hidden;box-shadow:0 20px 60px rgba(22,8,16,.1)}
+.tonos-piel-img img{width:100%;display:block;object-fit:cover;transition:transform .9s ease}
+.tonos-piel-img:hover img{transform:scale(1.03)}
+.tonos-piel-text h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(34px,3.5vw,50px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:20px}
+.tonos-piel-text h2 em{font-style:italic;color:var(--hot)}
+.tonos-piel-text p{font-size:15px;color:var(--mid);line-height:1.85;font-weight:300;margin-bottom:28px}
+.tonos-list{display:flex;flex-direction:column;gap:11px}
+.tono-tag{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid);font-weight:400}
+.tono-tag-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.12)}
+@media(max-width:900px){.tonos-piel{grid-template-columns:1fr;gap:40px}}
 
 @media(max-width:900px){
   .nav-links,.nav-btn{display:none}
@@ -263,7 +281,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   .kit-img{height:55vw}
   .tgrid{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
-  footer{grid-template-columns:1fr;gap:36px}
+  footer{grid-template-columns:1fr 1fr;gap:36px}
   .section-header{flex-direction:column;align-items:flex-start;gap:10px}
   .section-header p{text-align:left;max-width:none}
   .cta-banner{padding:60px 7%}
@@ -679,10 +697,15 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <span class="cart-total-lbl" style="font-weight:500;color:var(--dark)">Total</span>
       <span class="cart-total-val" id="cTotal">$0</span>
     </div>
-    <button class="btn-pay" id="btnPay" onclick="payMP()">Pagar con Bold</button>
-    <button class="btn-pay-wa" onclick="payWA()">
+    <div class="tc-check-wrap">
+      <input type="checkbox" id="tcCheck" onchange="togglePayBtns()">
+      <label for="tcCheck">He leído y acepto los <a href="terminos.html" target="_blank">términos y condiciones</a>, la <a href="terminos.html#privacidad" target="_blank">política de privacidad</a> y las políticas de envío y garantías de minime lovers.</label>
+    </div>
+    <button class="btn-pay" id="btnPay" onclick="payMP()" disabled>Pagar con Bold</button>
+    <button class="btn-pay-wa" id="btnPayWA" onclick="payWA()" disabled>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.847L.057 23.882l6.206-1.445A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.213-3.682.857.925-3.578-.233-.369A9.818 9.818 0 1112 21.818z"/></svg>
       Pedir por WhatsApp
+    </button>
     </button>
   </div>
 </div>
@@ -773,6 +796,25 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
 </section>
 
+<section class="tonos-piel">
+  <div class="tonos-piel-img reveal from-left">
+    <img src="tonos_en_piel_.jpeg" alt="Tonos minime lovers en piel — Sweet Sunset, Blush Crush, Latte Kiss, Mini Drama, Tiny Flame, Pink Whisper">
+  </div>
+  <div class="tonos-piel-text">
+    <div class="label-tag reveal">Encuentra tu tono ideal</div>
+    <h2 class="reveal d1">6 tonos,<br><em>todos perfectos</em></h2>
+    <p class="reveal d2">Desde el nude más suave hasta el rojo más intenso. Cada tono está pensado para distintos momentos, pieles y personalidades. ¿Cuál es el tuyo?</p>
+    <div class="tonos-list reveal d3">
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#C4503A"></div>Sweet Sunset — cálido y radiante</div>
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#C4406A"></div>Blush Crush — romántico y fresco</div>
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#8B5A3A"></div>Latte Kiss — nude elegante</div>
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#7A2A45"></div>Mini Drama — mauve sofisticado</div>
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#6B1A2E"></div>Tiny Flame — intenso y atrevido</div>
+      <div class="tono-tag"><div class="tono-tag-dot" style="background:#D890A8"></div>Pink Whisper — rosa sutil y femenino</div>
+    </div>
+  </div>
+</section>
+
 <div class="kit reveal scale-in">
   <div class="kit-img"><img src="6_tonos.JPG" alt="Kit minimee 6 tonos"></div>
   <div class="kit-text">
@@ -856,6 +898,15 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <li><a href="#contacto">Envíos</a></li>
     </ul>
   </div>
+  <div class="footer-col">
+    <h5>Legal</h5>
+    <ul>
+      <li><a href="terminos.html">Términos y condiciones</a></li>
+      <li><a href="terminos.html#privacidad">Política de privacidad</a></li>
+      <li><a href="terminos.html#envio">Política de envío</a></li>
+      <li><a href="terminos.html#garantias">Garantías y devoluciones</a></li>
+    </ul>
+  </div>
 </footer>
 <div class="footer-bottom">
   <p>© 2025 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
@@ -864,6 +915,14 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 
 <script>
 const WA = '573226473031';
+
+function togglePayBtns(){
+  const checked = document.getElementById('tcCheck')?.checked;
+  const btnPay = document.getElementById('btnPay');
+  const btnPayWA = document.getElementById('btnPayWA');
+  if(btnPay) btnPay.disabled = !checked;
+  if(btnPayWA) btnPayWA.disabled = !checked;
+}
 
 const products = [
   {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial'},
