@@ -25,9 +25,17 @@ exports.handler = async (event) => {
     if (!SECRET) throw new Error('BOLD_SECRET not configured');
     if (!API_KEY) throw new Error('BOLD_API_KEY not configured');
 
+    // Ensure amount is a clean integer string — no decimals, no spaces
+    const amount = String(Math.round(Number(total)));
+
     const orderId = 'MINIME-' + Date.now();
-    const integrityString = `${orderId}${total}COP${SECRET}`;
+    const integrityString = `${orderId}${amount}COP${SECRET}`;
     const signature = crypto.createHash('sha256').update(integrityString).digest('hex');
+
+    console.log('orderId:', orderId);
+    console.log('amount:', amount);
+    console.log('integrityString:', integrityString);
+    console.log('signature:', signature);
 
     return {
       statusCode: 200,
@@ -35,7 +43,7 @@ exports.handler = async (event) => {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ orderId, signature, total, apiKey: API_KEY })
+      body: JSON.stringify({ orderId, signature, amount, apiKey: API_KEY })
     };
 
   } catch (err) {
