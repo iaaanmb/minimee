@@ -1368,7 +1368,7 @@ async function payMP(){
   btn.disabled = true;
 
   const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const total = subtotal + shippingCost;
+  const total = Math.round(subtotal + shippingCost);
   const descFull = cart.map(i=>`${i.name} x${i.qty}`).join(', ');
   const description = descFull.length <= 240 ? descFull : `Pedido minime lovers — ${cart.length} productos`;
 
@@ -1376,7 +1376,7 @@ async function payMP(){
     const res = await fetch('/.netlify/functions/crear-preferencia', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ total, description })
+      body: JSON.stringify({ total: String(total), description })
     });
     const data = await res.json();
     if(data.error){ throw new Error(data.error); }
@@ -1398,7 +1398,7 @@ async function payMP(){
       const checkout = new BoldCheckout({
         orderId: data.orderId,
         currency: 'COP',
-        amount: String(total),
+        amount: data.amount,
         apiKey: boldApiKey,
         integritySignature: data.signature,
         description: description,
