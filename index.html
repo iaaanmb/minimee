@@ -1369,7 +1369,7 @@ async function payMP(){
 
   const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const total = Math.round(subtotal + shippingCost);
-  const description = 'Pedido minime lovers';
+  const description = `Pedido minime lovers - ${cart.length} producto${cart.length !== 1 ? 's' : ''}`;
 
   try {
     const res = await fetch('/.netlify/functions/crear-preferencia', {
