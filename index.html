@@ -273,9 +273,9 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tonos-piel-text h2 em{font-style:italic;color:var(--hot)}
 .tonos-piel-text p{font-size:15px;color:var(--mid);line-height:1.85;font-weight:300;margin-bottom:28px}
 .tonos-list{display:flex;flex-direction:column;gap:11px}
-.tono-tag{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid);font-weight:400;cursor:pointer;padding:6px 10px;border-radius:8px;transition:all .2s;user-select:none}
-.tono-tag:hover{background:rgba(255,255,255,.5);transform:translateX(4px)}
-.tono-tag.active{background:rgba(255,255,255,.7);font-weight:500;color:var(--dark);transform:translateX(6px)}
+.tono-tag{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid);font-weight:400;cursor:pointer;padding:8px 14px;border-radius:50px;border:1.5px solid rgba(184,0,62,.15);background:rgba(255,255,255,.6);transition:all .2s;user-select:none}
+.tono-tag:hover{background:rgba(255,255,255,.9);border-color:var(--hot);transform:translateX(4px);box-shadow:0 4px 16px rgba(184,0,62,.12)}
+.tono-tag.active{background:#fff;border-color:var(--hot);font-weight:500;color:var(--dark);transform:translateX(6px);box-shadow:0 4px 20px rgba(184,0,62,.15)}
 .tono-tag-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.12)}
 @media(max-width:900px){.tonos-piel{grid-template-columns:1fr;gap:40px}.tonos-piel-img img{width:70%;max-width:300px}}
 
@@ -795,6 +795,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h2>6 tonos,<br><em>todos perfectos</em></h2>
     <p>Desde el nude más suave hasta el rojo más intenso. Cada tono está pensado para distintos momentos, pieles y personalidades. ¿Cuál es el tuyo?</p>
     <div class="tonos-list">
+      <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);margin-bottom:6px;font-weight:500">✦ Toca un tono para verlo</p>
       <div class="tono-tag" data-c1="#e8a090" data-c2="#f5c4b8" data-c3="#fde0d8" onclick="setTonoFondo(this)"><div class="tono-tag-dot" style="background:#C4503A"></div>Sweet Sunset — cálido y radiante</div>
       <div class="tono-tag" data-c1="#e890b0" data-c2="#f5b8d0" data-c3="#fde0ec" onclick="setTonoFondo(this)"><div class="tono-tag-dot" style="background:#C4406A"></div>Blush Crush — romántico y fresco</div>
       <div class="tono-tag" data-c1="#c8a880" data-c2="#e0c8a8" data-c3="#f5e8d8" onclick="setTonoFondo(this)"><div class="tono-tag-dot" style="background:#8B5A3A"></div>Latte Kiss — nude elegante</div>
