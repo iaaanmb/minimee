@@ -1088,9 +1088,12 @@ function openDetail(productId){
   else { badge.style.display = 'none'; }
 
   const addBtn = document.getElementById('btnDetailAdd');
-  if(p.cat === 'kit' || p.cat === 'bolso'){
+  if(p.cat === 'kit'){
     addBtn.textContent = 'Personalizar y agregar';
     addBtn.onclick = () => { closeDetail(); openModal(p.id); };
+  } else if(p.cat === 'bolso'){
+    addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
+    addBtn.onclick = addDetailToCart;
   } else {
     addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
     addBtn.onclick = addDetailToCart;
