@@ -415,7 +415,20 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 }
 .btn-detail-wa:hover{background:var(--petal)}
 @media(max-width:540px){.detail-panel{width:100vw}.detail-body{padding:24px 20px 32px}}
+
+/* COOKIE BANNER */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(22,8,16,.97);backdrop-filter:blur(12px);border-top:1px solid rgba(242,196,216,.15);padding:16px 6%;display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+#cookie-banner.visible{transform:translateY(0)}
+.cookie-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;flex:1}
+.cookie-text a{color:var(--blush);text-decoration:underline}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+.cookie-accept{background:var(--hot);color:#fff;border:none;padding:9px 20px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .2s}
+.cookie-accept:hover{background:var(--rose)}
+.cookie-reject{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:9px 16px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.cookie-reject:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+@media(max-width:600px){#cookie-banner{flex-direction:column;align-items:flex-start;padding:20px 5%}.cookie-btns{width:100%}.cookie-accept,.cookie-reject{flex:1;text-align:center}}
 </style>
+
 </head>
 <body>
 
@@ -917,7 +930,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
 </footer>
 <div class="footer-bottom">
-  <p>© 2025 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
+  <p>© 2026 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
   <div class="footer-badge">🇨🇴 Hecho en Colombia</div>
 </div>
 
@@ -1554,5 +1567,29 @@ updateCart();
   }
 })();
 </script>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner" role="region" aria-label="Aviso de cookies">
+  <p class="cookie-text">Usamos cookies de terceros (Google Fonts, EmailJS) para mejorar tu experiencia. Al continuar navegando, aceptas nuestra <a href="terminos.html#privacidad" target="_blank">política de privacidad</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-reject" onclick="setCookieChoice('rejected')">Solo esenciales</button>
+    <button class="cookie-accept" onclick="setCookieChoice('accepted')">Aceptar</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('minime_cookie_choice')){
+    setTimeout(()=>document.getElementById('cookie-banner').classList.add('visible'), 800);
+  }
+})();
+function setCookieChoice(choice){
+  localStorage.setItem('minime_cookie_choice', choice);
+  const b = document.getElementById('cookie-banner');
+  b.style.transition='transform .3s ease-in';
+  b.style.transform='translateY(100%)';
+  setTimeout(()=>b.remove(), 350);
+}
+</script>
 </body>
 </html>
+
