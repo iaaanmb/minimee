@@ -1,0 +1,11 @@
+.env
+.env.local
+.env.production
+node_modules/
+dist/
+.cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.netlify/
