@@ -14,9 +14,9 @@ Tienda e-commerce de cosméticos colombianos. Venta de labiales en polvo, bolsos
 
 | Variable | Descripción |
 |---|---|
-| `BOLD_API_KEY` |yTw0Ccmy733qFafSGYJWd9hGduAn02orqSUj-uH4tqw |
-| `BOLD_SECRET` |a9r9GcWJqvPHE2-UtRwPKw|
-| `SHEETS_URL` |https://script.google.com/macros/s/AKfycbxSt8PZxlC22X4fAG1vjJ-iZ0l0yrjmjDw8tSgDDFfYwHbHxJWwGT5FIZ1c4kOYKABPpg/exec |
+| `BOLD_API_KEY` ||
+| `BOLD_SECRET` ||
+| `SHEETS_URL` ||
 
 ## Contacto
 
