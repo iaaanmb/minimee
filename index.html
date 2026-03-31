@@ -415,20 +415,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 }
 .btn-detail-wa:hover{background:var(--petal)}
 @media(max-width:540px){.detail-panel{width:100vw}.detail-body{padding:24px 20px 32px}}
-
-/* COOKIE BANNER */
-#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(22,8,16,.97);backdrop-filter:blur(12px);border-top:1px solid rgba(242,196,216,.15);padding:16px 6%;display:flex;align-items:center;justify-content:space-between;gap:16px;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
-#cookie-banner.visible{transform:translateY(0)}
-.cookie-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;flex:1}
-.cookie-text a{color:var(--blush);text-decoration:underline}
-.cookie-btns{display:flex;gap:10px;flex-shrink:0}
-.cookie-accept{background:var(--hot);color:#fff;border:none;padding:9px 20px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:background .2s}
-.cookie-accept:hover{background:var(--rose)}
-.cookie-reject{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.15);padding:9px 16px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.cookie-reject:hover{color:#fff;border-color:rgba(255,255,255,.4)}
-@media(max-width:600px){#cookie-banner{flex-direction:column;align-items:flex-start;padding:20px 5%}.cookie-btns{width:100%}.cookie-accept,.cookie-reject{flex:1;text-align:center}}
 </style>
-
 </head>
 <body>
 
@@ -930,7 +917,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
 </footer>
 <div class="footer-bottom">
-  <p>© 2026 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
+  <p>© 2025 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
   <div class="footer-badge">🇨🇴 Hecho en Colombia</div>
 </div>
 
@@ -946,22 +933,22 @@ function togglePayBtns(){
 }
 
 const products = [
-  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial'},
-  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial'},
-  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial'},
-  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial'},
-  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial'},
-  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial'},
-  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso'},
-  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso'},
-  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
-  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
-  {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit'},
-  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:120000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
-  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
-  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
-  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
-  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial',slug:'mini-drama'},
+  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial',slug:'sweet-sunset'},
+  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial',slug:'blush-crush'},
+  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial',slug:'latte-kiss'},
+  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial',slug:'pink-whisper'},
+  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial',slug:'tiny-flame'},
+  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso',slug:'bolso-blanco'},
+  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso',slug:'bolso-negro'},
+  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso',slug:'bolso-rojo'},
+  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso',slug:'bolso-rosa'},
+  {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit',slug:'kit-4-tonos'},
+  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:120000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-6-tonos'},
+  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit',slug:'kit-bolso-1-tono'},
+  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit',slug:'kit-bolso-2-tonos'},
+  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit',slug:'kit-bolso-4-tonos'},
+  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-bolso-6-tonos'},
 ];
 
 let cart = JSON.parse(localStorage.getItem('minime_cart') || '[]');
@@ -1089,6 +1076,9 @@ function openDetail(productId){
   currentDetailProduct = p;
   detailQty = 1;
 
+  // Update URL hash
+  if(p.slug) window.history.replaceState({}, '', '#' + p.slug);
+
   document.getElementById('detailImg').src = p.img;
   document.getElementById('detailImg').alt = p.name;
   document.getElementById('detailName').textContent = p.name;
@@ -1122,6 +1112,7 @@ function closeDetail(){
   document.getElementById('detailPanel').classList.remove('open');
   document.getElementById('detailOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  window.history.replaceState({}, '', window.location.pathname);
 }
 
 function changeDetailQty(d){
@@ -1507,6 +1498,15 @@ renderProducts();
 initReveal();
 updateCart();
 
+// Auto-open product from URL hash e.g. minime.com.co/#sweet-sunset
+(function(){
+  const hash = window.location.hash.replace('#','');
+  if(hash && hash !== 'tonos-piel' && hash !== 'productos' && hash !== 'nosotras' && hash !== 'testimonios' && hash !== 'contacto'){
+    const p = products.find(x=>x.slug===hash);
+    if(p) setTimeout(()=>openDetail(p.id), 400);
+  }
+})();
+
 // Tonos-piel slide-in animation
 (function(){
   const obs = new IntersectionObserver(entries => {
@@ -1567,29 +1567,5 @@ updateCart();
   }
 })();
 </script>
-
-<!-- COOKIE BANNER -->
-<div id="cookie-banner" role="region" aria-label="Aviso de cookies">
-  <p class="cookie-text">Usamos cookies de terceros (Google Fonts, EmailJS) para mejorar tu experiencia. Al continuar navegando, aceptas nuestra <a href="terminos.html#privacidad" target="_blank">política de privacidad</a>.</p>
-  <div class="cookie-btns">
-    <button class="cookie-reject" onclick="setCookieChoice('rejected')">Solo esenciales</button>
-    <button class="cookie-accept" onclick="setCookieChoice('accepted')">Aceptar</button>
-  </div>
-</div>
-<script>
-(function(){
-  if(!localStorage.getItem('minime_cookie_choice')){
-    setTimeout(()=>document.getElementById('cookie-banner').classList.add('visible'), 800);
-  }
-})();
-function setCookieChoice(choice){
-  localStorage.setItem('minime_cookie_choice', choice);
-  const b = document.getElementById('cookie-banner');
-  b.style.transition='transform .3s ease-in';
-  b.style.transform='translateY(100%)';
-  setTimeout(()=>b.remove(), 350);
-}
-</script>
 </body>
 </html>
-
