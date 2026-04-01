@@ -1,16 +1,29 @@
 exports.handler = async (event) => {
-  const pwd = event.queryStringParameters?.pwd || '';
-  if (pwd !== process.env.ADMIN_PASSWORD) {
-    return { statusCode: 401, headers: {'Access-Control-Allow-Origin':'*'}, body: JSON.stringify({ error: 'No autorizado' }) };
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS'
+      },
+      body: ''
+    };
   }
 
-  const SUPABASE_URL = process.env.SUPABASE_URL;
-  const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
-  console.log('URL:', SUPABASE_URL);
-  console.log('KEY starts with:', SUPABASE_KEY ? SUPABASE_KEY.substring(0, 30) : 'UNDEFINED');
+  const pwd = event.queryStringParameters?.pwd || '';
+  if (pwd !== process.env.ADMIN_PASSWORD) {
+    return {
+      statusCode: 401,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: 'No autorizado' })
+    };
+  }
 
   try {
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
     const res = await fetch(`${SUPABASE_URL}/rest/v1/pedidos?order=guardado.desc`, {
       headers: {
         'apikey': SUPABASE_KEY,
@@ -18,9 +31,22 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json'
       }
     });
+
     const pedidos = await res.json();
-    return { statusCode: 200, headers: {'Access-Control-Allow-Origin':'*','Content-Type':'application/json'}, body: JSON.stringify(pedidos) };
+
+    return {
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(pedidos)
+    };
   } catch (err) {
-    return { statusCode: 500, headers: {'Access-Control-Allow-Origin':'*'}, body: JSON.stringify({ error: err.message }) };
+    return {
+      statusCode: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ error: err.message })
+    };
   }
 };
