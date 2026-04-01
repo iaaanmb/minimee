@@ -1246,7 +1246,7 @@ let shippingLabel = '';
 const FREE_SHIPPING_THRESHOLD = 120000;
 
 function getBaseShipping(v){
-  if(v === 'bogota') return 10000;
+  if(v === 'bogota' || v === 'soacha') return 10000;
   if(v === 'principal') return 15000;
   if(v === 'otro') return 20000;
   return 0;
