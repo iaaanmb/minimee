@@ -780,7 +780,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h2>Los 6 tonos,<br><em>una sola decisión</em></h2>
     <p>De la oficina a la rumba. El kit completo para tener el tono perfecto en cada momento de tu vida.</p>
     <div class="kit-price-row">
-      <span class="kit-price">$130.000</span>
+      <span class="kit-price">$120.000</span>
       <span class="kit-price-sub">Kit 6 tonos</span>
     </div>
     <button class="btn-primary" onclick="openModal(15)">Personalizar y agregar kit</button>
@@ -877,7 +877,7 @@ const products = [
   {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
   {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
   {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit'},
-  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:130000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:120000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
   {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
   {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
   {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
@@ -1338,13 +1338,21 @@ async function payMP(){
             telefono: phone,
             ciudad: shippingLabel,
             direccion: address + (document.getElementById('barrioInput')?.value ? ' — ' + document.getElementById('barrioInput').value : ''),
-            productos: cart.map(i=>`${i.name} x${i.qty}`).join(', '),
+            productos: cart.map(i=>i.shade ? `${i.name} - ${i.shade} x${i.qty}` : `${i.name} x${i.qty}`).join(' | '),
             total: fmt(total),
             envio: shippingCost === 0 ? 'Gratis' : fmt(shippingCost),
             metodo: 'Bold ⏳ Pendiente'
           })
         });
       } catch(e){ console.log('Pre-log error:', e); }
+
+      // Enviar correo de confirmación AHORA — no esperar a que regrese
+      const email = document.getElementById('emailInput')?.value || '';
+      if(email){
+        try {
+          await sendConfirmationEmail(name, email, cart.map(i=>`${i.name} x${i.qty}`).join(', '), fmt(total), shippingLabel, address);
+        } catch(e){ console.log('Email pre-log error:', e); }
+      }
 
       await loadBoldSDK();
       const boldApiKey = data.apiKey;
