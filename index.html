@@ -573,7 +573,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
               <option value="principal">Puerto Carreño — $15.000</option>
             </optgroup>
             <optgroup label="— Cundinamarca">
-              <option value="otro">Soacha — $10.000</option>
+              <option value="bogota">Soacha — $10.000</option>
               <option value="otro">Chía — $20.000</option>
               <option value="otro">Zipaquirá — $20.000</option>
               <option value="otro">Facatativá — $20.000</option>
@@ -1246,7 +1246,7 @@ let shippingLabel = '';
 const FREE_SHIPPING_THRESHOLD = 120000;
 
 function getBaseShipping(v){
-  if(v === 'bogota' || v === 'soacha') return 10000;
+  if(v === 'bogota') return 10000;
   if(v === 'principal') return 15000;
   if(v === 'otro') return 20000;
   return 0;
