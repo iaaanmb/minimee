@@ -209,7 +209,7 @@ nav.scrolled .nav-btn:hover{background:var(--rose)}
 .btn-wa:hover{background:#1ebe5d}
 .cta-btns{display:flex;flex-direction:column;align-items:flex-start}
 
-footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid;grid-template-columns:1fr 1fr 1fr;gap:60px}
+footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px}
 .footer-brand img{height:34px;margin-bottom:18px}
 .footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;max-width:220px}
 .footer-col h5{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dark);margin-bottom:20px;font-weight:500}
@@ -251,8 +251,14 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .cart-total-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:600;color:var(--hot)}
 .btn-pay{width:100%;background:#1a1a1a;color:#fff;padding:13px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all .25s;margin-bottom:8px}
 .btn-pay:hover{background:#333}
+.btn-pay:disabled{opacity:.45;cursor:not-allowed}
 .btn-pay-wa{width:100%;background:#25D366;color:#fff;padding:11px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn-pay-wa:hover{background:#1ebe5d}
+.btn-pay-wa:disabled{opacity:.45;cursor:not-allowed}
+.tc-check-wrap{margin:14px 0 10px;display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--petal);border-radius:10px;border:1px solid rgba(184,0,62,.12)}
+.tc-check-wrap input[type=checkbox]{margin-top:2px;accent-color:var(--hot);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+.tc-check-wrap label{font-size:11px;color:var(--muted);line-height:1.6;cursor:pointer}
+.tc-check-wrap label a{color:var(--hot);text-decoration:underline}
 
 @media(max-width:900px){
   .nav-links,.nav-btn{display:none}
@@ -263,7 +269,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   .kit-img{height:55vw}
   .tgrid{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr 1fr}
-  footer{grid-template-columns:1fr;gap:36px}
+  footer{grid-template-columns:1fr 1fr;gap:36px}
   .section-header{flex-direction:column;align-items:flex-start;gap:10px}
   .section-header p{text-align:left;max-width:none}
   .cta-banner{padding:60px 7%}
@@ -679,8 +685,12 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <span class="cart-total-lbl" style="font-weight:500;color:var(--dark)">Total</span>
       <span class="cart-total-val" id="cTotal">$0</span>
     </div>
-    <button class="btn-pay" id="btnPay" onclick="payMP()">Pagar con Bold</button>
-    <button class="btn-pay-wa" onclick="payWA()">
+    <div class="tc-check-wrap">
+      <input type="checkbox" id="tcCheck" onchange="togglePayBtns()">
+      <label for="tcCheck">He leído y acepto los <a href="terminos.html" target="_blank">términos y condiciones</a>, la <a href="terminos.html#privacidad" target="_blank">política de privacidad</a> y las políticas de envío y garantías de minime lovers.</label>
+    </div>
+    <button class="btn-pay" id="btnPay" onclick="payMP()" disabled>Pagar con Bold</button>
+    <button class="btn-pay-wa" id="btnPayWA" onclick="payWA()" disabled>
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.847L.057 23.882l6.206-1.445A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.213-3.682.857.925-3.578-.233-.369A9.818 9.818 0 1112 21.818z"/></svg>
       Pedir por WhatsApp
     </button>
@@ -856,6 +866,15 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <li><a href="#contacto">Envíos</a></li>
     </ul>
   </div>
+  <div class="footer-col">
+    <h5>Legal</h5>
+    <ul>
+      <li><a href="terminos.html">Términos y condiciones</a></li>
+      <li><a href="terminos.html#privacidad">Política de privacidad</a></li>
+      <li><a href="terminos.html#envio">Política de envío</a></li>
+      <li><a href="terminos.html#garantias">Garantías y devoluciones</a></li>
+    </ul>
+  </div>
 </footer>
 <div class="footer-bottom">
   <p>© 2025 minime lovers · Mini Makeup Colombia · Todos los derechos reservados</p>
@@ -863,25 +882,33 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 </div>
 
 <script>
-const WA = '573226473031';
+const WA = '573124634966';
+
+function togglePayBtns(){
+  const checked = document.getElementById('tcCheck')?.checked;
+  const btnPay = document.getElementById('btnPay');
+  const btnPayWA = document.getElementById('btnPayWA');
+  if(btnPay) btnPay.disabled = !checked;
+  if(btnPayWA) btnPayWA.disabled = !checked;
+}
 
 const products = [
-  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial'},
-  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial'},
-  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial'},
-  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial'},
-  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial'},
-  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial'},
-  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso'},
-  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso'},
-  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso'},
-  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso'},
-  {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit'},
-  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:120000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
-  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit'},
-  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit'},
-  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit'},
-  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit'},
+  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial',slug:'mini-drama'},
+  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial',slug:'sweet-sunset'},
+  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial',slug:'blush-crush'},
+  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial',slug:'latte-kiss'},
+  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial',slug:'pink-whisper'},
+  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial',slug:'tiny-flame'},
+  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso',slug:'bolso-blanco'},
+  {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso',slug:'bolso-negro'},
+  {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso',slug:'bolso-rojo'},
+  {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso',slug:'bolso-rosa'},
+  {id:11,name:'Kit 4 Tonos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit',slug:'kit-4-tonos'},
+  {id:12,name:'Kit 6 Tonos',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:130000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-6-tonos'},
+  {id:13,name:'Kit Bolso + 1 Tono',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit',slug:'kit-bolso-1-tono'},
+  {id:14,name:'Kit Bolso + 2 Tonos',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:80000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit',slug:'kit-bolso-2-tonos'},
+  {id:15,name:'Kit Bolso + 4 Tonos',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:120000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit',slug:'kit-bolso-4-tonos'},
+  {id:16,name:'Kit Bolso + 6 Tonos',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-bolso-6-tonos'},
 ];
 
 let cart = JSON.parse(localStorage.getItem('minime_cart') || '[]');
@@ -1009,6 +1036,8 @@ function openDetail(productId){
   currentDetailProduct = p;
   detailQty = 1;
 
+  if(p.slug) window.history.replaceState({}, '', '#' + p.slug);
+
   document.getElementById('detailImg').src = p.img;
   document.getElementById('detailImg').alt = p.name;
   document.getElementById('detailName').textContent = p.name;
@@ -1022,9 +1051,12 @@ function openDetail(productId){
   else { badge.style.display = 'none'; }
 
   const addBtn = document.getElementById('btnDetailAdd');
-  if(p.cat === 'kit' || p.cat === 'bolso'){
+  if(p.cat === 'kit'){
     addBtn.textContent = 'Personalizar y agregar';
     addBtn.onclick = () => { closeDetail(); openModal(p.id); };
+  } else if(p.cat === 'bolso'){
+    addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
+    addBtn.onclick = addDetailToCart;
   } else {
     addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
     addBtn.onclick = addDetailToCart;
@@ -1039,6 +1071,7 @@ function closeDetail(){
   document.getElementById('detailPanel').classList.remove('open');
   document.getElementById('detailOverlay').classList.remove('open');
   document.body.style.overflow = '';
+  window.history.replaceState({}, '', window.location.pathname);
 }
 
 function changeDetailQty(d){
@@ -1303,7 +1336,7 @@ async function payMP(){
 
   const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
   const total = subtotal + shippingCost;
-  const description = cart.map(i=>`${i.name} x${i.qty}`).join(', ');
+  const description = `Pedido minime lovers - ${cart.length} producto${cart.length !== 1 ? 's' : ''}`;
 
   try {
     const res = await fetch('/.netlify/functions/crear-preferencia', {
@@ -1326,40 +1359,12 @@ async function payMP(){
         envio: shippingCost === 0 ? 'Gratis' : fmt(shippingCost)
       };
       localStorage.setItem('minime_last_order', JSON.stringify(orderInfo));
-
-      // Registrar AHORA en Sheets con estado pendiente — así no se pierde aunque no regrese
-      try {
-        await fetch('/.netlify/functions/log-pedido', {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({
-            fecha: new Date().toLocaleString('es-CO'),
-            nombre: name,
-            telefono: phone,
-            ciudad: shippingLabel,
-            direccion: address + (document.getElementById('barrioInput')?.value ? ' — ' + document.getElementById('barrioInput').value : ''),
-            productos: cart.map(i=>i.shade ? `${i.name} - ${i.shade} x${i.qty}` : `${i.name} x${i.qty}`).join(' | '),
-            total: fmt(total),
-            envio: shippingCost === 0 ? 'Gratis' : fmt(shippingCost),
-            metodo: 'Bold ⏳ Pendiente'
-          })
-        });
-      } catch(e){ console.log('Pre-log error:', e); }
-
-      // Enviar correo de confirmación AHORA — no esperar a que regrese
-      const email = document.getElementById('emailInput')?.value || '';
-      if(email){
-        try {
-          await sendConfirmationEmail(name, email, cart.map(i=>`${i.name} x${i.qty}`).join(', '), fmt(total), shippingLabel, address);
-        } catch(e){ console.log('Email pre-log error:', e); }
-      }
-
       await loadBoldSDK();
       const boldApiKey = data.apiKey;
       const checkout = new BoldCheckout({
         orderId: data.orderId,
         currency: 'COP',
-        amount: String(total),
+        amount: data.amount,
         apiKey: boldApiKey,
         integritySignature: data.signature,
         description: description,
@@ -1443,6 +1448,15 @@ function initReveal(){
 renderProducts();
 initReveal();
 updateCart();
+
+// Auto-open product from URL hash e.g. minime.com.co/#sweet-sunset
+(function(){
+  const hash = window.location.hash.replace('#','');
+  if(hash && !['nosotras','productos','testimonios','contacto'].includes(hash)){
+    const p = products.find(x=>x.slug===hash);
+    if(p) setTimeout(()=>openDetail(p.id), 400);
+  }
+})();
 
 // Check if returning from successful Bold payment
 (async function(){
