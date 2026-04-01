@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Admin — minime lovers</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#1A0510,#3D0A20)}
+.login-box{background:#fff;border-radius:8px;padding:48px;width:100%;max-width:400px;text-align:center}
+.login-box img{height:48px;margin-bottom:24px}
+.login-box h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:300;color:var(--dark);margin-bottom:8px}
+.login-box p{font-size:13px;color:var(--muted);margin-bottom:28px}
+.login-input{width:100%;padding:12px 16px;border:1.5px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--dark);outline:none;text-align:center;letter-spacing:2px;margin-bottom:14px;transition:border-color .2s}
+.login-input:focus{border-color:var(--hot)}
+.login-btn{width:100%;background:var(--hot);color:#fff;padding:13px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:background .25s}
+.login-btn:hover{background:var(--rose)}
+.login-error{font-size:12px;color:var(--hot);margin-top:10px;display:none}
+
+/* ADMIN */
+#adminScreen{display:none}
+.admin-nav{background:#fff;border-bottom:1px solid rgba(184,0,62,.08);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.admin-nav-logo{display:flex;align-items:center;gap:12px}
+.admin-nav-logo img{height:32px}
+.admin-nav-logo span{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:var(--petal);padding:3px 10px;border-radius:20px}
+.admin-nav-right{display:flex;gap:12px;align-items:center}
+.admin-refresh{background:var(--hot);color:#fff;padding:8px 20px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;transition:background .2s}
+.admin-refresh:hover{background:var(--rose)}
+.admin-logout{background:transparent;color:var(--muted);padding:8px 16px;border-radius:50px;border:1px solid rgba(184,0,62,.15);font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;letter-spacing:1px;text-transform:uppercase}
+.admin-logout:hover{color:var(--hot);border-color:var(--hot)}
+
+.admin-body{padding:24px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:#fff;border-radius:8px;padding:20px 24px;border:1px solid rgba(184,0,62,.08)}
+.stat-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.stat-val{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:600;color:var(--hot)}
+.stat-sub{font-size:12px;color:var(--muted);margin-top:4px}
+
+.filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.filter-input{padding:8px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);outline:none;background:#fff}
+.filter-input:focus{border-color:var(--hot)}
+.filter-select{padding:8px 16px;border:1px solid rgba(184,0,62,.2);border-radius:50px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);outline:none;background:#fff;cursor:pointer}
+
+.table-wrap{background:#fff;border-radius:8px;border:1px solid rgba(184,0,62,.08);overflow:hidden}
+.table-head{display:grid;grid-template-columns:140px 1fr 110px 1fr 2fr 90px 90px 120px;gap:0;background:var(--petal);border-bottom:1px solid rgba(184,0,62,.1)}
+.th{padding:12px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);font-weight:500}
+.table-body{max-height:calc(100vh - 320px);overflow-y:auto}
+.tr{display:grid;grid-template-columns:140px 1fr 110px 1fr 2fr 90px 90px 120px;gap:0;border-bottom:1px solid rgba(184,0,62,.05);transition:background .15s}
+.tr:hover{background:var(--petal)}
+.td{padding:12px 14px;font-size:12px;color:var(--mid);border-right:1px solid rgba(184,0,62,.04);display:flex;align-items:center;word-break:break-word}
+.td:last-child{border-right:none}
+
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:.5px;white-space:nowrap}
+.badge-confirmado{background:#d4edda;color:#0a7c3e}
+.badge-pendiente{background:#fff3cd;color:#856404}
+.badge-whatsapp{background:#d4edda;color:#155724}
+
+.empty-state{text-align:center;padding:60px;color:var(--muted);font-size:14px}
+.loading{text-align:center;padding:40px;color:var(--muted)}
+
+.detail-modal{display:none;position:fixed;inset:0;background:rgba(22,8,16,.55);z-index:500;backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+.detail-modal.open{display:flex}
+.detail-box{background:#fff;border-radius:8px;padding:32px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
+.detail-box h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:20px;font-style:italic}
+.detail-row{display:flex;gap:8px;margin-bottom:12px;font-size:13px}
+.detail-label{color:var(--muted);min-width:100px;font-weight:500}
+.detail-val{color:var(--dark)}
+.detail-close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--petal);border:none;cursor:pointer;font-size:16px;color:var(--hot);display:flex;align-items:center;justify-content:center}
+.wa-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:10px 20px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;margin-top:16px;text-decoration:none}
+
+@media(max-width:900px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .table-head,.tr{grid-template-columns:120px 1fr 100px 2fr 80px 100px}
+  .th:nth-child(4),.td:nth-child(4){display:none}
+}
+@media(max-width:600px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .admin-body{padding:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <img src="logo.png" alt="minime lovers">
+    <h2>Panel de administración</h2>
+    <p>Ingresa la contraseña para continuar</p>
+    <input class="login-input" type="password" id="pwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="loginError">Contraseña incorrecta</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminScreen">
+  <div class="admin-nav">
+    <div class="admin-nav-logo">
+      <img src="logo.png" alt="minime lovers">
+      <span>Admin</span>
+    </div>
+    <div class="admin-nav-right">
+      <button class="admin-refresh" onclick="loadPedidos()">↻ Actualizar</button>
+      <button class="admin-logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total pedidos</div>
+        <div class="stat-val" id="statTotal">—</div>
+        <div class="stat-sub">registrados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Confirmados Bold</div>
+        <div class="stat-val" id="statConfirmados">—</div>
+        <div class="stat-sub">pagos exitosos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pendientes</div>
+        <div class="stat-val" id="statPendientes">—</div>
+        <div class="stat-sub">sin confirmar</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total ventas</div>
+        <div class="stat-val" id="statVentas">—</div>
+        <div class="stat-sub">confirmadas</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input class="filter-input" type="text" id="filterSearch" placeholder="🔍 Buscar nombre, teléfono..." oninput="renderTable()">
+      <select class="filter-select" id="filterMetodo" onchange="renderTable()">
+        <option value="">Todos los métodos</option>
+        <option value="Confirmado">Bold Confirmado</option>
+        <option value="Pendiente">Bold Pendiente</option>
+        <option value="WhatsApp">WhatsApp</option>
+      </select>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <div class="th">Fecha</div>
+        <div class="th">Cliente</div>
+        <div class="th">Teléfono</div>
+        <div class="th">Ciudad</div>
+        <div class="th">Productos</div>
+        <div class="th">Total</div>
+        <div class="th">Envío</div>
+        <div class="th">Estado</div>
+      </div>
+      <div class="table-body" id="tableBody">
+        <div class="loading">Cargando pedidos...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="detail-modal" id="detailModal" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-box">
+    <button class="detail-close-btn" onclick="closeDetail()">✕</button>
+    <h3>Detalle del pedido</h3>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script>
+let pwd = '';
+let allPedidos = [];
+
+function doLogin(){
+  const input = document.getElementById('pwdInput').value;
+  fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(input)}`)
+    .then(r => {
+      if(r.status === 401){ 
+        document.getElementById('loginError').style.display = 'block';
+        return null;
+      }
+      return r.json();
+    })
+    .then(data => {
+      if(!data) return;
+      pwd = input;
+      allPedidos = data;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminScreen').style.display = 'block';
+      updateStats();
+      renderTable();
+    })
+    .catch(e => {
+      document.getElementById('loginError').style.display = 'block';
+    });
+}
+
+function logout(){
+  pwd = '';
+  allPedidos = [];
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminScreen').style.display = 'none';
+  document.getElementById('pwdInput').value = '';
+  document.getElementById('loginError').style.display = 'none';
+}
+
+function loadPedidos(){
+  document.getElementById('tableBody').innerHTML = '<div class="loading">Actualizando...</div>';
+  fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(pwd)}`)
+    .then(r => r.json())
+    .then(data => {
+      allPedidos = data;
+      updateStats();
+      renderTable();
+    });
+}
+
+function updateStats(){
+  const confirmados = allPedidos.filter(p => p.metodo && p.metodo.includes('Confirmado'));
+  const pendientes = allPedidos.filter(p => p.metodo && p.metodo.includes('Pendiente'));
+  const totalVentas = confirmados.reduce((s, p) => {
+    const n = Number((p.total || '0').replace(/[^0-9]/g, ''));
+    return s + n;
+  }, 0);
+
+  document.getElementById('statTotal').textContent = allPedidos.length;
+  document.getElementById('statConfirmados').textContent = confirmados.length;
+  document.getElementById('statPendientes').textContent = pendientes.length;
+  document.getElementById('statVentas').textContent = '$' + totalVentas.toLocaleString('es-CO');
+}
+
+function renderTable(){
+  const search = document.getElementById('filterSearch').value.toLowerCase();
+  const metodo = document.getElementById('filterMetodo').value;
+
+  const filtered = allPedidos.filter(p => {
+    const matchSearch = !search || 
+      (p.nombre || '').toLowerCase().includes(search) ||
+      (p.telefono || '').includes(search) ||
+      (p.productos || '').toLowerCase().includes(search);
+    const matchMetodo = !metodo || (p.metodo || '').includes(metodo);
+    return matchSearch && matchMetodo;
+  });
+
+  if(!filtered.length){
+    document.getElementById('tableBody').innerHTML = '<div class="empty-state">No se encontraron pedidos</div>';
+    return;
+  }
+
+  document.getElementById('tableBody').innerHTML = filtered.map(p => {
+    let badgeClass = 'badge-pendiente';
+    if((p.metodo || '').includes('Confirmado')) badgeClass = 'badge-confirmado';
+    else if((p.metodo || '').includes('WhatsApp')) badgeClass = 'badge-whatsapp';
+    
+    const metodoCorto = (p.metodo || '').replace('Bold ', '').replace(' Confirmado', ' ✅').replace(' Pendiente', ' ⏳');
+
+    return `<div class="tr" onclick='showDetail(${JSON.stringify(p).replace(/'/g, "&#39;")})' style="cursor:pointer">
+      <div class="td" style="font-size:11px">${p.fecha || '—'}</div>
+      <div class="td"><strong>${p.nombre || '—'}</strong></div>
+      <div class="td">${p.telefono || '—'}</div>
+      <div class="td">${(p.ciudad || '—').split(' —')[0]}</div>
+      <div class="td" style="font-size:11px">${p.productos || '—'}</div>
+      <div class="td"><strong style="color:var(--hot)">${p.total || '—'}</strong></div>
+      <div class="td">${p.envio || '—'}</div>
+      <div class="td"><span class="badge ${badgeClass}">${metodoCorto}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function showDetail(p){
+  const waMsg = encodeURIComponent(`¡Hola ${p.nombre}! 💄 Te escribimos de minime lovers para coordinar tu pedido.\n\nProductos: ${p.productos}\nTotal: ${p.total}\nDirección: ${p.direccion}\n\n¡Gracias por tu compra! 🌸`);
+  const waUrl = `https://wa.me/57${(p.telefono||'').replace(/\D/g,'')}?text=${waMsg}`;
+  
+  document.getElementById('detailContent').innerHTML = `
+    <div class="detail-row"><span class="detail-label">Fecha</span><span class="detail-val">${p.fecha || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Nombre</span><span class="detail-val">${p.nombre || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Teléfono</span><span class="detail-val">${p.telefono || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Correo</span><span class="detail-val">${p.email || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Ciudad</span><span class="detail-val">${p.ciudad || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Dirección</span><span class="detail-val">${p.direccion || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Productos</span><span class="detail-val">${p.productos || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Total</span><span class="detail-val" style="color:var(--hot);font-weight:600">${p.total || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Envío</span><span class="detail-val">${p.envio || '—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Método</span><span class="detail-val">${p.metodo || '—'}</span></div>
+    ${p.telefono ? `<a class="wa-btn" href="${waUrl}" target="_blank">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.847L.057 23.882l6.206-1.445A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.213-3.682.857.925-3.578-.233-.369A9.818 9.818 0 1112 21.818z"/></svg>
+      Escribir por WhatsApp
+    </a>` : ''}
+  `;
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeDetail(){
+  document.getElementById('detailModal').classList.remove('open');
+}
+
+// Enter en contraseña
+document.getElementById('pwdInput').addEventListener('keydown', e => {
+  if(e.key === 'Enter') doLogin();
+});
+</script>
+</body>
+</html>
