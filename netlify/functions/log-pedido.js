@@ -1,5 +1,3 @@
-const { getStore } = require('@netlify/blobs');
-
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -19,9 +17,11 @@ exports.handler = async (event) => {
 
   try {
     const SHEETS_URL = process.env.SHEETS_URL;
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
     const data = JSON.parse(event.body);
 
-    // 1. Guardar en Google Sheets (como antes)
     if (SHEETS_URL) {
       try {
         await fetch(SHEETS_URL, {
@@ -29,22 +29,35 @@ exports.handler = async (event) => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-      } catch(e) {
-        console.log('Sheets error:', e.message);
-      }
+      } catch(e) { console.log('Sheets error:', e.message); }
     }
 
-    // 2. Guardar en Netlify Blobs para el panel admin
-    try {
-      const store = getStore('pedidos');
-      const id = 'pedido-' + Date.now();
-      await store.setJSON(id, {
-        id,
-        ...data,
-        guardado: new Date().toISOString()
-      });
-    } catch(e) {
-      console.log('Blobs error:', e.message);
+    if (SUPABASE_URL && SUPABASE_KEY) {
+      try {
+        const id = 'pedido-' + Date.now();
+        await fetch(`${SUPABASE_URL}/rest/v1/pedidos`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            id,
+            fecha: data.fecha || '',
+            nombre: data.nombre || '',
+            telefono: data.telefono || '',
+            ciudad: data.ciudad || '',
+            direccion: data.direccion || '',
+            productos: data.productos || '',
+            total: data.total || '',
+            envio: data.envio || '',
+            metodo: data.metodo || '',
+            email: data.email || ''
+          })
+        });
+      } catch(e) { console.log('Supabase error:', e.message); }
     }
 
     return {
@@ -53,7 +66,6 @@ exports.handler = async (event) => {
       body: JSON.stringify({ ok: true })
     };
   } catch (err) {
-    console.error('log-pedido error:', err);
     return {
       statusCode: 500,
       headers: { 'Access-Control-Allow-Origin': '*' },
