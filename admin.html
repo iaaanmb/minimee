@@ -258,7 +258,7 @@ function renderTable(){
     if((p.metodo || '').includes('Confirmado')) badgeClass = 'badge-confirmado';
     else if((p.metodo || '').includes('WhatsApp')) badgeClass = 'badge-whatsapp';
     
-    const metodoCorto = (p.metodo || '').replace('Bold ', '').replace(' Confirmado', ' ✅').replace(' Pendiente', ' ⏳');
+    const metodoCorto = (p.metodo || '').includes('Confirmado') ? '✅ Confirmado' : (p.metodo || '').includes('Pendiente') ? '⏳ Pendiente' : (p.metodo || '').includes('WhatsApp') ? '💬 WhatsApp' : p.metodo || '';
 
     return `<div class="tr" onclick='showDetail(${JSON.stringify(p).replace(/'/g, "&#39;")})' style="cursor:pointer">
       <div class="td" style="font-size:11px">${p.fecha || '—'}</div>
