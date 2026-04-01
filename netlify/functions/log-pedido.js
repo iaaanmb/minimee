@@ -1,3 +1,5 @@
+const { getStore } = require('@netlify/blobs');
+
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -17,15 +19,33 @@ exports.handler = async (event) => {
 
   try {
     const SHEETS_URL = process.env.SHEETS_URL;
-    if (!SHEETS_URL) throw new Error('SHEETS_URL not configured');
-
     const data = JSON.parse(event.body);
 
-    const response = await fetch(SHEETS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+    // 1. Guardar en Google Sheets (como antes)
+    if (SHEETS_URL) {
+      try {
+        await fetch(SHEETS_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } catch(e) {
+        console.log('Sheets error:', e.message);
+      }
+    }
+
+    // 2. Guardar en Netlify Blobs para el panel admin
+    try {
+      const store = getStore('pedidos');
+      const id = 'pedido-' + Date.now();
+      await store.setJSON(id, {
+        id,
+        ...data,
+        guardado: new Date().toISOString()
+      });
+    } catch(e) {
+      console.log('Blobs error:', e.message);
+    }
 
     return {
       statusCode: 200,
