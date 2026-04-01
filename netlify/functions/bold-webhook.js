@@ -9,17 +9,7 @@ exports.handler = async (event) => {
     const SECRET = process.env.BOLD_SECRET;
     const SHEETS_URL = process.env.SHEETS_URL;
 
-    // Verify Bold signature
-    const boldSignature = event.headers['x-bold-signature'] || event.headers['bold-signature'] || '';
     const payload = event.body;
-    
-    // Verify integrity
-    const expectedSig = crypto.createHash('sha256').update(payload + SECRET).digest('hex');
-    if(boldSignature && boldSignature !== expectedSig){
-      console.log('Invalid signature');
-      // Still process for now - Bold signature format may vary
-    }
-
     const data = JSON.parse(payload);
     console.log('Bold webhook:', JSON.stringify(data));
 
@@ -35,6 +25,7 @@ exports.handler = async (event) => {
     const payerName = data.payer?.name || data.customer?.name || '';
     const payerPhone = data.payer?.phone || data.customer?.phone || '';
     const payerEmail = data.payer?.email || data.customer?.email || '';
+    const totalFmt = '$' + Number(amount).toLocaleString('es-CO');
 
     // Register in Google Sheets
     if(SHEETS_URL){
@@ -48,11 +39,37 @@ exports.handler = async (event) => {
           ciudad: '',
           direccion: '',
           productos: `Pedido ${orderId}`,
-          total: '$' + Number(amount).toLocaleString('es-CO'),
+          total: totalFmt,
           envio: '',
           metodo: 'Bold ✅ Webhook Confirmado'
         })
       });
+    }
+
+    // Send confirmation email via EmailJS REST API
+    if(payerEmail){
+      try {
+        await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service_id: 'minime_service',
+            template_id: 'template_s319duc',
+            user_id: 'f5J7OB5n6jACg3FcX',
+            template_params: {
+              nombre: payerName || 'clienta',
+              email: payerEmail,
+              productos: `Pedido ${orderId}`,
+              total: totalFmt,
+              ciudad: '',
+              direccion: ''
+            }
+          })
+        });
+        console.log('Email enviado a', payerEmail);
+      } catch(emailErr){
+        console.log('Email error:', emailErr.message);
+      }
     }
 
     return {
