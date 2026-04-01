@@ -1,5 +1,3 @@
-const { getStore } = require('@netlify/blobs');
-
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -13,7 +11,6 @@ exports.handler = async (event) => {
     };
   }
 
-  // Verificar contraseña
   const pwd = event.queryStringParameters?.pwd || '';
   if (pwd !== process.env.ADMIN_PASSWORD) {
     return {
@@ -24,19 +21,20 @@ exports.handler = async (event) => {
   }
 
   try {
-    const store = getStore('pedidos');
-    const { blobs } = await store.list();
+    const SUPABASE_URL = process.env.SUPABASE_URL;
+    const SUPABASE_KEY = process.env.UPABASE_SERVICE_KEY;
 
-    const pedidos = [];
-    for (const blob of blobs) {
-      try {
-        const data = await store.getJSON(blob.key);
-        if (data) pedidos.push(data);
-      } catch(e) {}
-    }
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/pedidos?order=guardado.desc&limit=500`,
+      {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        }
+      }
+    );
 
-    // Ordenar por fecha descendente
-    pedidos.sort((a, b) => new Date(b.guardado) - new Date(a.guardado));
+    const pedidos = await res.json();
 
     return {
       statusCode: 200,
