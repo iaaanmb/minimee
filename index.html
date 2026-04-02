@@ -277,6 +277,17 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .tono-tag:hover{background:rgba(255,255,255,.9);border-color:var(--hot);transform:translateX(4px);box-shadow:0 4px 16px rgba(184,0,62,.12)}
 .tono-tag.active{background:#fff;border-color:var(--hot);font-weight:500;color:var(--dark);transform:translateX(6px);box-shadow:0 4px 20px rgba(184,0,62,.15)}
 .tono-tag-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid #fff;box-shadow:0 0 0 1.5px rgba(0,0,0,.12)}
+
+.videos-section{padding:100px 6%;background:var(--cream)}
+.videos-header{text-align:center;margin-bottom:56px}
+.videos-header h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(36px,4vw,54px);font-weight:300;color:var(--dark)}
+.videos-header h2 em{font-style:italic;color:var(--hot)}
+.videos-header p{font-size:14px;color:var(--muted);margin-top:12px;font-weight:300}
+.videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.video-card{border-radius:12px;overflow:hidden;background:#000;position:relative;aspect-ratio:9/16}
+.video-card video{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:900px){.videos-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.videos-grid{grid-template-columns:1fr}}
 @media(max-width:900px){.tonos-piel{grid-template-columns:1fr;gap:40px}.tonos-piel-img img{width:70%;max-width:300px}}
 
 @media(max-width:900px){
@@ -856,6 +867,24 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
       <div class="t-stars">★★★★★</div>
       <div class="t-text">"Pensé que por ser en polvo no iba a funcionar bien. Me equivoqué completamente. Es diferente a todo lo que he probado en mi vida."</div>
       <div class="t-author"><div class="t-avatar">CL</div><div><div class="t-name">Camila L.</div><div class="t-city">Cali</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="videos-section">
+  <div class="videos-header">
+    <h2 class="reveal">Nuestras clientas,<br><em>en sus propias palabras</em></h2>
+    <p class="reveal d2">Momentos reales · Experiencias reales</p>
+  </div>
+  <div class="videos-grid">
+    <div class="video-card reveal d1">
+      <video src="https://res.cloudinary.com/ddozaur5c/video/upload/v1775158246/Este_a%C3%B1o_vivimos_cada_entrega_con_ilusi%C3%B3n_cada_mensaje_con_emoci%C3%B3n_y_cada_agradecimiento_com_fy4vvv.mp4" controls playsinline muted loop preload="none" poster=""></video>
+    </div>
+    <div class="video-card reveal d2">
+      <video src="https://res.cloudinary.com/ddozaur5c/video/upload/v1775158257/Las_mejores_decisiones_no_hacen_ruido_se_sienten._sebastiancarva_no_buscaba_solo_cambiar_d_odb5ht.mp4" controls playsinline muted loop preload="none" poster=""></video>
+    </div>
+    <div class="video-card reveal d3">
+      <video src="https://res.cloudinary.com/ddozaur5c/video/upload/v1775158261/No_s%C3%B3lo_entregamos_tecnolog%C3%ADa_entregamos_confianza_Gracias_yurivargas1_por_dejar_tu_e_mlzbyd.mp4" controls playsinline muted loop preload="none" poster=""></video>
     </div>
   </div>
 </section>
@@ -1452,19 +1481,27 @@ function loadBoldSDK(){
 }
 function payWA(){
   if(!cart.length)return;
+  const cityVal = document.getElementById('citySelect')?.value;
+  const name = document.getElementById('nameInput')?.value.trim();
+  const phone = document.getElementById('phoneInput')?.value.trim();
+  const address = document.getElementById('addressInput')?.value.trim();
+  if(!cityVal){ alert('Por favor selecciona tu ciudad.'); return; }
+  if(!name){ alert('Por favor ingresa tu nombre completo.'); return; }
+  if(!phone){ alert('Por favor ingresa tu teléfono.'); return; }
+  if(!address){ alert('Por favor ingresa tu dirección de entrega.'); return; }
+
   const lines=cart.map(i=>`• ${i.name} - ${i.shade} x${i.qty} — ${fmt(i.price*i.qty)}`).join('\n');
-  const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const address = document.getElementById('addressInput')?.value || '';
+  const subtotal=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = subtotal + shippingCost;
   const barrio = document.getElementById('barrioInput')?.value || '';
-  const name = document.getElementById('nameInput')?.value || '';
-  const phone = document.getElementById('phoneInput')?.value || '';
   const city = document.getElementById('citySelect')?.options[document.getElementById('citySelect')?.selectedIndex]?.text?.split(' —')[0] || '';
   let msg = `¡Hola minime lovers! 💄 Quiero hacer este pedido:\n\n${lines}\n\nTotal: ${fmt(total)}`;
-  if(name) msg += `\n\n👤 Nombre: ${name}`;
-  if(phone) msg += `\n📱 Teléfono: ${phone}`;
-  if(city) msg += `\n🏙️ Ciudad: ${city}`;
-  if(address) msg += `\n📍 Dirección: ${address}`;
+  msg += `\n\n👤 Nombre: ${name}`;
+  msg += `\n📱 Teléfono: ${phone}`;
+  msg += `\n🏙️ Ciudad: ${city}`;
+  msg += `\n📍 Dirección: ${address}`;
   if(barrio) msg += `\n🏘️ Barrio/Ref: ${barrio}`;
+  if(shippingCost > 0) msg += `\n🚚 Envío: ${fmt(shippingCost)}`;
   logPedido('WhatsApp');
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`,'_blank');
 }
