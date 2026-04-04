@@ -65,6 +65,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);
 .loading{text-align:center;padding:40px;color:var(--muted)}
 
 .detail-modal{display:none;position:fixed;inset:0;background:rgba(22,8,16,.55);z-index:500;backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px}
+
+.stock-section{background:#fff;border-radius:8px;border:1px solid rgba(184,0,62,.08);padding:24px;margin-bottom:24px}
+.stock-section h4{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);margin-bottom:20px;font-weight:500}
+.stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.stock-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:1px solid rgba(184,0,62,.08);border-radius:8px;background:var(--cream)}
+.stock-item-name{font-size:13px;color:var(--dark);font-weight:400}
+.stock-toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.stock-toggle input{opacity:0;width:0;height:0}
+.stock-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:.3s}
+.stock-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.stock-toggle input:checked + .stock-slider{background:var(--hot)}
+.stock-toggle input:checked + .stock-slider::before{transform:translateX(20px)}
+.stock-label{font-size:10px;color:var(--muted);margin-right:8px}
 .detail-modal.open{display:flex}
 .detail-box{background:#fff;border-radius:8px;padding:32px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
 .detail-box h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:20px;font-style:italic}
@@ -113,6 +126,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);
   </div>
 
   <div class="admin-body">
+    <div class="stock-section">
+      <h4>📦 Stock de productos</h4>
+      <div class="stock-grid" id="stockGrid">
+        <div style="color:var(--muted);font-size:13px">Cargando...</div>
+      </div>
+    </div>
+
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Total pedidos</div>
@@ -177,6 +197,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);
 let pwd = '';
 let allPedidos = [];
 
+async function loadStock(){
+  try {
+    const res = await fetch('/.netlify/functions/get-stock');
+    const items = await res.json();
+    document.getElementById('stockGrid').innerHTML = items.map(p => `
+      <div class="stock-item">
+        <span class="stock-item-name">${p.nombre}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span class="stock-label">${p.agotado ? 'Agotado' : 'Disponible'}</span>
+          <label class="stock-toggle">
+            <input type="checkbox" ${p.agotado ? 'checked' : ''} onchange="toggleStock(${p.id}, this.checked, this)">
+            <span class="stock-slider"></span>
+          </label>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    document.getElementById('stockGrid').innerHTML = '<div style="color:var(--hot);font-size:13px">Error cargando stock</div>';
+  }
+}
+
+async function toggleStock(id, agotado, checkbox){
+  try {
+    const res = await fetch('/.netlify/functions/update-stock', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ id, agotado, pwd })
+    });
+    if(!res.ok) throw new Error('Error');
+    const label = checkbox.parentElement.previousElementSibling;
+    if(label) label.textContent = agotado ? 'Agotado' : 'Disponible';
+  } catch(e) {
+    alert('Error actualizando stock');
+    checkbox.checked = !agotado;
+  }
+}
+
 function doLogin(){
   const input = document.getElementById('pwdInput').value;
   fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(input)}`)
@@ -195,6 +252,7 @@ function doLogin(){
       document.getElementById('adminScreen').style.display = 'block';
       updateStats();
       renderTable();
+      loadStock();
     })
     .catch(e => {
       document.getElementById('loginError').style.display = 'block';
