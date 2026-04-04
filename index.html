@@ -329,6 +329,13 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 .popular-strip{display:inline-flex;align-items:center;gap:10px;background:var(--petal);border:1px solid rgba(184,0,62,.12);padding:14px 28px;border-radius:50px;font-size:13px;color:var(--mid)}
 .popular-strip strong{color:var(--hot)}
 .p-card.hidden{display:none}
+.p-out-badge{position:absolute;inset:0;background:rgba(22,8,16,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:3px}
+.p-out-badge span:first-child{background:#fff;color:var(--dark);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:50px;font-weight:500}
+.p-out-badge span:last-child{font-size:11px;color:rgba(255,255,255,.8);text-align:center;padding:0 12px}
+.p-card.out-of-stock .p-price{color:var(--muted)}
+.detail-out-box{background:var(--petal);border:1px solid rgba(184,0,62,.15);border-radius:10px;padding:16px 20px;margin-bottom:20px;text-align:center}
+.detail-out-box strong{display:block;font-size:13px;color:var(--dark);margin-bottom:4px}
+.detail-out-box span{font-size:12px;color:var(--muted)}
 
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(22,8,16,.6);z-index:500;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
@@ -856,7 +863,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
     <h2>Los 6 tonos,<br><em>una sola decisión</em></h2>
     <p>De la oficina a la rumba. El kit completo para tener el tono perfecto en cada momento de tu vida.</p>
     <div class="kit-price-row">
-      <span class="kit-price">$120.000</span>
+      <span class="kit-price">$130.000</span>
       <span class="kit-price-sub">Kit 6 tonos</span>
     </div>
     <button class="btn-primary" onclick="openModal(15)">Personalizar y agregar kit</button>
@@ -966,7 +973,7 @@ const products = [
   {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial',slug:'latte-kiss'},
   {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial',slug:'pink-whisper'},
   {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial',slug:'tiny-flame'},
-  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso',slug:'bolso-blanco'},
+  {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso',slug:'bolso-blanco',outOfStock:true},
   {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso',slug:'bolso-negro'},
   {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso',slug:'bolso-rojo'},
   {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso',slug:'bolso-rosa'},
@@ -1006,7 +1013,29 @@ function openModal(productId){
   document.getElementById('toneCount').textContent = '0';
   document.getElementById('toneMax').textContent = maxTones;
   document.querySelectorAll('.tone-opt').forEach(t=>{t.classList.remove('selected','disabled')});
-  document.querySelectorAll('.bolso-opt').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.bolso-opt').forEach(b=>{
+    b.classList.remove('selected');
+    const color = b.dataset.color;
+    const bolsoProduct = products.find(x=>x.cat==='bolso' && x.name.includes(color));
+    if(bolsoProduct?.outOfStock){
+      b.classList.add('disabled');
+      b.style.opacity = '0.4';
+      b.style.cursor = 'not-allowed';
+      b.onclick = null;
+      if(!b.querySelector('.bolso-out-tag')){
+        const tag = document.createElement('div');
+        tag.className = 'bolso-out-tag';
+        tag.style.cssText = 'font-size:9px;color:var(--hot);letter-spacing:1px;text-transform:uppercase;margin-top:4px';
+        tag.textContent = 'Agotado';
+        b.appendChild(tag);
+      }
+    } else {
+      b.style.opacity = '1';
+      b.style.cursor = 'pointer';
+      b.onclick = function(){ selectBolso(this); };
+      b.querySelector('.bolso-out-tag')?.remove();
+    }
+  });
   document.getElementById('modalSummary').textContent = '';
   document.getElementById('btnModalAdd').disabled = true;
   document.getElementById('btnModalAdd').textContent = 'Selecciona tus opciones';
@@ -1118,15 +1147,30 @@ function openDetail(productId){
   else { badge.style.display = 'none'; }
 
   const addBtn = document.getElementById('btnDetailAdd');
-  if(p.cat === 'kit'){
-    addBtn.textContent = 'Personalizar y agregar';
-    addBtn.onclick = () => { closeDetail(); openModal(p.id); };
-  } else if(p.cat === 'bolso'){
-    addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
-    addBtn.onclick = addDetailToCart;
+  const detailQtyRow = document.querySelector('.detail-qty-row');
+  // Remove previous out-of-stock box if any
+  document.querySelector('.detail-out-box')?.remove();
+
+  if(p.outOfStock){
+    const outBox = document.createElement('div');
+    outBox.className = 'detail-out-box';
+    outBox.innerHTML = '<strong>🚫 Agotado</strong><span>En camino · te avisaremos cuando esté disponible</span>';
+    addBtn.parentNode.insertBefore(outBox, addBtn);
+    addBtn.style.display = 'none';
+    if(detailQtyRow) detailQtyRow.style.display = 'none';
   } else {
-    addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
-    addBtn.onclick = addDetailToCart;
+    addBtn.style.display = 'block';
+    if(detailQtyRow) detailQtyRow.style.display = 'flex';
+    if(p.cat === 'kit'){
+      addBtn.textContent = 'Personalizar y agregar';
+      addBtn.onclick = () => { closeDetail(); openModal(p.id); };
+    } else if(p.cat === 'bolso'){
+      addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
+      addBtn.onclick = addDetailToCart;
+    } else {
+      addBtn.textContent = 'Agregar al carrito — ' + fmt(p.price);
+      addBtn.onclick = addDetailToCart;
+    }
   }
 
   document.getElementById('detailPanel').classList.add('open');
@@ -1214,11 +1258,11 @@ async function logPedido(metodo){
 
 function renderProducts(){
     document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
-    <div class="p-card reveal d${(i%4)+1}" data-cat="${p.cat}" onclick="openDetail(${p.id})" style="cursor:pointer">
+    <div class="p-card reveal d${(i%4)+1} ${p.outOfStock?'out-of-stock':''}" data-cat="${p.cat}" onclick="${p.outOfStock?'':'openDetail('+p.id+')'}" style="cursor:${p.outOfStock?'default':'pointer'}">
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
-        ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
-        <button class="p-add" onclick="event.stopPropagation();${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>
+        ${p.badge&&!p.outOfStock?`<span class="p-badge">${p.badge}</span>`:''}
+        ${p.outOfStock?`<div class="p-out-badge"><span>Agotado</span><span>En camino · te avisaremos cuando esté disponible</span></div>`:`<button class="p-add" onclick="event.stopPropagation();${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>`}
       </div>
       <div class="p-name">${p.name}</div>
       <div class="p-shade">${p.shade}</div>
