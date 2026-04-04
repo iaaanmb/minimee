@@ -1596,6 +1596,20 @@ renderProducts();
 initReveal();
 updateCart();
 
+// Cargar stock desde Supabase y aplicar a productos
+(async function(){
+  try {
+    const res = await fetch('/.netlify/functions/get-stock');
+    const stockData = await res.json();
+    if(!Array.isArray(stockData)) return;
+    stockData.forEach(s => {
+      const p = products.find(x => x.id === s.id);
+      if(p) p.outOfStock = s.agotado;
+    });
+    renderProducts();
+  } catch(e) { console.log('Stock load error:', e); }
+})();
+
 // Auto-open product from URL hash e.g. minime.com.co/#sweet-sunset
 (function(){
   const hash = window.location.hash.replace('#','');
