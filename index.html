@@ -60,10 +60,60 @@
 <link rel="apple-touch-icon" href="favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>emailjs.init("f5J7OB5n6jACg3FcX");</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090}
+/* GSAP ANIMATIONS */
+.gsap-fade{opacity:0}
+.gsap-up{opacity:0;transform:translateY(60px)}
+.gsap-left{opacity:0;transform:translateX(-60px)}
+.gsap-right{opacity:0;transform:translateX(60px)}
+.gsap-scale{opacity:0;transform:scale(.92)}
+.clip-reveal{overflow:hidden}
+.clip-reveal-inner{transform:translateY(100%)}
+
+/* HERO PARALLAX WORD */
+.hero-word{display:block;overflow:hidden;line-height:.95}
+.hero-word-inner{display:block;transform:translateY(110%)}
+
+/* HORIZONTAL SCROLL TONOS */
+.tonos-scroll-wrap{overflow:hidden;position:relative}
+.tonos-scroll-track{display:flex;gap:16px;width:max-content}
+.tono-scroll-card{width:280px;flex-shrink:0;border-radius:12px;overflow:hidden;position:relative}
+.tono-scroll-card img{width:100%;height:380px;object-fit:cover;display:block;transform:scale(1.08)}
+.tono-scroll-label{position:absolute;bottom:20px;left:20px;font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:300;color:#fff;font-style:italic;text-shadow:0 2px 12px rgba(0,0,0,.3)}
+
+/* MARQUEE MEJORADO */
+.marquee-wrap{overflow:hidden;background:var(--hot);padding:16px 0}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 20s linear infinite}
+.marquee-track:hover{animation-play-state:paused}
+.marquee-item{font-size:13px;color:rgba(255,255,255,.9);letter-spacing:4px;text-transform:uppercase;padding:0 40px;display:inline-flex;align-items:center;gap:16px}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4);display:inline-block}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* PINNED SECTION */
+.pin-wrap{position:relative}
+.pin-text-section{display:flex;flex-direction:column;justify-content:center;min-height:100vh;padding:0 6%}
+.pin-text-section h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(48px,7vw,96px);font-weight:300;color:var(--dark);line-height:1;overflow:hidden}
+.pin-text-section h2 em{color:var(--hot);font-style:italic}
+.pin-text-section p{font-size:18px;color:var(--mid);line-height:1.8;max-width:520px;font-weight:300;margin-top:20px}
+
+/* PRODUCT CARDS HOVER 3D */
+.p-card{transform-style:preserve-3d;transition:box-shadow .3s}
+.p-card:hover{box-shadow:0 24px 48px rgba(184,0,62,.12)}
+
+/* FLOATING ELEMENTS */
+@keyframes float1{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes float2{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(3deg)}}
+.float-1{animation:float1 4s ease-in-out infinite}
+.float-2{animation:float2 5s ease-in-out infinite}
+
+/* COLOR MORPH BACKGROUND */
+body{transition:background-color 1s ease}
+
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
 
@@ -599,7 +649,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
               <option value="principal">Puerto Carreño — $15.000</option>
             </optgroup>
             <optgroup label="— Cundinamarca">
-              <option value="otro">Soacha — $12.000</option>
+              <option value="otro">Soacha — $20.000</option>
               <option value="otro">Chía — $20.000</option>
               <option value="otro">Zipaquirá — $20.000</option>
               <option value="otro">Facatativá — $20.000</option>
@@ -771,9 +821,12 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   <div class="hero-tint"></div>
   <div class="hero-content">
     <div class="hero-label">Cruelty Free · Hecho en Colombia</div>
-    <h1 class="hero-h1"><strong>Labial</strong><em>en polvo</em></h1>
-    <p class="hero-p">Pequeño en tamaño, grande en pigmento.<br>Un labial en polvo ligero y fácil de aplicar, creado para retocar tu color en cualquier momento.<br>Su textura se difumina suavemente en los labios, dejando un acabado natural, cómodo y perfecto para llevar siempre contigo.</p>
-    <div class="hero-actions">
+    <h1 class="hero-h1" style="overflow:hidden">
+      <span class="hero-word"><span class="hero-word-inner" id="hw1"><strong>Labial</strong></span></span>
+      <span class="hero-word"><span class="hero-word-inner" id="hw2"><em>en polvo <span class="hero-cycle" id="heroCycle">pigmentado</span></em></span></span>
+    </h1>
+    <p class="hero-p" id="heroP">Pequeño en tamaño, grande en pigmento.<br>Un labial en polvo ligero y fácil de aplicar, creado para retocar tu color en cualquier momento.<br>Su textura se difumina suavemente en los labios, dejando un acabado natural, cómodo y perfecto para llevar siempre contigo.</p>
+    <div class="hero-actions" id="heroActions">
       <a href="#tonos-piel" class="btn-primary">Descubrir tonos</a>
       <a href="#nosotras" class="btn-ghost-light">Nuestra historia →</a>
     </div>
@@ -784,22 +837,22 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   </div>
 </section>
 
-<div class="ticker">
-  <div class="ticker-track">
-    <span class="ticker-item">Labial en polvo <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Cruelty Free <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Hecho en Colombia <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Ultra pigmentado <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Retoques rápidos <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">6 tonos disponibles <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Envíos a toda Colombia <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Labial en polvo <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Cruelty Free <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Hecho en Colombia <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Ultra pigmentado <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Retoques rápidos <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">6 tonos disponibles <span class="ticker-dot">✦</span></span>
-    <span class="ticker-item">Envíos a toda Colombia <span class="ticker-dot">✦</span></span>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Labial en polvo<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Cruelty Free<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Hecho en Colombia<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Ultra pigmentado<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Retoques rápidos<span class="marquee-dot"></span></span>
+    <span class="marquee-item">6 tonos disponibles<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Envíos a toda Colombia<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Labial en polvo<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Cruelty Free<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Hecho en Colombia<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Ultra pigmentado<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Retoques rápidos<span class="marquee-dot"></span></span>
+    <span class="marquee-item">6 tonos disponibles<span class="marquee-dot"></span></span>
+    <span class="marquee-item">Envíos a toda Colombia<span class="marquee-dot"></span></span>
   </div>
 </div>
 
@@ -896,6 +949,11 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 
 <section class="how">
   <div class="how-header"><h2 class="reveal">¿Cómo se <em>aplica?</em></h2></div>
+  <div class="how-stats">
+    <div class="how-stat"><div class="how-stat-num" data-target="6" id="statTonos">0</div><div class="how-stat-lbl">tonos disponibles</div></div>
+    <div class="how-stat"><div class="how-stat-num" data-target="500" id="statClientas">0</div><div class="how-stat-lbl">clientas felices</div></div>
+    <div class="how-stat"><div class="how-stat-num" data-target="32" id="statCiudades">0</div><div class="how-stat-lbl">ciudades con envío</div></div>
+  </div>
   <div class="steps">
     <div class="step reveal d1"><div class="step-num">01</div><div class="step-icon">👄</div><h4>Prepara tus labios</h4><p>Hidrátalos y retira el exceso de brillo con un pañito</p></div>
     <div class="step reveal d2"><div class="step-num">02</div><div class="step-icon">✨</div><h4>Abre el mini</h4><p>Destapa el empaque y acerca el aplicador a tus labios</p></div>
@@ -1675,6 +1733,205 @@ updateCart();
     window.history.replaceState({}, '', '/');
   }
 })();
+
+// ── GSAP ANIMATIONS ──
+window.addEventListener('load', function(){
+  if(typeof gsap === 'undefined') return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  // HERO ENTRANCE
+  const tl = gsap.timeline({defaults:{ease:'power4.out'}});
+  tl.to('#hw1', {y:'0%', duration:1.1, delay:.2})
+    .to('#hw2', {y:'0%', duration:1.1}, '-=.85')
+    .to('#heroP', {opacity:1, y:0, duration:.9}, '-=.5')
+    .to('#heroActions', {opacity:1, y:0, duration:.8}, '-=.5');
+
+  gsap.set('#heroP', {opacity:0, y:30});
+  gsap.set('#heroActions', {opacity:0, y:20});
+
+  // HERO PARALLAX
+  gsap.to('.hero-bg', {
+    yPercent: 25,
+    ease:'none',
+    scrollTrigger:{trigger:'.hero', start:'top top', end:'bottom top', scrub:true}
+  });
+
+  // ABOUT SECTION
+  gsap.from('.about-img img', {
+    scale:1.15, duration:1.4, ease:'power2.out',
+    scrollTrigger:{trigger:'.about-strip', start:'top 80%', toggleActions:'play none none none'}
+  });
+  gsap.from('.about-text h2', {
+    y:50, opacity:0, duration:.9, ease:'power3.out',
+    scrollTrigger:{trigger:'.about-text', start:'top 75%'}
+  });
+  gsap.from('.about-text p', {
+    y:40, opacity:0, duration:.9, delay:.2, ease:'power3.out',
+    scrollTrigger:{trigger:'.about-text', start:'top 75%'}
+  });
+  gsap.from('.pillar', {
+    y:30, opacity:0, duration:.7, stagger:.15, ease:'power2.out',
+    scrollTrigger:{trigger:'.pillars', start:'top 80%'}
+  });
+
+  // TONOS PIEL — imagen con scale reveal
+  gsap.from('.tonos-piel-img img', {
+    scale:1.2, duration:1.2, ease:'power2.out',
+    scrollTrigger:{trigger:'.tonos-piel', start:'top 70%'}
+  });
+  gsap.from('.tono-tag', {
+    x:-30, opacity:0, stagger:.08, duration:.6, ease:'power2.out',
+    scrollTrigger:{trigger:'.tonos-list', start:'top 80%'}
+  });
+
+  // PRODUCTOS GRID — cards entran en cascada
+  ScrollTrigger.create({
+    trigger:'#pGrid',
+    start:'top 85%',
+    onEnter: () => {
+      gsap.from('.p-card', {
+        y:50, opacity:0, stagger:.06, duration:.7, ease:'power2.out'
+      });
+    }
+  });
+
+  // TILT 3D EN CARDS
+  document.querySelectorAll('.p-card:not(.out-of-stock)').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      gsap.to(card,{rotateY:x*12,rotateX:-y*12,translateZ:8,duration:.3,ease:'power2.out',transformPerspective:800});
+    });
+    card.addEventListener('mouseleave',()=>{
+      gsap.to(card,{rotateY:0,rotateX:0,translateZ:0,duration:.5,ease:'power2.out'});
+    });
+  });
+
+  // KIT BANNER
+  gsap.from('.kit-img img', {
+    scale:1.12, duration:1.2, ease:'power2.out',
+    scrollTrigger:{trigger:'.kit', start:'top 75%'}
+  });
+  gsap.from('.kit-text > *', {
+    y:40, opacity:0, stagger:.12, duration:.8, ease:'power3.out',
+    scrollTrigger:{trigger:'.kit-text', start:'top 80%'}
+  });
+
+  // TESTIMONIOS
+  gsap.from('.t-card', {
+    y:40, opacity:0, stagger:.15, duration:.8, ease:'power2.out',
+    scrollTrigger:{trigger:'.tgrid', start:'top 80%'}
+  });
+
+  // STEPS
+  gsap.from('.step', {
+    y:40, opacity:0, stagger:.12, duration:.7, ease:'power2.out',
+    scrollTrigger:{trigger:'.steps', start:'top 80%'}
+  });
+
+  // CTA BANNER
+  gsap.from('.cta-text h2', {
+    y:50, opacity:0, duration:.9, ease:'power3.out',
+    scrollTrigger:{trigger:'.cta-banner', start:'top 80%'}
+  });
+  gsap.from('.cta-btns', {
+    x:30, opacity:0, duration:.8, delay:.2, ease:'power2.out',
+    scrollTrigger:{trigger:'.cta-banner', start:'top 80%'}
+  });
+
+  // FOOTER
+  gsap.from('footer > *', {
+    y:30, opacity:0, stagger:.1, duration:.7, ease:'power2.out',
+    scrollTrigger:{trigger:'footer', start:'top 90%'}
+  });
+
+  // CONTADORES
+  function animCount(el,target,dur){
+    let start=null;
+    function step(ts){
+      if(!start)start=ts;
+      const p=Math.min((ts-start)/dur,1);
+      const ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(ease*target)+(target>=100?'+':'');
+      if(p<1)requestAnimationFrame(step);
+    }requestAnimationFrame(step);
+  }
+  const cobs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      animCount(e.target,parseInt(e.target.dataset.target),1400);
+      cobs.unobserve(e.target);
+    });
+  },{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>cobs.observe(el));
+
+  // SPARKLE AL AGREGAR
+  const sparks=['✦','✧','·','◦','*'];
+  const cols=['#B8003E','#F2C4D8','#D4005A'];
+  function doSparkle(x,y){
+    for(let i=0;i<8;i++){
+      const s=document.createElement('div');
+      s.style.cssText='position:fixed;pointer-events:none;font-size:14px;z-index:9999;animation:mmSpark .7s ease forwards';
+      s.textContent=sparks[Math.floor(Math.random()*sparks.length)];
+      s.style.color=cols[Math.floor(Math.random()*cols.length)];
+      s.style.left=x+'px';s.style.top=y+'px';
+      const angle=Math.random()*Math.PI*2;
+      const dist=30+Math.random()*50;
+      s.style.setProperty('--sx',Math.cos(angle)*dist+'px');
+      s.style.setProperty('--sy',Math.sin(angle)*dist+'px');
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),700);
+    }
+  }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.p-add,.btn-modal-add,.btn-detail-add');
+    if(btn)doSparkle(e.clientX,e.clientY);
+  });
+
+  // BOTÓN MAGNÉTICO
+  document.querySelectorAll('.btn-primary,.btn-white').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.2,y:(e.clientY-r.top-r.height/2)*.2,duration:.3,ease:'power2.out'});
+    });
+    btn.addEventListener('mouseleave',()=>gsap.to(btn,{x:0,y:0,duration:.5,ease:'elastic.out(1,.4)'}));
+  });
+
+  // TEXTO CICLO HERO
+  const cycleEl=document.getElementById('heroCycle');
+  if(cycleEl){
+    const words=['pigmentado','mini','cruelty free','colombiano','irresistible'];
+    let ci=0;
+    setInterval(()=>{
+      gsap.to(cycleEl,{opacity:0,y:-10,duration:.25,onComplete:()=>{
+        ci=(ci+1)%words.length;
+        cycleEl.textContent=words[ci];
+        gsap.fromTo(cycleEl,{opacity:0,y:10},{opacity:1,y:0,duration:.3});
+      }});
+    },2200);
+  }
+});
+
+// SPARKLE KEYFRAME
+const sparkStyle=document.createElement('style');
+sparkStyle.textContent='@keyframes mmSpark{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0)}}';
+document.head.appendChild(sparkStyle);
+
+(function(){
+  const el=document.getElementById('heroCycle');
+  if(!el)return;
+  const words=['pigmentado','mini','cruelty free','colombiano','irresistible','único'];
+  let i=0;
+  setInterval(()=>{
+    el.classList.add('fade');
+    setTimeout(()=>{i=(i+1)%words.length;el.textContent=words[i];el.classList.remove('fade')},320);
+  },2200);
+})();
+
+
 </script>
+</body>
+</html></script>
 </body>
 </html>
