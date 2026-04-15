@@ -599,7 +599,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
               <option value="principal">Puerto Carreño — $15.000</option>
             </optgroup>
             <optgroup label="— Cundinamarca">
-              <option value="otro">Soacha — $12.000</option>
+              <option value="otro">Soacha — $20.000</option>
               <option value="otro">Chía — $20.000</option>
               <option value="otro">Zipaquirá — $20.000</option>
               <option value="otro">Facatativá — $20.000</option>
@@ -771,7 +771,7 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
   <div class="hero-tint"></div>
   <div class="hero-content">
     <div class="hero-label">Cruelty Free · Hecho en Colombia</div>
-    <h1 class="hero-h1"><strong>Labial</strong><em>en polvo</em></h1>
+    <h1 class="hero-h1"><strong>Labial</strong><em>en polvo <span class="hero-cycle" id="heroCycle">pigmentado</span></em></h1>
     <p class="hero-p">Pequeño en tamaño, grande en pigmento.<br>Un labial en polvo ligero y fácil de aplicar, creado para retocar tu color en cualquier momento.<br>Su textura se difumina suavemente en los labios, dejando un acabado natural, cómodo y perfecto para llevar siempre contigo.</p>
     <div class="hero-actions">
       <a href="#tonos-piel" class="btn-primary">Descubrir tonos</a>
@@ -896,6 +896,11 @@ footer{padding:70px 6% 40px;border-top:1px solid rgba(184,0,62,.08);display:grid
 
 <section class="how">
   <div class="how-header"><h2 class="reveal">¿Cómo se <em>aplica?</em></h2></div>
+  <div class="how-stats">
+    <div class="how-stat"><div class="how-stat-num" data-target="6" id="statTonos">0</div><div class="how-stat-lbl">tonos disponibles</div></div>
+    <div class="how-stat"><div class="how-stat-num" data-target="500" id="statClientas">0</div><div class="how-stat-lbl">clientas felices</div></div>
+    <div class="how-stat"><div class="how-stat-num" data-target="32" id="statCiudades">0</div><div class="how-stat-lbl">ciudades con envío</div></div>
+  </div>
   <div class="steps">
     <div class="step reveal d1"><div class="step-num">01</div><div class="step-icon">👄</div><h4>Prepara tus labios</h4><p>Hidrátalos y retira el exceso de brillo con un pañito</p></div>
     <div class="step reveal d2"><div class="step-num">02</div><div class="step-icon">✨</div><h4>Abre el mini</h4><p>Destapa el empaque y acerca el aplicador a tus labios</p></div>
@@ -1675,6 +1680,95 @@ updateCart();
     window.history.replaceState({}, '', '/');
   }
 })();
+
+// ── TEXTO CICLO HERO ──
+(function(){
+  const el=document.getElementById('heroCycle');
+  if(!el)return;
+  const words=['pigmentado','mini','cruelty free','colombiano','irresistible','único'];
+  let i=0;
+  setInterval(()=>{
+    el.classList.add('fade');
+    setTimeout(()=>{i=(i+1)%words.length;el.textContent=words[i];el.classList.remove('fade')},320);
+  },2200);
+})();
+
+// ── TILT 3D EN CARDS ──
+(function(){
+  document.addEventListener('mousemove',e=>{
+    document.querySelectorAll('.p-card:not(.out-of-stock)').forEach(card=>{
+      const r=card.getBoundingClientRect();
+      if(e.clientX<r.left-80||e.clientX>r.right+80||e.clientY<r.top-80||e.clientY>r.bottom+80){
+        card.style.transform='';return;
+      }
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-8px)`;
+    });
+  });
+})();
+
+// ── SPARKLE AL AGREGAR AL CARRITO ──
+(function(){
+  const sparks=['✦','✧','·','◦','*'];
+  const cols=['#B8003E','#F2C4D8','#D4005A','#FDF0F6'];
+  function doSparkle(x,y){
+    for(let i=0;i<7;i++){
+      const s=document.createElement('div');
+      s.className='mm-sparkle';
+      s.textContent=sparks[Math.floor(Math.random()*sparks.length)];
+      s.style.color=cols[Math.floor(Math.random()*cols.length)];
+      s.style.left=x+'px';s.style.top=y+'px';
+      const angle=Math.random()*Math.PI*2;
+      const dist=30+Math.random()*50;
+      s.style.setProperty('--sx',Math.cos(angle)*dist+'px');
+      s.style.setProperty('--sy',Math.sin(angle)*dist+'px');
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(),700);
+    }
+  }
+  document.addEventListener('click',e=>{
+    const btn=e.target.closest('.p-add,.btn-modal-add,.btn-detail-add');
+    if(btn)doSparkle(e.clientX,e.clientY);
+  });
+})();
+
+// ── CONTADORES ANIMADOS ──
+(function(){
+  function animCount(el,target,dur){
+    let start=null;
+    function step(ts){
+      if(!start)start=ts;
+      const p=Math.min((ts-start)/dur,1);
+      const ease=1-Math.pow(1-p,3);
+      el.textContent=Math.round(ease*target)+(target>=100?'+':'');
+      if(p<1)requestAnimationFrame(step);
+    }requestAnimationFrame(step);
+  }
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const t=parseInt(e.target.dataset.target);
+      animCount(e.target,t,1400);
+      obs.unobserve(e.target);
+    });
+  },{threshold:.5});
+  document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
+})();
+
+// ── BOTÓN MAGNÉTICO ──
+(function(){
+  document.querySelectorAll('.btn-primary,.btn-white').forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const x=(e.clientX-r.left-r.width/2)*.2;
+      const y=(e.clientY-r.top-r.height/2)*.2;
+      btn.style.transform=`translate(${x}px,${y}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>btn.style.transform='');
+  });
+})();
+
 </script>
 </body>
 </html>
