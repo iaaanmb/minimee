@@ -234,6 +234,35 @@ async function toggleStock(id, agotado, checkbox){
   }
 }
 
+async function confirmarPago(id){
+  if(!confirm('¿Confirmar este pago manualmente?')) return;
+  try {
+    const SUPABASE_URL = 'https://jdroevumwjgcybeppasj.supabase.co';
+    const res = await fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(pwd)}&confirmar=${id}`, {
+      method: 'GET'
+    });
+    // Update via update-stock pattern — use a dedicated endpoint or direct Supabase
+    const supRes = await fetch(`${SUPABASE_URL}/rest/v1/pedidos?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjEzODAsImV4cCI6MjA5MDYzNzM4MH0.crNPtUyXmDjxTQm_J_XCA8BssBLHnGfBZ0YkFLnvEvg',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjEzODAsImV4cCI6MjA5MDYzNzM4MH0.crNPtUyXmDjxTQm_J_XCA8BssBLHnGfBZ0YkFLnvEvg',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ metodo: 'Bold ✅ Confirmado Manual' })
+    });
+    if(supRes.ok){
+      alert('✅ Pago confirmado correctamente');
+      loadPedidos();
+    } else {
+      alert('Error al confirmar. Intenta de nuevo.');
+    }
+  } catch(e){
+    alert('Error: ' + e.message);
+  }
+}
+
 function doLogin(){
   const input = document.getElementById('pwdInput').value;
   fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(input)}`)
@@ -315,8 +344,9 @@ function renderTable(){
     let badgeClass = 'badge-pendiente';
     if((p.metodo || '').includes('Confirmado')) badgeClass = 'badge-confirmado';
     else if((p.metodo || '').includes('WhatsApp')) badgeClass = 'badge-whatsapp';
-    
+
     const metodoCorto = (p.metodo || '').includes('Confirmado') ? '✅ Confirmado' : (p.metodo || '').includes('Pendiente') ? '⏳ Pendiente' : (p.metodo || '').includes('WhatsApp') ? '💬 WhatsApp' : p.metodo || '';
+    const isPendiente = (p.metodo || '').includes('Pendiente');
 
     return `<div class="tr" onclick='showDetail(${JSON.stringify(p).replace(/'/g, "&#39;")})' style="cursor:pointer">
       <div class="td" style="font-size:11px">${p.fecha || '—'}</div>
@@ -326,7 +356,10 @@ function renderTable(){
       <div class="td" style="font-size:11px">${p.productos || '—'}</div>
       <div class="td"><strong style="color:var(--hot)">${p.total || '—'}</strong></div>
       <div class="td">${p.envio || '—'}</div>
-      <div class="td"><span class="badge ${badgeClass}">${metodoCorto}</span></div>
+      <div class="td" style="gap:6px;flex-direction:column;align-items:flex-start">
+        <span class="badge ${badgeClass}">${metodoCorto}</span>
+        ${isPendiente ? `<button onclick="event.stopPropagation();confirmarPago('${p.id}')" style="font-size:10px;background:#0a7c3e;color:#fff;border:none;padding:3px 10px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:.5px">✓ Confirmar pago</button>` : ''}
+      </div>
     </div>`;
   }).join('');
 }
