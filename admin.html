@@ -237,26 +237,17 @@ async function toggleStock(id, agotado, checkbox){
 async function confirmarPago(id){
   if(!confirm('¿Confirmar este pago manualmente?')) return;
   try {
-    const SUPABASE_URL = 'https://jdroevumwjgcybeppasj.supabase.co';
-    const res = await fetch(`/.netlify/functions/get-pedidos?pwd=${encodeURIComponent(pwd)}&confirmar=${id}`, {
-      method: 'GET'
+    const res = await fetch('/.netlify/functions/confirm-pedido', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ id, pwd })
     });
-    // Update via update-stock pattern — use a dedicated endpoint or direct Supabase
-    const supRes = await fetch(`${SUPABASE_URL}/rest/v1/pedidos?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjEzODAsImV4cCI6MjA5MDYzNzM4MH0.crNPtUyXmDjxTQm_J_XCA8BssBLHnGfBZ0YkFLnvEvg',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjEzODAsImV4cCI6MjA5MDYzNzM4MH0.crNPtUyXmDjxTQm_J_XCA8BssBLHnGfBZ0YkFLnvEvg',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ metodo: 'Bold ✅ Confirmado Manual' })
-    });
-    if(supRes.ok){
+    const data = await res.json();
+    if(data.ok){
       alert('✅ Pago confirmado correctamente');
       loadPedidos();
     } else {
-      alert('Error al confirmar. Intenta de nuevo.');
+      alert('Error al confirmar: ' + (data.error || 'intenta de nuevo'));
     }
   } catch(e){
     alert('Error: ' + e.message);
