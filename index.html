@@ -1043,7 +1043,7 @@ function updateDocPlaceholder(){
 
 function getDocumento(){
   const type = document.getElementById('docTypeInput')?.value || 'CC';
-  const num = getDocumento();
+  const num = document.getElementById('cedulaInput')?.value || '';
   return type + ' ' + num;
 }
 
