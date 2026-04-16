@@ -1783,6 +1783,7 @@ window.addEventListener('load', function(){
   const tl = gsap.timeline({defaults:{ease:'power4.out'}});
   tl.to('#hw1', {y:'0%', duration:1.1, delay:.2})
     .to('#hw2', {y:'0%', duration:1.1}, '-=.85')
+    .to('#hw3', {y:'0%', duration:1.0}, '-=.75')
     .to('#heroP', {opacity:1, y:0, duration:.9}, '-=.5')
     .to('#heroActions', {opacity:1, y:0, duration:.8}, '-=.5');
 
