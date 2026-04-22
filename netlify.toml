@@ -3,5 +3,5 @@
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
 
-[build]
-  SECRETS_SCAN_OMIT_KEYS = "SUPABASE_URL"
+[build.environment]
+  SECRETS_SCAN_OMIT_PATHS = "reset.html"
