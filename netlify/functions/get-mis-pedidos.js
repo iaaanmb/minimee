@@ -12,7 +12,7 @@ exports.handler = async (event) => {
     if(!userData.email) return {statusCode:401,headers,body:JSON.stringify({error:'Sesión inválida'})};
     // Obtener pedidos de ese email, solo confirmados
     const pedidosRes = await fetch(
-      `${process.env.SUPABASE_URL}/rest/v1/pedidos?email=eq.${encodeURIComponent(userData.email)}&order=created_at.desc`,
+      `${process.env.SUPABASE_URL}/rest/v1/pedidos?email=eq.${encodeURIComponent(userData.email)}&order=created_at.desc&select=id,fecha,productos,total,envio,metodo,estado,guia,transportadora`,
       {headers:{'apikey':process.env.SUPABASE_SERVICE_KEY,'Authorization':`Bearer ${process.env.SUPABASE_SERVICE_KEY}`}}
     );
     const pedidos = await pedidosRes.json();

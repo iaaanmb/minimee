@@ -302,6 +302,7 @@ function renderPedidos(){
       <div class="td" style="flex-direction:column;align-items:flex-start;gap:5px">
         <span class="badge ${bc}">${mc}</span>
         ${ip?`<button class="btn-confirmar" onclick="event.stopPropagation();confirmarPago('${p.id}')">✓ Confirmar</button>`:''}
+        ${p.estado&&p.estado!=='En preparación'?`<span class="badge" style="background:${p.estado==='Enviado'?'#d4edda':p.estado==='Entregado'?'#e9d4f0':'#ffeeba'};color:${p.estado==='Enviado'?'#0a7c3e':p.estado==='Entregado'?'#6a1a9a':'#856404'};font-size:10px">${p.estado==='Enviado'?'🚚':p.estado==='Entregado'?'✅':'❌'} ${p.estado}</span>`:''}
       </div>
     </div>`;
   }).join('');
@@ -315,7 +316,7 @@ async function confirmarPago(id){
 }
 
 function showPedidoDetail(p){
-  const wm=encodeURIComponent(`¡Hola ${p.nombre}! 💄 Te escribimos de minime lovers.\n\nProductos: ${p.productos}\nTotal: ${p.total}\nDirección: ${p.direccion}\n\n¡Gracias por tu compra! 🌸`);
+  const wm=encodeURIComponent(`¡Hola ${p.nombre}! 💄 Tu pedido de minime lovers está en camino.\n\nProductos: ${p.productos}\nGuía: ${p.guia||'—'}\nTransportadora: ${p.transportadora||'—'}\n\n¡Gracias por tu compra! 🌸`);
   document.getElementById('detailTitle').textContent='Pedido de '+(p.nombre||'cliente');
   document.getElementById('detailContent').innerHTML=`
     <div class="detail-row"><span class="detail-label">Fecha</span><span class="detail-val">${p.fecha||'—'}</span></div>
@@ -328,11 +329,64 @@ function showPedidoDetail(p){
     <div class="detail-row"><span class="detail-label">Productos</span><span class="detail-val">${p.productos||'—'}</span></div>
     <div class="detail-row"><span class="detail-label">Total</span><span class="detail-val" style="color:var(--hot);font-weight:600">${p.total||'—'}</span></div>
     <div class="detail-row"><span class="detail-label">Envío</span><span class="detail-val">${p.envio||'—'}</span></div>
-    <div class="detail-row"><span class="detail-label">Estado</span><span class="detail-val">${p.metodo||'—'}</span></div>
+    <div class="detail-row"><span class="detail-label">Pago</span><span class="detail-val">${p.metodo||'—'}</span></div>
+    <hr style="margin:16px 0;border-color:rgba(184,0,62,.1)">
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--hot);margin-bottom:14px;font-weight:500">Seguimiento del pedido</div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Estado</label>
+      <select id="editEstado" style="width:100%;padding:8px 12px;border:1.5px solid rgba(184,0,62,.2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:#160810;outline:none">
+        <option value="En preparación" ${(p.estado||'En preparación')==='En preparación'?'selected':''}>📦 En preparación</option>
+        <option value="Enviado" ${p.estado==='Enviado'?'selected':''}>🚚 Enviado</option>
+        <option value="Entregado" ${p.estado==='Entregado'?'selected':''}>✅ Entregado</option>
+        <option value="Cancelado" ${p.estado==='Cancelado'?'selected':''}>❌ Cancelado</option>
+      </select>
+    </div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Transportadora</label>
+      <select id="editTransportadora" style="width:100%;padding:8px 12px;border:1.5px solid rgba(184,0,62,.2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:#160810;outline:none">
+        <option value="" ${!p.transportadora?'selected':''}>— Sin asignar —</option>
+        <option value="Interrapidísimo" ${p.transportadora==='Interrapidísimo'?'selected':''}>Interrapidísimo</option>
+        <option value="Servientrega" ${p.transportadora==='Servientrega'?'selected':''}>Servientrega</option>
+        <option value="Coordinadora" ${p.transportadora==='Coordinadora'?'selected':''}>Coordinadora</option>
+        <option value="Envia" ${p.transportadora==='Envia'?'selected':''}>Envia</option>
+        <option value="TCC" ${p.transportadora==='TCC'?'selected':''}>TCC</option>
+      </select>
+    </div>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;color:var(--muted);display:block;margin-bottom:4px">Número de guía</label>
+      <input id="editGuia" type="text" value="${p.guia||''}" placeholder="Ej: 123456789" style="width:100%;padding:8px 12px;border:1.5px solid rgba(184,0,62,.2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:#160810;outline:none">
+    </div>
+    <button onclick="guardarSeguimiento('${p.id}')" style="width:100%;background:var(--hot);color:#fff;padding:10px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Guardar cambios</button>
     ${p.telefono?`<a class="wa-btn" href="https://wa.me/57${(p.telefono||'').replace(/\D/g,'')}?text=${wm}" target="_blank">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.525 5.847L.057 23.882l6.206-1.445A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.372l-.36-.213-3.682.857.925-3.578-.233-.369A9.818 9.818 0 1112 21.818z"/></svg>
-      Escribir por WhatsApp</a>`:''}`;
+      Notificar por WhatsApp</a>`:''}`;
   document.getElementById('detailModal').classList.add('open');
+}
+
+async function guardarSeguimiento(id){
+  const estado = document.getElementById('editEstado').value;
+  const guia = document.getElementById('editGuia').value.trim();
+  const transportadora = document.getElementById('editTransportadora').value;
+  const btn = event.target;
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+  try {
+    const r = await fetch('/.netlify/functions/update-pedido', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','x-admin-pwd':pwd},
+      body: JSON.stringify({id, estado, guia, transportadora})
+    });
+    const d = await r.json();
+    if(d.ok){
+      btn.textContent = '✅ Guardado';
+      const idx = allPedidos.findIndex(p=>p.id==id);
+      if(idx>=0){ allPedidos[idx].estado=estado; allPedidos[idx].guia=guia; allPedidos[idx].transportadora=transportadora; }
+      setTimeout(()=>{ btn.disabled=false; btn.textContent='Guardar cambios'; },1500);
+    } else {
+      btn.textContent = 'Error: '+(d.error||'intenta de nuevo');
+      btn.disabled = false;
+    }
+  } catch(e){ btn.textContent='Error al guardar'; btn.disabled=false; }
 }
 
 async function loadClientes(){

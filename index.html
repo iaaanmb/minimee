@@ -576,6 +576,12 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 .pedido-card-estado{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:20px;font-weight:500}
 .estado-confirmado{background:#d4edda;color:#0a7c3e}
 .estado-pendiente{background:#fff3cd;color:#856404}
+.estado-preparacion{background:#e8f4fd;color:#0a6ebd}
+.estado-enviado{background:#d4edda;color:#0a7c3e}
+.estado-entregado{background:#e9d4f0;color:#6a1a9a}
+.pedido-card-tracking{margin-top:10px;padding:10px 12px;background:rgba(184,0,62,.04);border-radius:6px;font-size:12px;color:var(--muted)}
+.pedido-card-tracking a{color:var(--hot);text-decoration:none;font-weight:500}
+.pedido-card-tracking a:hover{text-decoration:underline}
 .pedidos-empty{text-align:center;padding:40px 0;color:var(--muted);font-size:14px}
 .pedidos-logout{margin-top:16px;width:100%;background:transparent;color:var(--muted);border:1px solid rgba(184,0,62,.15);padding:10px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;transition:all .2s}
 .pedidos-logout:hover{color:var(--hot);border-color:var(--hot)}
@@ -2303,14 +2309,39 @@ async function loadPedidos(){
       listEl.innerHTML='<div class="pedidos-empty">🛍️<br><br>Aún no tienes pedidos registrados</div>'; return;
     }
     listEl.innerHTML = pedidos.map(p => {
-      const esConfirmado = (p.metodo||'').includes('Confirmado');
+      const estado = p.estado || 'En preparación';
+      const estadoClass = {
+        'En preparación': 'estado-preparacion',
+        'Enviado': 'estado-enviado',
+        'Entregado': 'estado-entregado',
+        'Cancelado': 'estado-pendiente'
+      }[estado] || 'estado-pendiente';
+      const estadoIcon = {
+        'En preparación': '📦',
+        'Enviado': '🚚',
+        'Entregado': '✅',
+        'Cancelado': '❌'
+      }[estado] || '⏳';
+      const trackingUrl = p.transportadora && p.guia ? {
+        'Interrapidísimo': `https://www.interrapidisimo.com/rastreo/?guia=${p.guia}`,
+        'Servientrega': `https://www.servientrega.com.co/wps/portal/rastreo?numero=${p.guia}`,
+        'Coordinadora': `https://coordinadora.com/portafolio-de-servicios/servicios-en-linea/rastrear-guias/?guia=${p.guia}`,
+        'Envia': `https://www.envia.com/rastreo?numero=${p.guia}`,
+        'TCC': `https://www.tcc.com.co/portal/rastreo?numero=${p.guia}`
+      }[p.transportadora] : null;
+      const trackingHtml = p.guia ? `<div class="pedido-card-tracking">
+        🚚 Guía: <strong>${p.guia}</strong>${p.transportadora ? ' · ' + p.transportadora : ''}
+        ${trackingUrl ? ` · <a href="${trackingUrl}" target="_blank">Rastrear envío</a>` : ''}
+      </div>` : '';
       return `<div class="pedido-card">
         <div class="pedido-card-fecha">${p.fecha||'—'}</div>
         <div class="pedido-card-productos">${p.productos||'—'}</div>
         <div class="pedido-card-row">
           <span class="pedido-card-total">${p.total||'—'}</span>
-          <span class="pedido-card-estado ${esConfirmado?'estado-confirmado':'estado-pendiente'}">${esConfirmado?'✅ Confirmado':'⏳ Pendiente'}</span>
+          <span class="pedido-card-estado ${estadoClass}">${estadoIcon} ${estado}</span>
         </div>
+        ${p.envio ? `<div style="font-size:11px;color:var(--muted);margin-top:4px">Envío: ${p.envio}</div>` : ''}
+        ${trackingHtml}
       </div>`;
     }).join('');
   } catch(e){ listEl.innerHTML='<div class="pedidos-empty">Error cargando pedidos</div>'; }
