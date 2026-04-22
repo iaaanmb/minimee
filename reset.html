@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueva contraseña — minime lovers</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090}
+body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#1A0510,#3D0A20);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{background:#fff;border-radius:12px;padding:48px 40px;width:100%;max-width:420px;text-align:center}
+.box img{height:44px;margin-bottom:28px}
+.box h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;font-weight:300;color:var(--dark);margin-bottom:8px;line-height:1.2}
+.box h2 em{font-style:italic;color:var(--hot)}
+.box p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.input{width:100%;padding:11px 16px;border:1.5px solid rgba(184,0,62,.2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--dark);outline:none;margin-bottom:12px;transition:border-color .2s}
+.input:focus{border-color:var(--hot)}
+.btn{width:100%;background:var(--hot);color:#fff;padding:13px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:background .25s;margin-top:4px}
+.btn:hover{background:var(--rose)}
+.btn:disabled{background:var(--muted);cursor:not-allowed}
+.error{font-size:12px;color:var(--hot);margin-top:10px;display:none;text-align:center}
+.success{text-align:center}
+.success .icon{font-size:52px;margin-bottom:16px}
+.success h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:300;color:var(--dark);margin-bottom:8px}
+.success p{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:24px}
+.link{font-size:13px;color:var(--muted);text-decoration:none;display:inline-block;margin-top:16px;transition:color .2s}
+.link:hover{color:var(--hot)}
+</style>
+</head>
+<body>
+
+<div class="box" id="mainBox">
+  <img src="logo.png" alt="minime lovers">
+  <div id="content"></div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://jdroevumwjgcybeppasj.supabase.co';
+
+function getTokenFromHash(){
+  const hash = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  return {
+    access_token: params.get('access_token'),
+    type: params.get('type')
+  };
+}
+
+function showExpired(){
+  document.getElementById('content').innerHTML = `
+    <h2>Link <em>expirado</em></h2>
+    <p>Este enlace ya no es válido o expiró. Solicita uno nuevo desde la tienda.</p>
+    <div style="font-size:48px;margin:20px 0">⏳</div>
+    <a href="/" class="btn" style="display:inline-block;text-decoration:none;line-height:1;padding:13px 32px">Volver a la tienda</a>
+  `;
+}
+
+function showForm(token){
+  document.getElementById('content').innerHTML = `
+    <h2>Nueva <em>contraseña</em></h2>
+    <p>Elige una contraseña segura para tu cuenta minime lovers.</p>
+    <input class="input" type="password" id="newPwd" placeholder="Nueva contraseña" minlength="6">
+    <input class="input" type="password" id="confirmPwd" placeholder="Confirmar contraseña">
+    <button class="btn" id="saveBtn" onclick="savePassword('${token}')">Guardar contraseña</button>
+    <div class="error" id="errorMsg"></div>
+  `;
+}
+
+function showSuccess(){
+  document.getElementById('content').innerHTML = `
+    <div class="success">
+      <div class="icon">🎉</div>
+      <h3>¡Contraseña actualizada!</h3>
+      <p>Tu contraseña fue cambiada correctamente. Ya puedes iniciar sesión.</p>
+      <a href="/" class="btn" style="display:inline-block;text-decoration:none;line-height:1;padding:13px 32px">Ir a la tienda</a>
+    </div>
+  `;
+}
+
+async function savePassword(token){
+  const pwd = document.getElementById('newPwd').value;
+  const confirm = document.getElementById('confirmPwd').value;
+  const errEl = document.getElementById('errorMsg');
+  const btn = document.getElementById('saveBtn');
+  errEl.style.display = 'none';
+
+  if(pwd.length < 6){ errEl.textContent = 'La contraseña debe tener al menos 6 caracteres'; errEl.style.display='block'; return; }
+  if(pwd !== confirm){ errEl.textContent = 'Las contraseñas no coinciden'; errEl.style.display='block'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzI4NTYsImV4cCI6MjA1NzY0ODg1Nn0.oRjLB4x3EmIgMfTXLpGEjQLpRQTfAqJV2C2MVvdvucs',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ password: pwd })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.msg || data.message || 'Error al actualizar');
+    showSuccess();
+    window.location.hash = '';
+  } catch(e){
+    errEl.textContent = e.message || 'Error al guardar. Intenta de nuevo.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Guardar contraseña';
+  }
+}
+
+// Inicializar
+const { access_token, type } = getTokenFromHash();
+if(access_token && type === 'recovery'){
+  showForm(access_token);
+} else {
+  showExpired();
+}
+</script>
+
+</body>
+</html>

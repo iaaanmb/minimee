@@ -4,14 +4,14 @@ exports.handler = async (event) => {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, x-admin-pwd',
         'Access-Control-Allow-Methods': 'GET, OPTIONS'
       },
       body: ''
     };
   }
 
-  const pwd = event.queryStringParameters?.pwd || '';
+  const pwd = event.headers?.['x-admin-pwd'] || event.queryStringParameters?.pwd || '';
   if (pwd !== process.env.ADMIN_PASSWORD) {
     return {
       statusCode: 401,
