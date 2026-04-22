@@ -1178,6 +1178,14 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 </div>
 
 <script>
+// Redirigir a reset.html si hay token de recuperación en el hash
+(function(){
+  const hash = new URLSearchParams(window.location.hash.substring(1));
+  if(hash.get('type') === 'recovery' && hash.get('access_token')){
+    window.location.href = '/reset.html' + window.location.hash;
+  }
+})();
+
 const WA = '573124634966';
 
 function updateDocPlaceholder(){
