@@ -37,8 +37,6 @@ body{font-family:'DM Sans',sans-serif;background:linear-gradient(135deg,#1A0510,
 </div>
 
 <script>
-const SUPABASE_URL = 'https://jdroevumwjgcybeppasj.supabase.co';
-
 function getTokenFromHash(){
   const hash = window.location.hash.substring(1);
   const params = new URLSearchParams(hash);
@@ -85,25 +83,18 @@ async function savePassword(token){
   const errEl = document.getElementById('errorMsg');
   const btn = document.getElementById('saveBtn');
   errEl.style.display = 'none';
-
   if(pwd.length < 6){ errEl.textContent = 'La contraseña debe tener al menos 6 caracteres'; errEl.style.display='block'; return; }
   if(pwd !== confirm){ errEl.textContent = 'Las contraseñas no coinciden'; errEl.style.display='block'; return; }
-
   btn.disabled = true;
   btn.textContent = 'Guardando...';
-
   try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzI4NTYsImV4cCI6MjA1NzY0ODg1Nn0.oRjLB4x3EmIgMfTXLpGEjQLpRQTfAqJV2C2MVvdvucs',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ password: pwd })
+    const res = await fetch('/.netlify/functions/update-password', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ token, password: pwd })
     });
     const data = await res.json();
-    if(!res.ok) throw new Error(data.msg || data.message || 'Error al actualizar');
+    if(!res.ok) throw new Error(data.error || 'Error al actualizar');
     showSuccess();
     window.location.hash = '';
   } catch(e){
