@@ -10,7 +10,8 @@ exports.handler = async (event) => {
       method:'POST',
       headers:{
         'Content-Type':'application/json',
-        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impkcm9ldnVtd2pnY3liZXBwYXNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIwNzI4NTYsImV4cCI6MjA1NzY0ODg1Nn0.oRjLB4x3EmIgMfTXLpGEjQLpRQTfAqJV2C2MVvdvucs'
+        'apikey': process.env.SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_KEY}`
       },
       body: JSON.stringify({
         email,
