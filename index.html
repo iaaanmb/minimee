@@ -167,8 +167,8 @@ nav.scrolled .nav-btn:hover{background:var(--rose)}
 @keyframes scrollani{0%{top:-100%}100%{top:200%}}
 @keyframes fadeup{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
 
-.ticker{background:var(--hot);padding:13px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:1}
-.ticker-track{display:inline-flex;animation:ticker 28s linear infinite;will-change:transform}
+.ticker{background:var(--hot);padding:13px 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:ticker 28s linear infinite}
 .ticker-item{font-size:10px;color:rgba(255,255,255,.88);letter-spacing:3px;text-transform:uppercase;padding:0 46px}
 .ticker-dot{color:rgba(255,255,255,.3)}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
@@ -578,6 +578,35 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 .pedido-card-tracking a{color:var(--hot);text-decoration:none;font-weight:500}
 .pedido-card-tracking a:hover{text-decoration:underline}
 .pedidos-empty{text-align:center;padding:40px 0;color:var(--muted);font-size:14px}
+/* DÍA DE LAS MADRES */
+.madres-section{position:relative;overflow:hidden;padding:100px 6%;background:linear-gradient(135deg,#1A0510 0%,#3D0A20 55%,#1A0510 100%);display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.madres-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(212,170,80,.07) 0%,transparent 55%),radial-gradient(ellipse at 80% 50%,rgba(184,0,62,.1) 0%,transparent 55%);pointer-events:none}
+.madres-petals{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.madres-petal{position:absolute;opacity:.15;animation:petalFloat linear infinite}
+@keyframes petalFloat{0%{transform:translateY(-20px) rotate(0deg);opacity:0}10%{opacity:.15}90%{opacity:.15}100%{transform:translateY(110vh) rotate(360deg);opacity:0}}
+.madres-text{position:relative;z-index:1}
+.madres-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#D4AA50;margin-bottom:20px;font-weight:500}
+.madres-divider{width:40px;height:1px;background:linear-gradient(90deg,rgba(212,170,80,.6),transparent);margin-bottom:20px}
+.madres-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(38px,4vw,60px);font-weight:300;color:#fff;line-height:1.1;margin-bottom:20px}
+.madres-title em{font-style:italic;color:#D4AA50}
+.madres-subtitle{font-size:13px;color:rgba(255,255,255,.6);line-height:1.9;margin-bottom:32px;max-width:380px}
+.madres-countdown{display:inline-flex;gap:16px;margin-bottom:36px;background:rgba(255,255,255,.05);border:1px solid rgba(212,170,80,.18);border-radius:14px;padding:18px 28px}
+.madres-countdown-item{text-align:center;min-width:44px}
+.madres-countdown-num{font-family:'Cormorant Garamond',Georgia,serif;font-size:32px;font-weight:300;color:#D4AA50;line-height:1;display:block}
+.madres-countdown-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-top:4px;display:block}
+.madres-countdown-sep{font-family:'Cormorant Garamond',Georgia,serif;font-size:28px;color:rgba(212,170,80,.35);align-self:center;margin-top:-6px}
+.madres-btn{display:inline-block;background:linear-gradient(135deg,#C49A28,#D4AA50);color:#1A0510;padding:14px 36px;border-radius:50px;text-decoration:none;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;transition:opacity .25s;cursor:pointer;border:none;font-family:'DM Sans',sans-serif}
+.madres-btn:hover{opacity:.85}
+.madres-img-wrap{position:relative;z-index:1;display:flex;justify-content:center;align-items:center}
+.madres-img-glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(212,170,80,.15) 0%,transparent 70%);pointer-events:none}
+.madres-img-ring{position:absolute;width:280px;height:280px;border-radius:50%;border:1px solid rgba(212,170,80,.12);animation:ringPulse 3s ease-in-out infinite}
+.madres-img-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(212,170,80,.06);animation:ringPulse 3s ease-in-out infinite .8s}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.04);opacity:.3}}
+.madres-img{width:260px;height:260px;object-fit:cover;border-radius:50%;border:2px solid rgba(212,170,80,.25);animation:floatBag 4s ease-in-out infinite;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+@keyframes floatBag{0%,100%{transform:translateY(0px)}50%{transform:translateY(-16px)}}
+.madres-img-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#C49A28,#D4AA50);color:#1A0510;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;padding:5px 16px;border-radius:20px;white-space:nowrap}
+.badge-madres{background:linear-gradient(135deg,#C49A28,#D4AA50);color:#1A0510;font-size:9px;letter-spacing:1.5px;font-weight:600}
+@media(max-width:900px){.madres-section{grid-template-columns:1fr;text-align:center;padding:72px 6%}.madres-divider{margin:0 auto 20px}.madres-subtitle{margin-left:auto;margin-right:auto}.madres-countdown{gap:10px;padding:14px 20px}.madres-countdown-num{font-size:26px}.madres-img{width:200px;height:200px}.madres-img-ring{width:220px;height:220px}.madres-img-ring2{width:270px;height:270px}}
 .pedidos-logout{margin-top:16px;width:100%;background:transparent;color:var(--muted);border:1px solid rgba(184,0,62,.15);padding:10px;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;letter-spacing:1.5px;text-transform:uppercase;transition:all .2s}
 .pedidos-logout:hover{color:var(--hot);border-color:var(--hot)}
 
@@ -1000,6 +1029,9 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
       <a href="#tonos-piel" class="btn-primary">Descubrir tonos</a>
       <a href="#nosotras" class="btn-ghost-light">Nuestra historia →</a>
     </div>
+    <a href="#dia-madres" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#D4AA50;text-decoration:none;opacity:.85;transition:opacity .2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=.85">
+      🌸 Edición Día de las Madres →
+    </a>
   </div>
   <div class="hero-scroll">
     <div class="scroll-line"></div>
@@ -1059,6 +1091,34 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
       <div class="tono-tag" data-c1="#a86878" data-c2="#cc9098" data-c3="#eec0c4" onclick="setTonoFondo(this)"><div class="tono-tag-dot" style="background:#6B1A2E"></div>Tiny Flame — intenso y atrevido</div>
       <div class="tono-tag" data-c1="#f0b0cc" data-c2="#f8cce0" data-c3="#fde8f2" onclick="setTonoFondo(this)"><div class="tono-tag-dot" style="background:#D890A8"></div>Pink Whisper — rosa sutil y femenino</div>
     </div>
+  </div>
+</section>
+
+<section class="madres-section" id="dia-madres">
+  <div class="madres-petals" id="madresPetals"></div>
+  <div class="madres-text">
+    <div class="madres-eyebrow">10 de mayo · Edición limitada</div>
+    <div class="madres-divider"></div>
+    <h2 class="madres-title">Para la mujer<br>que lo merece <em>todo</em></h2>
+    <p class="madres-subtitle">Este Día de las Madres, regálale algo tan especial como ella. El Tote Édition Mamá está disponible solo por tiempo limitado.</p>
+    <div class="madres-countdown" id="madresCountdown">
+      <div class="madres-countdown-item"><span class="madres-countdown-num" id="cdDays">--</span><span class="madres-countdown-label">días</span></div>
+      <div class="madres-countdown-sep">·</div>
+      <div class="madres-countdown-item"><span class="madres-countdown-num" id="cdHours">--</span><span class="madres-countdown-label">horas</span></div>
+      <div class="madres-countdown-sep">·</div>
+      <div class="madres-countdown-item"><span class="madres-countdown-num" id="cdMins">--</span><span class="madres-countdown-label">min</span></div>
+      <div class="madres-countdown-sep">·</div>
+      <div class="madres-countdown-item"><span class="madres-countdown-num" id="cdSecs">--</span><span class="madres-countdown-label">seg</span></div>
+    </div>
+    <br>
+    <button class="madres-btn" onclick="openDetail(17)">Ver bolso · $55.000</button>
+  </div>
+  <div class="madres-img-wrap">
+    <div class="madres-img-glow"></div>
+    <div class="madres-img-ring"></div>
+    <div class="madres-img-ring2"></div>
+    <img class="madres-img" src="bolso_rosa.JPG" alt="Tote Édition Mamá">
+    <span class="madres-img-label">Tote Édition Mamá</span>
   </div>
 </section>
 
@@ -1234,6 +1294,7 @@ const products = [
   {id:14,name:'Kit Mini Dúo',shade:'Bolso mini + 2 tonos a elegir',desc:'Dos tonos para dos versiones tuyas. El kit para la que siempre está lista para retocar.',price:85000,img:'kit_2.JPG',swatch:'#C8004E',badge:'',cat:'kit',slug:'kit-mini-duo'},
   {id:15,name:'Kit Mini Esenciales',shade:'Bolso mini + 4 tonos a elegir',desc:'La combinación perfecta para llevar tu makeup siempre contigo con estilo.',price:130000,img:'kit_4.JPG',swatch:'#B8003E',badge:'Mejor valor',cat:'kit',slug:'kit-mini-esenciales'},
   {id:16,name:'Kit Todo en Mini',shade:'Bolso mini + colección completa',desc:'El kit definitivo. Todos los tonos y tu bolso en una sola decisión increíble.',price:165000,img:'kit_6.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-todo-en-mini'},
+  {id:17,name:'Tote Édition Mamá',shade:'Cuero croco · Herrajes dorados · Edición limitada',desc:'Creado para honrar a la mujer más importante de tu vida. Solo disponible hasta el 10 de mayo.',price:55000,img:'bolso_rosa.JPG',swatch:'#D4AA50',badge:'Edición Mamá',cat:'bolso',slug:'tote-edition-mama'},
 ];
 
 let cart = JSON.parse(localStorage.getItem('minime_cart') || '[]');
@@ -1509,11 +1570,13 @@ async function logPedido(metodo){
 }
 
 function renderProducts(){
-    document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
+  const catOrder = {kit:0, bolso:1, labial:2};
+  const sorted = [...products].sort((a,b)=>(catOrder[a.cat]??9)-(catOrder[b.cat]??9));
+    document.getElementById('pGrid').innerHTML=sorted.map((p,i)=>`
     <div class="p-card reveal d${(i%4)+1} ${p.outOfStock?'out-of-stock':''}" data-cat="${p.cat}" onclick="${p.outOfStock?'':'openDetail('+p.id+')'}" style="cursor:${p.outOfStock?'default':'pointer'}">
       <div class="p-img">
         <img src="${p.img}" alt="${p.shade}" loading="lazy">
-        ${p.badge&&!p.outOfStock?`<span class="p-badge">${p.badge}</span>`:''}
+        ${p.badge&&!p.outOfStock?`<span class="p-badge ${p.badge==='Edición Mamá'?'badge-madres':''}">${p.badge}</span>`:''}
         ${p.outOfStock?`<div class="p-out-badge"><span>Agotado</span><span>En camino · te avisaremos cuando esté disponible</span></div>`:`<button class="p-add" onclick="event.stopPropagation();${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>`}
       </div>
       <div class="p-name">${p.name}</div>
@@ -2476,6 +2539,43 @@ async function sendPasswordReset(){
     btn.textContent = 'Enviar enlace';
   }
 }
+
+// ── DÍA DE LAS MADRES ──
+(function(){
+  const target = new Date('2026-05-10T00:00:00-05:00');
+  function updateCountdown(){
+    const now = new Date();
+    const diff = target - now;
+    if(diff <= 0){
+      const el = document.getElementById('madresCountdown');
+      if(el) el.innerHTML = '<span style="color:#D4AA50;font-family:\'Cormorant Garamond\',serif;font-size:22px;font-style:italic">¡Hoy es el Día de las Madres! 🌸</span>';
+      return;
+    }
+    const days = Math.floor(diff/86400000);
+    const hours = Math.floor((diff%86400000)/3600000);
+    const mins = Math.floor((diff%3600000)/60000);
+    const secs = Math.floor((diff%60000)/1000);
+    const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=String(v).padStart(2,'0'); };
+    set('cdDays',days); set('cdHours',hours); set('cdMins',mins); set('cdSecs',secs);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  const petals = ['🌸','🌷','💐','🌺','✨'];
+  const container = document.getElementById('madresPetals');
+  if(container){
+    for(let i=0;i<18;i++){
+      const span = document.createElement('span');
+      span.className = 'madres-petal';
+      span.textContent = petals[i%petals.length];
+      span.style.left = (Math.random()*100)+'%';
+      span.style.animationDuration = (8+Math.random()*12)+'s';
+      span.style.animationDelay = (Math.random()*10)+'s';
+      span.style.fontSize = (12+Math.random()*14)+'px';
+      container.appendChild(span);
+    }
+  }
+})();
 
 </script>
 </body>
