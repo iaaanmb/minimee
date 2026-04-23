@@ -87,8 +87,8 @@
 .tono-scroll-label{position:absolute;bottom:20px;left:20px;font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:300;color:#fff;font-style:italic;text-shadow:0 2px 12px rgba(0,0,0,.3)}
 
 /* MARQUEE MEJORADO */
-.marquee-wrap{overflow:hidden;background:var(--hot);padding:16px 0}
-.marquee-track{display:flex;white-space:nowrap;animation:marquee 20s linear infinite}
+.marquee-wrap{overflow:hidden;background:var(--hot);padding:16px 0;position:relative;z-index:2}
+.marquee-track{display:flex;white-space:nowrap;animation:marquee 20s linear infinite;will-change:transform}
 .marquee-track:hover{animation-play-state:paused}
 .marquee-item{font-size:13px;color:rgba(255,255,255,.9);letter-spacing:4px;text-transform:uppercase;padding:0 40px;display:inline-flex;align-items:center;gap:16px}
 .marquee-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.4);display:inline-block}
