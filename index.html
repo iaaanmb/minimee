@@ -65,7 +65,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090;--wine:#5C0A14;--gold:#C9A84C;--gold-lt:#F0D47A}
+:root{--hot:#B8003E;--rose:#D4005A;--blush:#F2C4D8;--petal:#FDF0F6;--cream:#FBF6F9;--dark:#160810;--mid:#6B2A44;--muted:#B07090}
 /* GSAP ANIMATIONS */
 .gsap-fade{opacity:0}
 .gsap-up{opacity:0;transform:translateY(60px)}
@@ -592,45 +592,6 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 .verify-status.ok{color:#0a7c3e}
 .verify-status.err{color:var(--hot)}
 
-/* ===== DÍA DE LAS MADRES ===== */
-.madres-strip{background:linear-gradient(90deg,var(--wine) 0%,#8B1520 50%,var(--wine) 100%);padding:11px 0;overflow:hidden;position:relative;z-index:290}
-.madres-strip-track{display:inline-flex;animation:madresRoll 32s linear infinite;white-space:nowrap;will-change:transform}
-.madres-strip-item{font-family:'Cormorant Garamond',Georgia,serif;font-size:14px;font-style:italic;color:var(--gold-lt);padding:0 44px;letter-spacing:.5px}
-.madres-strip-sep{color:var(--gold);opacity:.55;font-size:10px;align-self:center}
-@keyframes madresRoll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.madres-section{background:linear-gradient(135deg,#220008 0%,var(--wine) 35%,#8B1520 65%,#220008 100%);padding:100px 6%;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.madres-section::before{content:'';position:absolute;top:-120px;right:-120px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.13),transparent 70%);pointer-events:none}
-.madres-section::after{content:'';position:absolute;bottom:-90px;left:-90px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08),transparent 70%);pointer-events:none}
-.madres-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:22px;display:flex;align-items:center;gap:12px}
-.madres-eyebrow::before{content:'';width:32px;height:1px;background:var(--gold)}
-.madres-headline{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(42px,5.5vw,78px);font-weight:300;color:#fff;line-height:1.0;margin-bottom:10px}
-.madres-headline em{font-style:italic;color:var(--gold-lt)}
-.madres-gold-line{width:44px;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold-lt));margin:22px 0;border-radius:2px}
-.madres-msgs{position:relative;min-height:62px;margin-bottom:14px}
-.madres-msg{position:absolute;top:0;left:0;right:0;font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-style:italic;color:rgba(255,255,255,.72);line-height:1.65;font-weight:300;opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .7s ease}
-.madres-msg.active{opacity:1;transform:translateY(0)}
-.madres-kits{display:flex;flex-direction:column;gap:10px}
-.madres-kit-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.28);border-radius:8px;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
-.madres-kit-card:hover{background:rgba(255,255,255,.11);border-color:var(--gold);transform:translateX(5px)}
-.madres-kit-name{font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;font-style:italic;color:#fff;margin-bottom:2px}
-.madres-kit-sub{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(201,168,76,.75)}
-.madres-kit-price{font-family:'Cormorant Garamond',Georgia,serif;font-size:24px;font-weight:600;color:var(--gold-lt);white-space:nowrap}
-.madres-bolso-wrap{position:relative}
-.madres-bolso-img{border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.55),0 0 0 1px rgba(201,168,76,.2)}
-.madres-bolso-img img{width:100%;display:block;aspect-ratio:3/4;object-fit:cover;transition:transform .9s ease}
-.madres-bolso-img:hover img{transform:scale(1.04)}
-.madres-bolso-badge{position:absolute;top:20px;left:20px;background:linear-gradient(135deg,var(--gold),var(--gold-lt));color:#220008;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:50px;font-weight:700}
-.madres-bolso-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 55%,transparent 100%);padding:28px 20px 22px;border-radius:0 0 16px 16px}
-.madres-bolso-label{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;font-weight:300;font-style:italic;color:#fff;line-height:1.2}
-.madres-bolso-sublabel{font-size:12px;color:rgba(240,212,122,.85);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;font-family:'DM Sans',sans-serif;font-weight:400}
-.btn-madres{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-lt) 100%);color:#220008;padding:15px 38px;border-radius:50px;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:2px;text-transform:uppercase;transition:all .3s;display:inline-block;margin-top:28px}
-.btn-madres:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(201,168,76,.35)}
-.bolso-opt.animal-print{border-color:rgba(201,168,76,.35);background:linear-gradient(135deg,rgba(92,10,20,.06),rgba(201,168,76,.06))}
-.bolso-opt.animal-print .bolso-name{color:#8B1520;font-weight:500}
-.bolso-opt.animal-print.selected{border-color:#C9A84C;background:linear-gradient(135deg,rgba(92,10,20,.1),rgba(201,168,76,.14))}
-.animal-kit-price-note{font-size:10px;color:var(--gold,#C9A84C);margin-top:2px;font-style:italic}
-@media(max-width:900px){.madres-section{grid-template-columns:1fr;gap:44px}.madres-bolso-wrap{max-width:65%;margin:0 auto}}
-@media(max-width:540px){.madres-section{padding:60px 6%}.madres-bolso-wrap{max-width:80%}}
 
 </style>
 </head>
@@ -693,10 +654,9 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
             <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_rosa.JPG" style="width:100%;height:100%;object-fit:cover;display:block"></div>
             <div class="bolso-name">Rosa</div>
           </div>
-          <div class="bolso-opt animal-print" data-color="Animal Print" onclick="selectBolso(this)" style="border-color:rgba(201,168,76,.4)">
-            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1;position:relative"><img src="bolso_animalPrint.jpeg" style="width:100%;height:100%;object-fit:cover;display:block"><div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(60,20,5,.45),transparent);display:flex;align-items:flex-end;padding:4px"><span style="font-size:8px;background:linear-gradient(135deg,#C9A84C,#F0D47A);color:#220008;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:.5px">MADRES</span></div></div>
-            <div class="bolso-name" style="color:#8B1520;font-weight:600">Animal Print</div>
-            <div class="animal-kit-price-note">✦ Kit edición especial</div>
+          <div class="bolso-opt" data-color="Animal Print" onclick="selectBolso(this)">
+            <div style="border-radius:6px;overflow:hidden;margin-bottom:8px;aspect-ratio:1/1"><img src="bolso_animalPrint.jpeg" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+            <div class="bolso-name">Animal Print</div>
           </div>
         </div>
       </div>
@@ -1000,35 +960,6 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
   </div>
 </div>
 
-<!-- TICKER DÍA DE LAS MADRES -->
-<div class="madres-strip">
-  <div class="madres-strip-track">
-    <span class="madres-strip-item">✦ Semana de la Madre</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Edición especial animal print</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">✦ Kits exclusivos para mamá</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Semana de la Madre</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Edición especial animal print</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">✦ Kits exclusivos para mamá</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">✦ Semana de la Madre</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Edición especial animal print</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">✦ Kits exclusivos para mamá</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Semana de la Madre</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">Edición especial animal print</span>
-    <span class="madres-strip-sep">♦</span>
-    <span class="madres-strip-item">✦ Kits exclusivos para mamá</span>
-    <span class="madres-strip-sep">♦</span>
-  </div>
-</div>
 
 <nav id="mainNav">
   <a href="#" class="nav-logo"><img src="logo.png" alt="minime lovers"></a>
@@ -1100,64 +1031,6 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
   </div>
 </div>
 
-<!-- SECCIÓN PRINCIPAL DÍA DE LAS MADRES -->
-<section class="madres-section" id="dia-madres">
-  <div>
-    <div class="madres-eyebrow">Edición especial · Mayo 2026</div>
-    <h2 class="madres-headline">Para la mamá<br>que lo es <em>todo</em></h2>
-    <div class="madres-gold-line"></div>
-    <div class="madres-msgs" id="madresMsgs">
-      <p class="madres-msg active">"Gracias por todo lo que eres — hoy y siempre."</p>
-      <p class="madres-msg">"Tu amor es la fuerza más poderosa del mundo."</p>
-      <p class="madres-msg">"Mereces brillar tanto como nos haces brillar a nosotras."</p>
-      <p class="madres-msg">"Para la mamá que lo da todo sin pedir nada — este es tu momento."</p>
-      <p class="madres-msg">"Hermosa, fuerte, increíble — igual que tú."</p>
-    </div>
-    <p style="font-size:14px;color:rgba(255,255,255,.62);line-height:1.8;font-weight:300;margin-bottom:28px;max-width:420px">Un detalle pequeño, pero lleno de amor 💖 Esta cosmetiquera mini en animal print es perfecta para sorprender a mamá en su día. Compacta, práctica y con un diseño único para llevar sus esenciales de belleza con todo el estilo. Porque mamá merece un regalo tan especial como ella ✨</p>
-    <p style="font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(201,168,76,.7);margin-bottom:16px;font-weight:400">Kits especiales · Bolso Animal Print incluido</p>
-    <div class="madres-kits">
-      <div class="madres-kit-card" onclick="openMadresKit(13)">
-        <div>
-          <div class="madres-kit-name">✦ Kit brote de amor ✦</div>
-          <div class="madres-kit-sub">Bolso animal print + 1 tono a elegir</div>
-        </div>
-        <div class="madres-kit-price">$68.000</div>
-      </div>
-      <div class="madres-kit-card" onclick="openMadresKit(14)">
-        <div>
-          <div class="madres-kit-name">✦ Kit doble amor ✦</div>
-          <div class="madres-kit-sub">Bolso animal print + 2 tonos a elegir</div>
-        </div>
-        <div class="madres-kit-price">$90.000</div>
-      </div>
-      <div class="madres-kit-card" onclick="openMadresKit(15)">
-        <div>
-          <div class="madres-kit-name">✦ Kit Te quiero, mamá ✦</div>
-          <div class="madres-kit-sub">Bolso animal print + 4 tonos a elegir</div>
-        </div>
-        <div class="madres-kit-price">$140.000</div>
-      </div>
-      <div class="madres-kit-card" onclick="openMadresKit(16)">
-        <div>
-          <div class="madres-kit-name">✦ Kit La mejor mamá ✦</div>
-          <div class="madres-kit-sub">Bolso animal print + 6 tonos a elegir</div>
-        </div>
-        <div class="madres-kit-price">$175.000</div>
-      </div>
-    </div>
-    <button class="btn-madres" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">Ver colección completa</button>
-  </div>
-  <div class="madres-bolso-wrap">
-    <div class="madres-bolso-img">
-      <img src="bolso_animalPrint.jpeg" alt="Bolso Animal Print · Edición Día de las Madres">
-      <div class="madres-bolso-badge">✦ Edición Madres ✦</div>
-      <div class="madres-bolso-overlay">
-        <div class="madres-bolso-label">Bolso Animal Print</div>
-        <div class="madres-bolso-sublabel">Edición especial · Solo por tiempo limitado</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="about-strip" id="nosotras">
   <div class="about-img reveal from-left">
@@ -1361,7 +1234,7 @@ const products = [
   {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso',slug:'bolso-negro'},
   {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso',slug:'bolso-rojo'},
   {id:10,name:'Bolso Mini — Rosa',shade:'Cuero croco perlado · Herrajes plateados',desc:'Femenino, brillante y único. El bolso que hace que todo el mundo pregunte dónde lo compraste.',price:45000,img:'bolso_rosa.JPG',swatch:'#D4A0B0',badge:'Especial',cat:'bolso',slug:'bolso-rosa'},
-  {id:17,name:'Bolso Mini — Animal Print',shade:'Cuero animal print premium · Herrajes dorados',desc:'La pieza más especial de esta semana. Textura animal print única, ideal para regalar a la mamá que lo merece todo.',price:52000,img:'bolso_animalPrint.jpeg',swatch:'#3A2010',badge:'Edición Madres',cat:'bolso',slug:'bolso-animal-print'},
+  {id:17,name:'Bolso Mini — Animal Print',shade:'Cuero animal print premium · Herrajes dorados',desc:'Textura animal print única con herrajes dorados. Compacta, práctica y con un diseño que destaca.',price:45000,img:'bolso_animalPrint.jpeg',swatch:'#3A2010',badge:'',cat:'bolso',slug:'bolso-animal-print'},
   {id:11,name:'Kit Mini Favoritos',shade:'Mini Drama · Sweet Sunset · Blush Crush · Latte Kiss',desc:'Los 4 clásicos que toda minimee necesita. Un tono para cada momento del día.',price:90000,img:'4_tonos.JPG',swatch:'#B8003E',badge:'Popular',cat:'kit',slug:'kit-mini-favoritos'},
   {id:12,name:'Kit La Colección',shade:'Colección completa',desc:'Todos los tonos, todas las opciones. Para la que quiere tenerlo todo.',price:130000,img:'6_tonos.JPG',swatch:'#8B1A3A',badge:'',cat:'kit',slug:'kit-la-coleccion'},
   {id:13,name:'Kit Mini Diario',shade:'Bolso mini + 1 tono a elegir',desc:'Tu bolso favorito con el retoque perfecto. Elige tu tono y llévatelo todo junto.',price:60000,img:'kit_1.JPG',swatch:'#D4005A',badge:'',cat:'kit',slug:'kit-mini-diario'},
@@ -1469,19 +1342,10 @@ function selectBolso(el){
   updateModalBtn();
 }
 
-const animalPrintKitNames = {13:'Kit brote de amor',14:'Kit doble amor',15:'Kit Te quiero, mamá',16:'Kit La mejor mamá'};
-const animalPrintKitPrices = {13:68000,14:90000,15:140000,16:175000};
-
 function getActiveKitPrice(){
-  if(selectedBolso === 'Animal Print' && currentModalProduct && animalPrintKitPrices[currentModalProduct.id]){
-    return animalPrintKitPrices[currentModalProduct.id];
-  }
   return currentModalProduct ? currentModalProduct.price : 0;
 }
 function getActiveKitName(){
-  if(selectedBolso === 'Animal Print' && currentModalProduct && animalPrintKitNames[currentModalProduct.id]){
-    return animalPrintKitNames[currentModalProduct.id];
-  }
   return currentModalProduct ? currentModalProduct.name : '';
 }
 
@@ -1527,14 +1391,6 @@ function addModalToCart(){
   updateCart();
   closeModal();
   openCart();
-}
-
-function openMadresKit(id){
-  openModal(id);
-  setTimeout(()=>{
-    const ap = document.querySelector('.bolso-opt[data-color="Animal Print"]');
-    if(ap) selectBolso(ap);
-  }, 80);
 }
 
 
@@ -2641,17 +2497,6 @@ async function sendPasswordReset(){
   }
 }
 
-// ── DÍA DE LAS MADRES — mensajes rotativos ──
-(function(){
-  const msgs = document.querySelectorAll('#madresMsgs .madres-msg');
-  if(!msgs.length) return;
-  let idx = 0;
-  setInterval(()=>{
-    msgs[idx].classList.remove('active');
-    idx = (idx + 1) % msgs.length;
-    msgs[idx].classList.add('active');
-  }, 3500);
-})();
 
 </script>
 </body>
