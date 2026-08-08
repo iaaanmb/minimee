@@ -62,6 +62,7 @@
 <script>emailjs.init("f5J7OB5n6jACg3FcX");</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="envios.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -143,7 +144,7 @@ nav.scrolled .nav-btn{border-color:var(--hot);background:var(--hot)}
 nav.scrolled .nav-btn:hover{background:var(--rose)}
 
 .hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('6_tonos.JPG') center 30%/cover no-repeat;transform:scale(1.06);transition:transform 12s ease}
+.hero-bg{position:absolute;inset:0;background:url('hero_grupal.jpg') center 30%/cover no-repeat;transform:scale(1.06);transition:transform 12s ease}
 .hero-bg.ready{transform:scale(1)}
 .hero-tint{position:absolute;inset:0;background:linear-gradient(160deg,rgba(22,8,16,.75) 0%,rgba(22,8,16,.2) 50%,transparent 75%),linear-gradient(to top,rgba(22,8,16,.98) 0%,rgba(22,8,16,.55) 35%,transparent 65%)}
 .hero-content{position:relative;z-index:1;padding:0 6% 90px;max-width:820px}
@@ -203,6 +204,27 @@ nav.scrolled .nav-btn:hover{background:var(--rose)}
 .p-add{position:absolute;bottom:12px;right:12px;width:38px;height:38px;border-radius:50%;background:rgba(22,8,16,.78);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);transition:all .28s}
 .p-card:hover .p-add{opacity:1;transform:translateY(0)}
 .p-add:hover{background:var(--hot)}
+/* Carrusel tipo Instagram en la tarjeta */
+.p-carousel{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.p-carousel::-webkit-scrollbar{display:none}
+.p-carousel img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:center;display:block}
+.p-card:hover .p-carousel img{transform:none}
+.p-car-nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);border:none;color:#160810;font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.p-car-nav.prev{left:10px}.p-car-nav.next{right:10px}
+.p-card:hover .p-car-nav{opacity:1}
+.p-car-nav:hover{background:#fff}
+.p-car-dots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:3;pointer-events:none}
+.p-car-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .25s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.p-car-dot.active{background:#fff;width:7px;height:7px}
+@media(hover:none){.p-car-nav{display:none}}
+/* Buscador de municipios (envío) */
+.city-results{position:absolute;top:100%;left:0;right:0;margin-top:2px;max-height:220px;overflow-y:auto;background:#fff;border:1px solid rgba(184,0,62,.2);border-radius:10px;z-index:60;box-shadow:0 10px 28px rgba(0,0,0,.14)}
+.city-results .cr-item{padding:7px 10px;font-size:12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #f6eaf0}
+.city-results .cr-item:last-child{border-bottom:none}
+.city-results .cr-item:hover{background:#fdeef4}
+.city-results .cr-depto{color:var(--muted);font-size:10px}
+.city-results .cr-price{color:var(--hot);font-weight:600;white-space:nowrap;font-size:11px}
+.city-results .cr-empty{padding:9px 10px;font-size:11px;color:var(--muted);line-height:1.4}
 .p-name{font-size:14px;font-weight:500;color:var(--dark);margin-bottom:3px}
 .p-shade{font-size:12px;color:var(--muted);margin-bottom:10px}
 .p-row{display:flex;justify-content:space-between;align-items:center}
@@ -446,6 +468,16 @@ nav.scrolled .hamburger span{background:var(--dark)}
 .detail-panel.open{transform:translateX(0)}
 .detail-img-wrap{position:relative;overflow:hidden;flex-shrink:0}
 .detail-img-wrap img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+.detail-carousel{position:relative}
+.detail-car-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.detail-car-track::-webkit-scrollbar{display:none}
+.detail-car-track img{flex:0 0 100%;scroll-snap-align:center}
+.detail-car-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;color:#160810;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.detail-car-nav.prev{left:12px}.detail-car-nav.next{right:12px}
+.detail-car-nav:hover{background:#fff}
+.detail-car-dots{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:7px;z-index:3;pointer-events:none}
+.detail-car-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.55);transition:all .25s;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.detail-car-dot.active{background:#fff;width:8px;height:8px}
 .detail-close{
   position:absolute;top:16px;right:16px;
   width:38px;height:38px;border-radius:50%;
@@ -672,7 +704,7 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 <div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
 <div class="detail-panel" id="detailPanel">
   <div class="detail-img-wrap">
-    <img id="detailImg" src="" alt="">
+    <div class="detail-carousel" id="detailCarousel"></div>
     <button class="detail-close" onclick="closeDetail()">✕</button>
   </div>
   <div class="detail-body">
@@ -714,140 +746,11 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
     <div id="freeShipBanner" style="display:none;font-size:11px;font-weight:500;text-align:center;padding:6px 10px;background:var(--petal);border-radius:10px;margin-bottom:8px"></div>
     <div id="shippingBox" style="margin-bottom:10px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px">
-        <div>
+        <div style="position:relative">
           <label style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:3px">Ciudad / Municipio</label>
-          <select id="citySelect" onchange="updateShipping()" style="width:100%;padding:6px 10px;border:1px solid rgba(184,0,62,.2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;cursor:pointer;outline:none;appearance:none">
-            <option value="">Selecciona tu ciudad</option>
-            <optgroup label="— Bogotá">
-              <option value="bogota">Bogotá — $10.000</option>
-            </optgroup>
-            <optgroup label="— Ciudades principales">
-              <option value="principal">Medellín — $15.000</option>
-              <option value="principal">Cali — $15.000</option>
-              <option value="principal">Barranquilla — $15.000</option>
-              <option value="principal">Cartagena — $15.000</option>
-              <option value="principal">Bucaramanga — $15.000</option>
-              <option value="principal">Pereira — $15.000</option>
-              <option value="principal">Manizales — $15.000</option>
-              <option value="principal">Santa Marta — $15.000</option>
-              <option value="principal">Cúcuta — $15.000</option>
-              <option value="principal">Ibagué — $15.000</option>
-              <option value="principal">Pasto — $15.000</option>
-              <option value="principal">Neiva — $15.000</option>
-              <option value="principal">Villavicencio — $15.000</option>
-              <option value="principal">Armenia — $15.000</option>
-              <option value="principal">Montería — $15.000</option>
-              <option value="principal">Valledupar — $15.000</option>
-              <option value="principal">Sincelejo — $15.000</option>
-              <option value="principal">Popayán — $15.000</option>
-              <option value="principal">Tunja — $15.000</option>
-              <option value="principal">Florencia — $15.000</option>
-              <option value="principal">Riohacha — $15.000</option>
-              <option value="principal">Quibdó — $15.000</option>
-              <option value="principal">Yopal — $15.000</option>
-              <option value="principal">Arauca — $15.000</option>
-              <option value="principal">Mitú — $15.000</option>
-              <option value="principal">Puerto Inírida — $15.000</option>
-              <option value="principal">San José del Guaviare — $15.000</option>
-              <option value="principal">Mocoa — $15.000</option>
-              <option value="principal">Leticia — $15.000</option>
-              <option value="principal">Puerto Carreño — $15.000</option>
-            </optgroup>
-            <optgroup label="— Cundinamarca">
-              <option value="otro">Soacha — $20.000</option>
-              <option value="otro">Chía — $20.000</option>
-              <option value="otro">Zipaquirá — $20.000</option>
-              <option value="otro">Facatativá — $20.000</option>
-              <option value="otro">Fusagasugá — $20.000</option>
-              <option value="otro">Girardot — $20.000</option>
-              <option value="otro">Mosquera — $20.000</option>
-              <option value="otro">Madrid — $20.000</option>
-              <option value="otro">Funza — $20.000</option>
-              <option value="otro">Cajicá — $20.000</option>
-              <option value="otro">Tocancipá — $20.000</option>
-              <option value="otro">Sopó — $20.000</option>
-            </optgroup>
-            <optgroup label="— Antioquia">
-              <option value="otro">Bello — $20.000</option>
-              <option value="otro">Itagüí — $20.000</option>
-              <option value="otro">Envigado — $20.000</option>
-              <option value="otro">Sabaneta — $20.000</option>
-              <option value="otro">Rionegro — $20.000</option>
-              <option value="otro">Apartadó — $20.000</option>
-              <option value="otro">Turbo — $20.000</option>
-              <option value="otro">Caucasia — $20.000</option>
-              <option value="otro">La Estrella — $20.000</option>
-              <option value="otro">Copacabana — $20.000</option>
-            </optgroup>
-            <optgroup label="— Valle del Cauca">
-              <option value="otro">Buenaventura — $20.000</option>
-              <option value="otro">Palmira — $20.000</option>
-              <option value="otro">Tuluá — $20.000</option>
-              <option value="otro">Cartago — $20.000</option>
-              <option value="otro">Buga — $20.000</option>
-              <option value="otro">Jamundí — $20.000</option>
-              <option value="otro">Yumbo — $20.000</option>
-            </optgroup>
-            <optgroup label="— Atlántico">
-              <option value="otro">Soledad — $20.000</option>
-              <option value="otro">Malambo — $20.000</option>
-              <option value="otro">Sabanalarga — $20.000</option>
-              <option value="otro">Baranoa — $20.000</option>
-            </optgroup>
-            <optgroup label="— Bolívar">
-              <option value="otro">Magangué — $20.000</option>
-              <option value="otro">Turbaco — $20.000</option>
-              <option value="otro">El Carmen de Bolívar — $20.000</option>
-            </optgroup>
-            <optgroup label="— Santander">
-              <option value="otro">Floridablanca — $20.000</option>
-              <option value="otro">Girón — $20.000</option>
-              <option value="otro">Piedecuesta — $20.000</option>
-              <option value="otro">Barrancabermeja — $20.000</option>
-              <option value="otro">San Gil — $20.000</option>
-            </optgroup>
-            <optgroup label="— Boyacá">
-              <option value="otro">Duitama — $20.000</option>
-              <option value="otro">Sogamoso — $20.000</option>
-              <option value="otro">Chiquinquirá — $20.000</option>
-            </optgroup>
-            <optgroup label="— Tolima">
-              <option value="otro">Espinal — $20.000</option>
-              <option value="otro">Honda — $20.000</option>
-              <option value="otro">Melgar — $20.000</option>
-            </optgroup>
-            <optgroup label="— Huila">
-              <option value="otro">Pitalito — $20.000</option>
-              <option value="otro">Garzón — $20.000</option>
-            </optgroup>
-            <optgroup label="— Nariño">
-              <option value="otro">Tumaco — $20.000</option>
-              <option value="otro">Ipiales — $20.000</option>
-            </optgroup>
-            <optgroup label="— Córdoba">
-              <option value="otro">Cereté — $20.000</option>
-              <option value="otro">Lorica — $20.000</option>
-            </optgroup>
-            <optgroup label="— Cesar">
-              <option value="otro">Aguachica — $20.000</option>
-            </optgroup>
-            <optgroup label="— Magdalena">
-              <option value="otro">Ciénaga — $20.000</option>
-              <option value="otro">Fundación — $20.000</option>
-            </optgroup>
-            <optgroup label="— Caldas">
-              <option value="otro">La Dorada — $20.000</option>
-              <option value="otro">Riosucio — $20.000</option>
-            </optgroup>
-            <optgroup label="— Risaralda">
-              <option value="otro">Dosquebradas — $20.000</option>
-              <option value="otro">La Virginia — $20.000</option>
-            </optgroup>
-            <optgroup label="— Meta">
-              <option value="otro">Acacías — $20.000</option>
-              <option value="otro">Granada — $20.000</option>
-            </optgroup>
-          </select>
+          <input id="citySearch" type="text" autocomplete="off" placeholder="Escribe tu municipio…" oninput="filterCities(this.value)" onfocus="filterCities(this.value)" style="width:100%;padding:6px 10px;border:1px solid rgba(184,0,62,.2);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--dark);background:#fff;outline:none">
+          <div id="cityResults" class="city-results" style="display:none"></div>
+          <select id="citySelect" onchange="updateShipping()" style="display:none"><option value=""></option></select>
         </div>
         <div>
           <label style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:3px">Teléfono</label>
@@ -1034,7 +937,7 @@ nav.scrolled .nav-login-btn:hover{background:var(--petal)}
 
 <section class="about-strip" id="nosotras">
   <div class="about-img reveal from-left">
-    <img src="tono_1.JPG" alt="minimee Mini Drama">
+    <img src="about_grupal.jpg" alt="Modelos minime lovers">
   </div>
   <div class="about-text">
     <div class="label-tag reveal">Nuestra historia</div>
@@ -1224,12 +1127,12 @@ function togglePayBtns(){
 }
 
 const products = [
-  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'tono_1.JPG',swatch:'#6B1A2E',badge:'Favorita',cat:'labial',slug:'mini-drama'},
-  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'tono_2.JPG',swatch:'#C4503A',badge:'',cat:'labial',slug:'sweet-sunset'},
-  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'tono_3.JPG',swatch:'#C4406A',badge:'',cat:'labial',slug:'blush-crush'},
-  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'tono_4.JPG',swatch:'#8B5A3A',badge:'',cat:'labial',slug:'latte-kiss'},
-  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'tono_5.JPG',swatch:'#D4607A',badge:'Nuevo',cat:'labial',slug:'pink-whisper'},
-  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'tono_6.JPG',swatch:'#8B1A2E',badge:'Nuevo',cat:'labial',slug:'tiny-flame'},
+  {id:1,name:'Mini Drama',shade:'Labial en Polvo',desc:'Perfecto para cuando quieres destacar sin decir una sola palabra.',price:25000,img:'modelo_mini-drama_1.jpg',images:['modelo_mini-drama_1.jpg','modelo_mini-drama_2.jpg'],swatch:'#6B1A2E',badge:'Favorita',cat:'labial',slug:'mini-drama'},
+  {id:2,name:'Sweet Sunset',shade:'Labial en Polvo',desc:'Un toque cálido y alegre, como el atardecer que nunca pasa de moda.',price:25000,img:'modelo_sweet-sunset_2.jpg',images:['modelo_sweet-sunset_2.jpg','modelo_sweet-sunset_1.jpg'],swatch:'#C4503A',badge:'',cat:'labial',slug:'sweet-sunset'},
+  {id:3,name:'Blush Crush',shade:'Labial en Polvo',desc:'Romántico y fresco, el color ideal para un look tierno pero seguro.',price:25000,img:'modelo_blush-crush_1.jpg',images:['modelo_blush-crush_1.jpg','modelo_blush-crush_2.jpg'],swatch:'#C4406A',badge:'',cat:'labial',slug:'blush-crush'},
+  {id:4,name:'Latte Kiss',shade:'Labial en Polvo',desc:'Natural, suave y elegante: el nude que combina con todo.',price:25000,img:'modelo_latte-kiss_2.jpg',images:['modelo_latte-kiss_2.jpg','modelo_latte-kiss_1.jpg'],swatch:'#8B5A3A',badge:'',cat:'labial',slug:'latte-kiss'},
+  {id:5,name:'Pink Whisper',shade:'Labial en Polvo',desc:'Sutil, femenino y encantador, como un secreto bonito en tus labios.',price:25000,img:'modelo_pink-whisper_1.jpg',images:['modelo_pink-whisper_1.jpg','modelo_pink-whisper_2.jpg'],swatch:'#D4607A',badge:'Nuevo',cat:'labial',slug:'pink-whisper'},
+  {id:6,name:'Tiny Flame',shade:'Labial en Polvo',desc:'Intenso y atrevido, el toque mini que deja una gran impresión.',price:25000,img:'modelo_tiny-flame_3.jpg',images:['modelo_tiny-flame_3.jpg','modelo_tiny-flame_1.jpg','modelo_tiny-flame_2.jpg'],swatch:'#8B1A2E',badge:'Nuevo',cat:'labial',slug:'tiny-flame'},
   {id:7,name:'Bolso Mini — Blanco',shade:'Cuero croco · Herrajes dorados',desc:'Elegante y atemporal. El blanco que eleva cualquier outfit al instante.',price:45000,img:'bolso_blanco.JPG',swatch:'#F5F0EB',badge:'',cat:'bolso',slug:'bolso-blanco',outOfStock:true},
   {id:8,name:'Bolso Mini — Negro',shade:'Cuero croco · Herrajes dorados',desc:'Clásico e infaltable. El negro que va con todo y dura para siempre.',price:45000,img:'bolso_negro.JPG',swatch:'#1a1a1a',badge:'',cat:'bolso',slug:'bolso-negro'},
   {id:9,name:'Bolso Mini — Rojo',shade:'Cuero croco · Herrajes dorados',desc:'Audaz y apasionado. Para la que no tiene miedo de ser el centro de atención.',price:45000,img:'bolso_rojo.JPG',swatch:'#9B1B1B',badge:'',cat:'bolso',slug:'bolso-rojo'},
@@ -1397,6 +1300,11 @@ function addModalToCart(){
 let currentDetailProduct = null;
 let detailQty = 1;
 
+function detailCarNav(dir){
+  const t = document.getElementById('detailCarTrack');
+  if(t) t.scrollBy({left: dir*t.clientWidth, behavior:'smooth'});
+}
+
 function openDetail(productId){
   const p = products.find(x=>x.id===productId);
   if(!p) return;
@@ -1405,8 +1313,17 @@ function openDetail(productId){
 
   if(p.slug) window.history.replaceState({}, '', '#' + p.slug);
 
-  document.getElementById('detailImg').src = p.img;
-  document.getElementById('detailImg').alt = p.name;
+  const dImgs = (p.images&&p.images.length)?p.images:[p.img];
+  const dc = document.getElementById('detailCarousel');
+  dc.innerHTML = `<div class="detail-car-track" id="detailCarTrack">${dImgs.map(im=>`<img src="${im}" alt="${p.name}">`).join('')}</div>` +
+    (dImgs.length>1?`<button class="detail-car-nav prev" onclick="detailCarNav(-1)" aria-label="Anterior">‹</button><button class="detail-car-nav next" onclick="detailCarNav(1)" aria-label="Siguiente">›</button><div class="detail-car-dots">${dImgs.map((_,d)=>`<span class="detail-car-dot${d===0?' active':''}"></span>`).join('')}</div>`:'');
+  const dTrack = document.getElementById('detailCarTrack');
+  if(dImgs.length>1){
+    dTrack.addEventListener('scroll', ()=>{
+      const idx = Math.round(dTrack.scrollLeft / dTrack.clientWidth);
+      dc.querySelectorAll('.detail-car-dot').forEach((d,i)=>d.classList.toggle('active', i===idx));
+    }, {passive:true});
+  }
   document.getElementById('detailName').textContent = p.name;
   document.getElementById('detailShade').textContent = p.shade;
   document.getElementById('detailPrice').textContent = fmt(p.price);
@@ -1532,7 +1449,14 @@ function renderProducts(){
     document.getElementById('pGrid').innerHTML=products.map((p,i)=>`
     <div class="p-card reveal d${(i%4)+1} ${p.outOfStock?'out-of-stock':''}" data-cat="${p.cat}" onclick="${p.outOfStock?'':'openDetail('+p.id+')'}" style="cursor:${p.outOfStock?'default':'pointer'}">
       <div class="p-img">
-        <img src="${p.img}" alt="${p.shade}" loading="lazy">
+        ${(p.images&&p.images.length>1)?`
+        <div class="p-carousel" id="pcar-${p.id}">
+          ${p.images.map(im=>`<img src="${im}" alt="${p.name}" loading="lazy">`).join('')}
+        </div>
+        <button class="p-car-nav prev" onclick="event.stopPropagation();carNav(${p.id},-1)" aria-label="Anterior">‹</button>
+        <button class="p-car-nav next" onclick="event.stopPropagation();carNav(${p.id},1)" aria-label="Siguiente">›</button>
+        <div class="p-car-dots">${p.images.map((_,d)=>`<span class="p-car-dot${d===0?' active':''}"></span>`).join('')}</div>
+        `:`<img src="${p.img}" alt="${p.shade}" loading="lazy">`}
         ${p.badge&&!p.outOfStock?`<span class="p-badge">${p.badge}</span>`:''}
         ${p.outOfStock?`<div class="p-out-badge"><span>Agotado</span><span>En camino · te avisaremos cuando esté disponible</span></div>`:`<button class="p-add" onclick="event.stopPropagation();${p.cat==='kit'?'openModal('+p.id+')':'addToCart('+p.id+')'}">+</button>`}
       </div>
@@ -1545,6 +1469,25 @@ function renderProducts(){
       </div>
     </div>`).join('');
   initReveal();
+  initCarousels();
+}
+
+function carNav(id, dir){
+  const car = document.getElementById('pcar-'+id);
+  if(!car) return;
+  car.scrollBy({left: dir*car.clientWidth, behavior:'smooth'});
+}
+
+function initCarousels(){
+  document.querySelectorAll('.p-carousel').forEach(car=>{
+    if(car.dataset.init) return;
+    car.dataset.init = '1';
+    car.addEventListener('scroll', ()=>{
+      const idx = Math.round(car.scrollLeft / car.clientWidth);
+      const dots = car.parentElement.querySelectorAll('.p-car-dot');
+      dots.forEach((d,i)=>d.classList.toggle('active', i===idx));
+    }, {passive:true});
+  });
 }
 
 function filterCat(cat){
@@ -1583,39 +1526,75 @@ function changeQty(id,d){
 
 let shippingCost = 0;
 let shippingLabel = '';
+let selectedMuni = null;
 const FREE_SHIPPING_THRESHOLD = 120000;
 
 function getBaseShipping(v){
-  if(v === 'bogota') return 10000;
-  if(v === 'principal') return 15000;
-  if(v === 'otro') return 20000;
-  return 0;
+  return selectedMuni ? selectedMuni.p : 0;
+}
+
+// Normaliza para búsqueda: minúsculas, sin acentos
+function normTxt(s){ return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+function filterCities(q){
+  const box = document.getElementById('cityResults');
+  const data = window.ENVIOS || [];
+  // Si el usuario edita el texto, invalida la selección previa
+  if(selectedMuni && q !== `${selectedMuni.n} · ${selectedMuni.d}`){ selectedMuni = null; updateCart(); }
+  const nq = normTxt(q.trim());
+  if(nq.length < 2){ box.style.display='none'; box.innerHTML=''; return; }
+  const matches = [];
+  for(let i=0;i<data.length && matches.length<40;i++){
+    if(normTxt(data[i][0]).indexOf(nq) !== -1) matches.push(i);
+  }
+  if(!matches.length){
+    box.innerHTML = '<div class="cr-empty">Sin resultados. Revisa la ortografía o escribe el municipio más cercano.</div>';
+    box.style.display='block'; return;
+  }
+  box.innerHTML = matches.map(i=>{
+    const m = data[i];
+    return `<div class="cr-item" onmousedown="event.preventDefault();pickCity(${i})"><span>${m[0]}<span class="cr-depto"> · ${m[1]}</span></span><span class="cr-price">${fmt(m[2])}</span></div>`;
+  }).join('');
+  box.style.display='block';
+}
+
+function pickCity(i){
+  const m = (window.ENVIOS || [])[i];
+  if(!m) return;
+  selectedMuni = { n:m[0], d:m[1], p:m[2] };
+  document.getElementById('citySearch').value = `${m[0]} · ${m[1]}`;
+  const sel = document.getElementById('citySelect');
+  sel.innerHTML = `<option value="sel" selected>${m[0]} — ${m[1]}</option>`;
+  document.getElementById('cityResults').style.display='none';
+  updateShipping();
 }
 
 function updateShipping(){
-  const sel = document.getElementById('citySelect');
-  const v = sel.value;
-  const cityName = sel.options[sel.selectedIndex]?.text?.split(' —')[0] || '';
-  if(v === 'bogota'){ shippingLabel = 'Bogotá'; }
-  else if(v === 'principal'){ shippingLabel = cityName; }
-  else if(v === 'otro'){ shippingLabel = cityName; }
-  else { shippingLabel = ''; }
-
-  // Dynamic address placeholder
+  shippingLabel = selectedMuni ? `${selectedMuni.n} — ${selectedMuni.d}` : '';
   const addrInput = document.getElementById('addressInput');
   const hint = document.getElementById('addressHint');
-  if(v === 'bogota' || v === 'principal'){
-    addrInput.placeholder = 'Ej: Calle 116 # 77b-42, Apto 301';
-    if(hint) hint.textContent = '💡 Usa el formato: Calle/Carrera/Diagonal + número # número-número';
-  } else if(v === 'otro'){
-    addrInput.placeholder = 'Ej: Barrio La Esperanza, casa rosada frente a la cancha';
-    if(hint) hint.textContent = '💡 Puedes describir tu dirección libremente — entre más detalle mejor';
+  if(selectedMuni){
+    if(/^Bogot/.test(selectedMuni.d)){
+      addrInput.placeholder = 'Ej: Calle 116 # 77b-42, Apto 301';
+      if(hint) hint.textContent = '💡 Usa el formato: Calle/Carrera/Diagonal + número # número-número';
+    } else {
+      addrInput.placeholder = 'Ej: Barrio La Esperanza, casa rosada frente a la cancha';
+      if(hint) hint.textContent = '💡 Puedes describir tu dirección libremente — entre más detalle mejor';
+    }
   } else {
     addrInput.placeholder = 'Ej: Calle 116 # 77b-42';
     if(hint) hint.textContent = '';
   }
   updateCart();
 }
+
+// Cerrar el desplegable al hacer clic fuera
+document.addEventListener('click', function(e){
+  if(!e.target.closest('#citySearch') && !e.target.closest('#cityResults')){
+    const b = document.getElementById('cityResults');
+    if(b) b.style.display = 'none';
+  }
+});
 
 function updateCart(){
   localStorage.setItem('minime_cart', JSON.stringify(cart));
